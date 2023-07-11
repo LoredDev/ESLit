@@ -1,20 +1,20 @@
 {
-  "name": "@readable/core",
+  "name": "readable",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-	"module": "./index.js",
-	"source": "./index.js",
-	"exports": {
-		"default": "./index.js",
-		"import": "./index.js",
-		"types": "./index.d.ts"
-	},
-	"type": "module",
-	"types": "./index.js",
+  "module": "./src/index.js",
+  "source": "./src/index.js",
+  "exports": {
+    "default": "./src/index.js",
+    "import": "./src/index.js",
+    "types": "./index.d.ts"
+  },
+  "type": "module",
+  "types": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "ESLINT_USE_FLAT_CONFIG=true eslint ."
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint ."
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,13 @@
   "devDependencies": {
     "@eslint/js": "^8.44.0",
     "@types/eslint__js": "^8.42.0",
+    "@types/node": "^20.4.1",
     "eslint": "^8.44.0"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "typescript": "^5.0.0"
   }
 }

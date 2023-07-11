@@ -1,6 +1,3 @@
-import type { Linter } from "eslint"
+import { Config, ESConfig } from "./src/types";
 
-export type ESConfig = Readonly<Linter.FlatConfig>;
-
-const config: Config;
-export default config;
+export function defineConfig(config: Config): ESConfig[]

@@ -1,5 +1,5 @@
 {
-  "name": "readable",
+  "name": "readable-monorepo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@readable/core": "workspace:*"
+    "readable": "workspace:*"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
