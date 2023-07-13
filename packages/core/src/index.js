@@ -3,6 +3,7 @@ import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import * as configs from './configs/index.js';
+import { getUserRules } from './userOptions.js';
 
 /**
  * @param {import('./types').Config} userConfig
@@ -10,14 +11,6 @@ import * as configs from './configs/index.js';
  * @returns {import('./types').ESConfig[]}
 */
 export function defineConfig(userConfig) {
-
-	// eslint-disable-next-line no-undef
-	process.env.READABLE_CONFIG_INDENT = userConfig.options?.indent ?? 'tab';
-	// eslint-disable-next-line no-undef
-	process.env.READABLE_CONFIG_SEMI = userConfig.options?.semi ?? 'always';
-	// eslint-disable-next-line no-undef
-	process.env.READABLE_CONFIG_QUOTES = userConfig.options?.quotes ?? 'single';
-
 	return [
 		{
 			ignores: [
@@ -57,6 +50,7 @@ export function defineConfig(userConfig) {
 		configs.common,
 		configs.formatting,
 		configs.typescript,
+		...getUserRules(userConfig.options),
 	];
 }
 

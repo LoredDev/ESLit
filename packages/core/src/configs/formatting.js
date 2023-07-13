@@ -14,8 +14,7 @@ const config = {
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
 		'indent': 'off',
-		// eslint-disable-next-line no-undef
-		'@typescript-eslint/indent': ['error', process.env.READABLE_CONFIG_INDENT === 'space' ? 2 : 'tab', {
+		'@typescript-eslint/indent': ['error', 'tab', {
 			SwitchCase: 1,
 			VariableDeclarator: 1,
 			outerIIFEBody: 1,
@@ -67,12 +66,10 @@ const config = {
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
 
 		'quotes': 'off',
-		// eslint-disable-next-line no-undef
-		'@typescript-eslint/quotes': ['error', process.env.READABLE_CONFIG_QUOTES ?? 'single'],
+		'@typescript-eslint/quotes': ['error', 'single'],
 
 		'semi': 'off',
-		// eslint-disable-next-line no-undef
-		'@typescript-eslint/semi': ['error', process.env.READABLE_CONFIG_SEMI ?? 'always'],
+		'@typescript-eslint/semi': ['error', 'always'],
 
 		'space-before-blocks': 'off',
 		'@typescript-eslint/space-before-blocks': ['error', 'always'],
