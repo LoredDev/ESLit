@@ -3,6 +3,7 @@ import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import * as configs from './configs/index.js';
+import globals from 'globals';
 import { getUserRules } from './userOptions.js';
 
 /**
@@ -36,6 +37,11 @@ export function defineConfig(userConfig) {
 					project: userConfig.tsconfig,
 					// eslint-disable-next-line no-undef
 					tsconfigRootDir: process.cwd(),
+				},
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+				globals: {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+					...globals.nodeBuiltin,
 				},
 			},
 			// @ts-expect-error The `@typescript-eslint/eslint-plugin` package doesn't export
