@@ -1,3 +1,3 @@
-import { Config, ESConfig } from "./src/types";
+import type { Config, ESConfig } from './src/types';
 
-export function defineConfig(config: Config): ESConfig[]
+export function defineConfig(config: Config): ESConfig[];
