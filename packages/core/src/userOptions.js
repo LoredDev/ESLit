@@ -16,5 +16,35 @@ export function getUserRules(userOptions) {
 					configs.formatting.rules['@typescript-eslint/indent'][2] ?? null,
 				],
 			},
+		},
+		{
+			files: ['**/*.ts'],
+			rules: {
+				...(
+					/** @type {() => import('eslint').Linter.RulesRecord} */
+					() => {
+
+						const inferrableTypes = userOptions?.inferrableTypes ?? 'never';
+
+						if (typeof inferrableTypes === 'string') {
+							return {
+								'@typescript-eslint/explicit-function-return-type': inferrableTypes === 'always' ? 'off' : 'error',
+								'@typescript-eslint/no-inferrable-types': inferrableTypes === 'always' ? 'off' : 'error',
+							};
+						}
+						else {
+							return {
+								'@typescript-eslint/explicit-function-return-type': inferrableTypes[1].returnValues ? 'off' : 'error',
+								'@typescript-eslint/no-inferrable-types': [
+									inferrableTypes[0] === 'always' ? 'off' : 'error',
+									{
+										ignoreParameters: inferrableTypes[1].parameters ?? false,
+										ignoreProperties: inferrableTypes[1].properties ?? false,
+									},
+								],
+							};
+						}
+					})(),
+			},
 		}];
 }
