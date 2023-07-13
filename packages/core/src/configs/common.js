@@ -9,6 +9,7 @@ const config = {
 		'@typescript-eslint/ban-ts-comment': ['error', {
 			'ts-ignore': 'allow-with-description',
 		}],
+		'@typescript-eslint/ban-tslint-comment': 'error',
 
 		'@typescript-eslint/no-require-imports': 'error',
 
@@ -25,6 +26,9 @@ const config = {
 
 		'no-use-before-define': 'off',
 		'@typescript-eslint/no-use-before-define': 'error',
+
+		'no-empty-function': 'off',
+		'@typescript-eslint/no-empty-function': 'error',
 	},
 };
 export default config;
