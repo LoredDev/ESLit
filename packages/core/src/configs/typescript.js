@@ -7,7 +7,7 @@ const config = {
 	rules: {
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': 'error',
-		'@typescript-eslint/class-literal-property': 'error',
+		'@typescript-eslint/class-literal-property-style': 'error',
 		'@typescript-eslint/consistent-generic-constructors': 'error',
 		'@typescript-eslint/consistent-indexed-object-style': 'error',
 		'@typescript-eslint/consistent-type-assertions': 'error',
