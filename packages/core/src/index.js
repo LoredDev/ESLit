@@ -24,22 +24,16 @@ export function defineConfig(userConfig) {
 		{
 			files: ['**/*.js', '**/*.ts'],
 			plugins: {
-				// @ts-expect-error The `@typescript-eslint/eslint-plugin` package doesn't export
-				// a correct type as default. But this still works because of backwards-compatibility of eslint.
 				'@typescript-eslint': tsEslint,
 			},
 			languageOptions: {
 				sourceType: 'module',
-				// @ts-expect-error The `@typescript-eslint/parser` package doesn't export a correct type as default.
-				// (see `plugins['@typescript-eslint']` option/property error for more info)
 				parser: tsParser,
 				parserOptions: {
 					project: userConfig.tsconfig,
 					tsconfigRootDir: process.cwd(),
 				},
 			},
-			// @ts-expect-error The `@typescript-eslint/eslint-plugin` package doesn't export
-			// rules as `RulesRecord` type.
 			rules: {
 				...tsEslint.configs.recommended.rules,
 				...tsEslint.configs['recommended-requiring-type-checking'].rules,
