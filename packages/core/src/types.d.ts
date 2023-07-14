@@ -2,21 +2,63 @@ import type { Linter } from 'eslint';
 
 export type ESConfig = Readonly<Linter.FlatConfig>;
 
-export type inferrableTypesOptions = [
-	'never' | 'always' | 'ts-never' | 'js-never',
-	{
-		/** @see {@link https://typescript-eslint.io/rules/no-inferrable-types#ignoreparameters} */
-		parameters?: boolean
-		/** @see {@link https://typescript-eslint.io/rules/no-inferrable-types#ignoreproperties} */
-		properties?: boolean
-		/** @see {@link https://typescript-eslint.io/rules/explicit-function-return-type} */
-		returnValues?: boolean
-	},
-] | 'never' | 'always' | 'ts-never' | 'js-never';
-
 export interface Config {
 	tsconfig?: string | string[]
 	strict?: boolean
+	/**
+	 * @summary
+	 * Environment and language settings
+	 *
+	 * If no globals/environments are defined, the configuration tries to detect the
+	 * environment using `typeof`. See each option for more explanation
+	 */
+	environment?: {
+		/**
+		 * @summary
+		 * Enables NodeJS environment globals.
+		 *
+		 * **Note:** this does not enables CommonJS globals, if you are using
+		 * CommonJS, use a file ending in `.cjs` or `.cts`
+		 *
+		 *
+		 * @example // Detects if
+		 * typeof window === 'undefined' &&
+		 * typeof process !== 'undefined' &&
+		 * typeof require !== 'undefined'
+		 */
+		node?: boolean
+		/**
+		 * @summary
+		 * Enables the global `Deno` namespace and browser/web standards globals
+		 *
+		 * @example // Detects if
+		 * typeof window !== 'undefined' &&
+		 * typeof Deno !== 'undefined'
+		 */
+		deno?: boolean
+		/**
+		 * @summary
+		 * Enables browser/web standards globals
+		 *
+		 * @example // Detects if
+		 * typeof window !== 'undefined'
+		 */
+		browser?: boolean
+		/**
+		 * @summary
+		 * What JavaScript (ECMAScript) that will be evaluated
+		 *
+		 * **Defaults to `latest`**
+		 */
+		ecmaVersion?: Linter.ParserOptions['ecmaVersion']
+		/**
+		 * @summary
+		 * User defined globals for edge-cases or if available aren't enough
+		 *
+		 * **Does not overrides previous enabled ones**
+		 */
+		customGlobals?: Record<string, boolean>
+	}
 	options?: {
 		indent?: 'tab' | 'space'
 		quotes?: 'single' | 'double'
@@ -98,3 +140,15 @@ export interface Config {
 		inferrableTypes?: inferrableTypesOptions
 	}
 }
+
+export type inferrableTypesOptions = [
+	'never' | 'always' | 'ts-never' | 'js-never',
+	{
+		/** @see {@link https://typescript-eslint.io/rules/no-inferrable-types#ignoreparameters} */
+		parameters?: boolean
+		/** @see {@link https://typescript-eslint.io/rules/no-inferrable-types#ignoreproperties} */
+		properties?: boolean
+		/** @see {@link https://typescript-eslint.io/rules/explicit-function-return-type} */
+		returnValues?: boolean
+	},
+] | 'never' | 'always' | 'ts-never' | 'js-never';
