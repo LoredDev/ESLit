@@ -3,7 +3,7 @@
  * @type {import('../types').ESConfig}
  */
 const config = {
-	files: ['**/*.ts'],
+	files: ['**/*.ts', '**/*.cts', '**/*.mts'],
 	rules: {
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': 'error',
@@ -21,6 +21,33 @@ const config = {
 		'@typescript-eslint/prefer-for-of': 'error',
 		'@typescript-eslint/prefer-function-type': 'error',
 		'@typescript-eslint/prefer-namespace-keyword': 'error',
+
+		...(
+			/** @type {() => import('eslint').Linter.RulesRecord} */
+			() => {
+				const inferrableTypes = process.env.READABLE_ESLINT_OPTIONS?.inferrableTypes ?? 'never';
+
+				if (typeof inferrableTypes === 'string') {
+					return {
+						'@typescript-eslint/explicit-function-return-type': inferrableTypes === 'always' ? 'off' : 'error',
+						'@typescript-eslint/no-inferrable-types': inferrableTypes === 'always' ? 'off' : 'error',
+					};
+				}
+				else {
+					return {
+						'@typescript-eslint/explicit-function-return-type': inferrableTypes[1].returnValues ? 'off' : 'error',
+						'@typescript-eslint/no-inferrable-types': [
+							inferrableTypes[0] === 'always' ? 'off' : 'error',
+							{
+								ignoreParameters: inferrableTypes[1].parameters ?? false,
+								ignoreProperties: inferrableTypes[1].properties ?? false,
+							},
+						],
+					};
+				}
+			}
+		)(),
+
 	},
 };
 export default config;

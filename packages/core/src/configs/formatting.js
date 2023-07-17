@@ -3,7 +3,7 @@
  * @type {import('../types').ESConfig}
  */
 const config = {
-	files: ['**/*.js', '**/*.ts'],
+	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 	rules: {
 		// Formatting rules
 
@@ -14,7 +14,7 @@ const config = {
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
 		'indent': 'off',
-		'@typescript-eslint/indent': ['error', 'tab', {
+		'@typescript-eslint/indent': ['error', process.env.READABLE_ESLINT_OPTIONS?.indent === 'space' ? 2 : 'tab', {
 			SwitchCase: 1,
 			VariableDeclarator: 1,
 			outerIIFEBody: 1,
@@ -66,13 +66,13 @@ const config = {
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
 
 		'quotes': 'off',
-		'@typescript-eslint/quotes': ['error', 'single'],
+		'@typescript-eslint/quotes': ['error', process.env.READABLE_ESLINT_OPTIONS?.quotes ?? 'single'],
 
 		'semi': 'off',
 		'@typescript-eslint/semi': ['error', 'always'],
 
 		'space-before-blocks': 'off',
-		'@typescript-eslint/space-before-blocks': ['error', 'always'],
+		'@typescript-eslint/space-before-blocks': ['error', process.env.READABLE_ESLINT_OPTIONS?.semi ?? 'always'],
 
 		'space-before-function-paren': 'off',
 		'@typescript-eslint/space-before-function-paren': ['error', {

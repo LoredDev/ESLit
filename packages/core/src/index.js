@@ -11,7 +11,13 @@ import { setEnvironments } from './environments.js';
  *
  * @returns {import('./types').ESConfig[]}
 */
-export function defineConfig(userConfig) {
+	userConfig.strict ??= true;
+
+	process.env.READABLE_ESLINT_STRICT = userConfig.strict;
+	process.env.READABLE_ESLINT_OPTIONS = {
+		inferrableTypes: userConfig.strict ? 'always' : 'never',
+		...userConfig.options,
+	};
 	return [
 		{
 			ignores: [

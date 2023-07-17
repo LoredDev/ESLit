@@ -1,10 +1,12 @@
+import type { FlatCompat } from '@eslint/eslintrc';
 import type { Linter } from 'eslint';
 
 export type ESConfig = Readonly<Linter.FlatConfig>;
 
 export interface Config {
-	tsconfig?: string | string[]
+	tsconfig?: string | string[] | true
 	strict?: boolean
+	rootDir?: string
 	/**
 	 * @summary
 	 * Environment and language settings
@@ -67,8 +69,8 @@ export interface Config {
 		 * Typescript's type-checking is able to infer types from parameters.
 		 * So using an explicit `:` type annotation isn't obligatory.
 		 *
-		 * But, by default, type annotations are always mandated to make
-		 * the core more readable, explicit and robust to changes.
+		 * But, **by default in strict mode**, type annotations are always mandated to make
+		 * the code more readable, explicit and robust to changes.
 		 *
 		 * See {@link https://typescript-eslint.io/rules/no-inferrable-types typescript-eslint documentation }
 		 * for more info.
@@ -114,7 +116,7 @@ export interface Config {
 			const id = 10;
 			const name = 'foo';
 			```
-	   * @example ```ts
+		 * @example ```ts
 			// Typescript
 			const id: number = 10;
 			const name: string = 'foo';
@@ -139,6 +141,9 @@ export interface Config {
 		 */
 		inferrableTypes?: inferrableTypesOptions
 	}
+	overrides?:
+	| Linter.FlatConfig[]
+	| ((eslintrc: FlatCompat) => Linter.FlatConfig[] | Promise<Linter.FlatConfig[]>)
 }
 
 export type inferrableTypesOptions = [
