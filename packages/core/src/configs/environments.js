@@ -1,12 +1,13 @@
 import globals from 'globals';
 
 /**
- * @param {import('./types').Config['environment']} environment
+ * @param {import('../types').Config['environment']} environment
  *
- * @returns {import('./types').ESConfig[]}
+ * @returns {import('../types').ESConfig[]}
 */
-export function setEnvironments(environment) {
+export function environments(environment) {
 
+	/** @type {Record<string, Record<string, boolean>>} */
 	environment ||= {
 		node:
 			typeof window === 'undefined' &&
