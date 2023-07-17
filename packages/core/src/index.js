@@ -3,6 +3,7 @@ import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import * as configs from './configs/index.js';
+import { getTsConfigs } from './tsconfigs.js';
 
 /**
  * @param {import('./types').Config} userConfig
@@ -12,6 +13,8 @@ import * as configs from './configs/index.js';
 export async function defineConfig(userConfig) {
 
 	userConfig.strict ??= true;
+	userConfig.rootDir ??= process.cwd();
+	userConfig.tsconfig ??= await getTsConfigs(userConfig.rootDir);
 
 	process.env.READABLE_ESLINT_STRICT = userConfig.strict;
 	process.env.READABLE_ESLINT_OPTIONS = {
@@ -33,7 +36,7 @@ export async function defineConfig(userConfig) {
 		},
 		js.configs.recommended,
 		{
-			files: ['**/*.js', '**/*.ts'],
+			files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 			plugins: {
 				'@typescript-eslint': tsEslint,
 			},
@@ -42,7 +45,7 @@ export async function defineConfig(userConfig) {
 				parser: tsParser,
 				parserOptions: {
 					project: userConfig.tsconfig,
-					tsconfigRootDir: userConfig.rootDir ?? process.cwd(),
+					tsconfigRootDir: userConfig.rootDir,
 				},
 			},
 			rules: {
