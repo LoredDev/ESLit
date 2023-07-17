@@ -3,14 +3,14 @@ import tsEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import js from '@eslint/js';
 import * as configs from './configs/index.js';
-import { getUserRules } from './userOptions.js';
-import { setEnvironments } from './environments.js';
 
 /**
  * @param {import('./types').Config} userConfig
  *
- * @returns {import('./types').ESConfig[]}
+ * @returns {Promise<import('./types').ESConfig[]>}
 */
+export async function defineConfig(userConfig) {
+
 	userConfig.strict ??= true;
 
 	process.env.READABLE_ESLINT_STRICT = userConfig.strict;
@@ -18,6 +18,11 @@ import { setEnvironments } from './environments.js';
 		inferrableTypes: userConfig.strict ? 'always' : 'never',
 		...userConfig.options,
 	};
+
+	const userOverrides = (typeof userConfig.overrides !== 'function'
+		? userConfig.overrides
+		: await userConfig.overrides(eslintrc)) ?? [];
+
 	return [
 		{
 			ignores: [
@@ -37,7 +42,7 @@ import { setEnvironments } from './environments.js';
 				parser: tsParser,
 				parserOptions: {
 					project: userConfig.tsconfig,
-					tsconfigRootDir: process.cwd(),
+					tsconfigRootDir: userConfig.rootDir ?? process.cwd(),
 				},
 			},
 			rules: {
@@ -50,8 +55,8 @@ import { setEnvironments } from './environments.js';
 		configs.common,
 		configs.formatting,
 		configs.typescript,
-		...getUserRules(userConfig.options),
-		...setEnvironments(userConfig.environment),
+		...configs.environments(userConfig.environment),
+		...userOverrides,
 	];
 }
 
