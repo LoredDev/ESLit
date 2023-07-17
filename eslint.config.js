@@ -1,8 +1,7 @@
 import { defineConfig } from 'readable';
 
 export default defineConfig({
-	strict: true,
-	tsconfig: '/home/work/Documents/Repositories/Readable/tsconfig.json',
+	tsconfig: ['./tsconfig.json', './packages/*/tsconfig.json', './packages/*/jsconfig.json'],
 	environment: {
 		node: true,
 	},
