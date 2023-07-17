@@ -4,7 +4,7 @@
  * @type {import('../types').ESConfig}
  */
 const config = {
-	files: ['**/*.js', '**/*.ts'],
+	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 	rules: {
 		'@typescript-eslint/ban-ts-comment': ['error', {
 			'ts-ignore': 'allow-with-description',
