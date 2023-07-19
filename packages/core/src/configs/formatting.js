@@ -1,5 +1,6 @@
 /**
  * Formatting rules/configuration for Javascript and Typescript
+ *
  * @type {import('../types').ESConfig}
  */
 const config = {

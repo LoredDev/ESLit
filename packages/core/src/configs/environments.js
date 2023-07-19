@@ -2,12 +2,13 @@ import globals from 'globals';
 
 /**
  * @param {import('../types').Config['environment']} environment
- *
+ * Manual configuration of environments, if undefined,
+ * the function tries to detect the environment automatically
  * @returns {import('../types').ESConfig[]}
-*/
+ * ESLint configuration with global variables and environment
+ */
 export function environments(environment) {
 
-	/** @type {Record<string, Record<string, boolean>>} */
 	environment ||= {
 		node:
 			typeof window === 'undefined' &&

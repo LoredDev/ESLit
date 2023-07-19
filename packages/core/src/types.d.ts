@@ -22,7 +22,6 @@ export interface Config {
 		 * **Note:** this does not enables CommonJS globals, if you are using
 		 * CommonJS, use a file ending in `.cjs` or `.cts`
 		 *
-		 *
 		 * @example // Detects if
 		 * typeof window === 'undefined' &&
 		 * typeof process !== 'undefined' &&

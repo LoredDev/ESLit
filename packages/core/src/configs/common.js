@@ -1,6 +1,7 @@
 
 /**
  * Common configuration related to language features of Javascript and Typescript
+ *
  * @type {import('../types').ESConfig}
  */
 const config = {

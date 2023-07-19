@@ -13,8 +13,8 @@ function exists(...path) {
 }
 
 /**
- * @param {string} directory
- * @returns {Promise<string[]>}
+ * @param {string} directory what the root directory to detect an workspace/monorepo configuration file
+ * @returns {Promise<string[]>} list of possible paths of packages' tsconfig.json and jsconfig.json files
  */
 async function getMonorepoConfigs(directory) {
 
@@ -60,8 +60,8 @@ async function getMonorepoConfigs(directory) {
 }
 
 /**
- * @param {string} directory
- * @returns {Promise<string[]>}
+ * @param {string} directory what the root directory to work on
+ * @returns {Promise<string[]>} list of tsconfig.json and jsconfig.json file paths
  */
 export async function getTsConfigs(directory) {
 

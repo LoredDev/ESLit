@@ -1,10 +1,20 @@
+import jsdoc from 'eslint-plugin-jsdoc';
+
 /**
- * Typescript syntax-specific configuration
+ * Typescript specific configuration
+ *
  * @type {import('../types').ESConfig}
  */
 const config = {
 	files: ['**/*.ts', '**/*.cts', '**/*.mts'],
+	// See plugins['jsdoc'] on index.js for more info on this error
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	rules: {
+
+		// See plugins['jsdoc'] on index.js for more info on this error
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+		...jsdoc.configs['recommended-typescript-error'].rules,
+
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': 'error',
 		'@typescript-eslint/class-literal-property-style': 'error',
