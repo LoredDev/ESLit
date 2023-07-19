@@ -1,15 +1,10 @@
 {
   "name": "readable-monorepo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
   "private": true,
   "scripts": {
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
 		"prepare": "husky install"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
