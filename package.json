@@ -1,0 +1,20 @@
+{
+  "name": "readable-monorepo",
+  "private": true,
+  "scripts": {
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
+		"prepare": "husky install"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "readable": "workspace:*"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.2",
+    "@commitlint/config-conventional": "^17.6.6",
+    "@commitlint/types": "^17.4.4",
+    "eslint": "^8.44.0",
+    "husky": "^8.0.3"
+  }
+}
