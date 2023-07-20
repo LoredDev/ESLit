@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update dev branch
-        if: steps.changesets.outputs.hasChangesets == 'false'
+        if: ${{ steps.changesets.outputs.hasChangesets == 'false' && github.ref_name == 'main'}}
         uses: devmasx/merge-branch@master
         with:
           type: now
