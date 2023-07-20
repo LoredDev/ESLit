@@ -5,7 +5,8 @@
     "lint": "turbo run lint",
     "lint:monorepo": "ESLINT_USE_FLAT_CONFIG=true eslint .",
     "test": "",
-		"prepare": "husky install"
+    "release": "changeset publish",
+    "prepare": "husky install"
   },
   "author": "",
   "license": "ISC",
