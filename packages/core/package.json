@@ -14,7 +14,7 @@
   "types": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint ."
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
