@@ -5,6 +5,11 @@
   "main": "index.js",
   "module": "./src/index.js",
   "source": "./src/index.js",
+	"files": [
+		"src",
+		"index.d.ts"
+	],
+	"homepage": "https://github.com/LoredDev/ESLit",
   "exports": {
     "default": "./src/index.js",
     "import": "./src/index.js",
@@ -16,9 +21,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+	"repository": {
+		"directory": "packages/core",
+		"type": "git",
+		"url": "https://github.com/LoredDev/ESLit"
+	},
+  "author": {
+		"email": "contact.guz013@gmail.com",
+		"name": "Gustavo \"Guz\" L. de Mello",
+		"url": "https://guz.one"
+	},
+  "license": "MIT",
   "devDependencies": {
     "@types/eslint__js": "^8.42.0",
     "@types/node": "^20.4.2",

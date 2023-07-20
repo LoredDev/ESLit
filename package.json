@@ -8,8 +8,7 @@
     "release": "changeset publish",
     "prepare": "husky install"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
 	"type": "module",
   "dependencies": {
     "@eslit/core": "workspace:*"
