@@ -1,5 +1,5 @@
 {
-  "name": "readable-monorepo",
+  "name": "eslit-monorepo",
   "private": true,
   "scripts": {
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "readable": "workspace:*"
+    "@eslit/core": "workspace:*"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
