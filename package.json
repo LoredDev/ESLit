@@ -2,7 +2,9 @@
   "name": "eslit-monorepo",
   "private": true,
   "scripts": {
-    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint .",
+    "lint": "turbo run lint",
+    "lint:monorepo": "ESLINT_USE_FLAT_CONFIG=true eslint .",
+    "test": "",
 		"prepare": "husky install"
   },
   "author": "",
