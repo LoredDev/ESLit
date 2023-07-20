@@ -1,4 +1,4 @@
-import { defineConfig } from 'readable';
+import { defineConfig } from '@eslit/core';
 
 export default defineConfig({
 	environment: {
