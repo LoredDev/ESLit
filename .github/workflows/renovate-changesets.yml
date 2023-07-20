@@ -4,7 +4,7 @@ name: "📦 Renovate Changesets"
 on:
   pull_request_target:
     paths:
-      - '.github/workflows/sync_renovate-changesets.yml'
+      - '.github/workflows/renovate-changesets.yml'
       - '**/pnpm-lock.yaml'
 
 jobs:
