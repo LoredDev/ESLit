@@ -1,4 +1,4 @@
-name: "Dependabot Changesets"
+name: "📦 Renovate Changesets"
 
 on: pull_request
 
