@@ -3,6 +3,44 @@ import type { Linter } from 'eslint';
 
 export type ESConfig = Readonly<Linter.FlatConfig>;
 
+export interface EnvOptions {
+	ESLIT_TSCONFIG?: string | string[] | true
+	ESLIT_ROOT?: string
+	ESLIT_INDENT?: 'tab' | 'space' | number
+	ESLIT_ECMASCRIPT?: Linter.ParserOptions['ecmaVersion']
+	ESLIT_SEMI?: 'never' | 'always'
+	/**
+	 * Typescript's type-checking is able to infer types from parameters.
+	 * So using an explicit `:` type annotation isn't obligatory.
+	 *
+	 * But, **by default in strict mode**, type annotations are always mandated to make
+	 * the code more readable, explicit and robust to changes.
+	 *
+	 * See {@link https://typescript-eslint.io/rules/no-inferrable-types typescript-eslint documentation }
+	 * for more info.
+	 * ---
+	 * **Option: `never`** (default)
+	 * Types are always explicit in Typescript
+	 *
+	 * @example ```ts
+			// Typescript
+			const id: number = 10;
+			const name: string = 'foo';
+			```
+	 * ---
+	 * **Option: `always`**
+	 * Types are always inferred in Typescript
+	 *
+	 * @example ```ts
+			// Typescript
+			const id = 10;
+			const name = 'foo';
+			```
+	 */
+	ESLIT_INFER_TYPES?: inferrableTypesOptions
+	[ENV: string]: unknown
+}
+
 export interface Config {
 	tsconfig?: string | string[] | true
 	strict?: boolean

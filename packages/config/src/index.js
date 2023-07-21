@@ -7,9 +7,9 @@ import * as configs from './configs/index.js';
 import { getTsConfigs } from './tsconfigs.js';
 
 /**
- * @param {import('./types').Config} userConfig
+ * @param {import('./types.js').Config} userConfig
  * User configuration
- * @returns {Promise<import('./types').ESConfig[]>}
+ * @returns {Promise<import('./types.js').ESConfig[]>}
  * The complete list of configs for ESLint
  */
 export async function defineConfig(userConfig) {

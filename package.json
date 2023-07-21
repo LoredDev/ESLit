@@ -11,7 +11,7 @@
   "license": "MIT",
 	"type": "module",
   "dependencies": {
-    "@eslit/core": "workspace:*"
+    "@eslit/config": "workspace:*"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",

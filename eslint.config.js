@@ -1,4 +1,4 @@
-import { defineConfig } from '@eslit/core';
+import { defineConfig } from '@eslit/config';
 
 export default defineConfig({
 	environment: {
