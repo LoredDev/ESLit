@@ -1,6 +1,10 @@
 import globals from 'globals';
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * Configuration for Node development environment
+ *
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const node = {
 	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 	languageOptions: {
@@ -10,7 +14,11 @@ const node = {
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * Configuration for Deno development environment
+ *
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const deno = {
 	files: ['**/*.js', '**/*.ts'],
 	languageOptions: {
@@ -21,6 +29,11 @@ const deno = {
 	},
 };
 
+/**
+ * Configuration for browser development environment
+ *
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const browser = {
 	files: ['**/*.js', '**/*.ts'],
 	languageOptions: {
