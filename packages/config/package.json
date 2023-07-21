@@ -22,7 +22,7 @@
     "lint": "eslint ."
   },
 	"repository": {
-		"directory": "packages/core",
+		"directory": "packages/config",
 		"type": "git",
 		"url": "https://github.com/LoredDev/ESLit"
 	},
