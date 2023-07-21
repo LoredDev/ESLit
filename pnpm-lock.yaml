@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@eslit/core':
+      '@eslit/config':
         specifier: workspace:*
-        version: link:packages/core
+        version: link:packages/config
     devDependencies:
       '@changesets/cli':
         specifier: ^2.26.2
@@ -76,7 +76,7 @@ importers:
         specifier: ^4.4.2
         version: 4.4.2
 
-  packages/core:
+  packages/config:
     dependencies:
       '@eslint/eslintrc':
         specifier: ^2.1.0

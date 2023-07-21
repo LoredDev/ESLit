@@ -1,12 +1,19 @@
+import tsESlint from '@typescript-eslint/eslint-plugin';
+import js from '@eslint/js';
 
 /**
- * Common configuration related to language features of Javascript and Typescript
+ * Recommended configuration overrides of ESLit
  *
- * @type {import('../types').ESConfig}
+ * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {
-	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 	rules: {
+		...js.configs.recommended.rules,
+		...tsESlint.configs.recommended.rules,
+		...tsESlint.configs['recommended-requiring-type-checking'].rules,
+		...tsESlint.configs['eslint-recommended'].rules,
+		...tsESlint.configs.strict.rules,
+
 		'@typescript-eslint/ban-ts-comment': ['error', {
 			'ts-ignore': 'allow-with-description',
 		}],

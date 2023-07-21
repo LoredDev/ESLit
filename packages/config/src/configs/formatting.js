@@ -1,7 +1,7 @@
 /**
- * Formatting rules/configuration for Javascript and Typescript
+ * Formatting rules/configuration overrides for Javascript and Typescript
  *
- * @type {import('../types').ESConfig}
+ * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {
 	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
@@ -15,7 +15,14 @@ const config = {
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
 		'indent': 'off',
-		'@typescript-eslint/indent': ['error', process.env.READABLE_ESLINT_OPTIONS?.indent === 'space' ? 2 : 'tab', {
+		'@typescript-eslint/indent': ['error', (() => {
+			/** @type {import('../types').EnvOptions['ESLIT_INDENT']} */
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+			const indent = JSON.parse(process.env.ESLINT_INDENT ?? '"tab"');
+
+			if (indent === 'space') return 2;
+			else return indent;
+		})(), {
 			SwitchCase: 1,
 			VariableDeclarator: 1,
 			outerIIFEBody: 1,
@@ -67,13 +74,13 @@ const config = {
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
 
 		'quotes': 'off',
-		'@typescript-eslint/quotes': ['error', process.env.READABLE_ESLINT_OPTIONS?.quotes ?? 'single'],
+		'@typescript-eslint/quotes': ['error', process.env.ESLINT_QUOTES ?? 'single'],
 
 		'semi': 'off',
 		'@typescript-eslint/semi': ['error', 'always'],
 
 		'space-before-blocks': 'off',
-		'@typescript-eslint/space-before-blocks': ['error', process.env.READABLE_ESLINT_OPTIONS?.semi ?? 'always'],
+		'@typescript-eslint/space-before-blocks': ['error', process.env.ESLIT_SEMI ?? 'always'],
 
 		'space-before-function-paren': 'off',
 		'@typescript-eslint/space-before-function-paren': ['error', {
