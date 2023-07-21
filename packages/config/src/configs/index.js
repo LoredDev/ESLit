@@ -1,5 +1,8 @@
-export { default as common } from './common.js';
-export { default as formatting } from './formatting.js';
-export { default as jsdoc } from './jsdoc.js';
-export { default as typescript } from './typescript.js';
-export * from './environments.js';
+import formatting from './formatting.js';
+import jsdoc from './jsdoc.js';
+import typescript from './typescript.js';
+import recommended from './recommended.js';
+import environments from './environments.js';
+import common from './common.js';
+
+export default { formatting, jsdoc, typescript, recommended, environments, common };

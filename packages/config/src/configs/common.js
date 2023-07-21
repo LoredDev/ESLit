@@ -1,35 +1,35 @@
+import tsESLint from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+import jsdoc from 'eslint-plugin-jsdoc';
 
 /**
- * Common configuration related to language features of Javascript and Typescript
+ * Common configuration for using ESLit rules overrides.
  *
- * @type {import('../types').ESConfig}
+ * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {
 	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
-	rules: {
-		'@typescript-eslint/ban-ts-comment': ['error', {
-			'ts-ignore': 'allow-with-description',
-		}],
-		'@typescript-eslint/ban-tslint-comment': 'error',
-
-		'@typescript-eslint/no-require-imports': 'error',
-
-		// Extension rules
-
-		'no-dupe-class-members': 'off',
-		'@typescript-eslint/no-dupe-class-members': 'error',
-
-		'no-invalid-this': 'off',
-		'@typescript-eslint/no-invalid-this': 'error',
-
-		'no-redeclare': 'off',
-		'@typescript-eslint/no-redeclare': 'error',
-
-		'no-use-before-define': 'off',
-		'@typescript-eslint/no-use-before-define': 'error',
-
-		'no-empty-function': 'off',
-		'@typescript-eslint/no-empty-function': 'error',
+	plugins: {
+		'@typescript-eslint': tsESLint,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		'jsdoc': jsdoc,
+	},
+	languageOptions: {
+		parser: tsParser,
+		parserOptions: {
+			project: process.env.ESLIT_TSCONFIG ?? [
+				'./{ts,js}config{.eslint,}.json',
+				'./packages/*/{ts,js}config{.eslint,}.json',
+				'./apps/*/{ts,js}config{.eslint,}.json',
+			],
+			tsconfigRootDir: process.env.ESLIT_ROOT ?? process.cwd(),
+		},
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		ecmaVersion: (
+			/** @type {import('eslint').Linter.ParserOptions['ecmaVersion']} */
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+			() => {return JSON.parse(process.env.ESLIT_ECMASCRIPT ?? '"latest"');}
+		)(),
 	},
 };
 export default config;

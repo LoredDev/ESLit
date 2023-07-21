@@ -1,9 +1,9 @@
 import jsdoc from 'eslint-plugin-jsdoc';
 
 /**
- * Typescript specific configuration
+ * Typescript specific configuration overrides
  *
- * @type {import('../types').ESConfig}
+ * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {
 	files: ['**/*.ts', '**/*.cts', '**/*.mts'],
@@ -35,7 +35,9 @@ const config = {
 		...(
 			/** @type {() => import('eslint').Linter.RulesRecord} */
 			() => {
-				const inferrableTypes = process.env.READABLE_ESLINT_OPTIONS?.inferrableTypes ?? 'never';
+				/** @type {import('../types').inferrableTypesOptions} */
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+				const inferrableTypes = JSON.parse(process.env.ESLIT_INFER_TYPES ?? '"never"');
 
 				if (typeof inferrableTypes === 'string') {
 					return {

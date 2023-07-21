@@ -1,7 +1,6 @@
-import { defineConfig } from '@eslit/config';
+import { configs, defineConfig, presets } from '@eslit/config';
 
-export default defineConfig({
-	environment: {
-		node: true,
-	},
-});
+export default defineConfig([
+	...presets.default,
+	configs.environments.node,
+]);
