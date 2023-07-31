@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "pnpm cli"
+  },
+  "dependencies": {
+		"@eslit/cli": "workspace:*"
+	},
+	"keywords": [],
+  "author": "",
+  "license": "ISC"
+}
