@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+	"private": true,
   "scripts": {
     "test": "pnpm cli"
   },
