@@ -1,6 +1,6 @@
 {
 	"name": "@eslit/cli",
-	"version": "0.1.0",
+	"version": "0.0.0",
 	"description": "",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -32,10 +32,10 @@
 		"nanospinner": "^1.1.0",
 		"picocolors": "^1.0.0",
 		"picomatch": "^2.3.1",
-		"prompts": "^2.4.2"
+		"prompts": "^2.4.2",
+		"yaml": "^2.3.1"
 	},
 	"devDependencies": {
-		"@types/node": "^20.4.2",
-		"yaml": "^2.3.1"
+		"@types/node": "^20.4.2"
 	}
 }
