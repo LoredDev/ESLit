@@ -5,7 +5,6 @@ import { existsSync } from 'node:fs';
 import { createSpinner } from 'nanospinner';
 import glob from 'picomatch';
 import YAML from 'yaml';
-import Debugger from './debugger.js';
 import c from 'picocolors';
 
 /**
@@ -107,10 +106,7 @@ export default class Cli {
 		this.packages = options.packages;
 		this.dir = path.normalize(options.directory ?? this.dir);
 		this.debug = options.debug ?? this.debug;
-		this.#debugger = new Debugger(this.debug);
 	}
-
-	#debugger = new Debugger(this.debug);
 
 	/** @type {{files: string[], directories: string[]} | undefined} */
 	#paths;
