@@ -57,11 +57,11 @@ async function getPackageName(directory) {
 
 /**
  * @param {string} directory - The directory path to work on
- * @param {string[]} files - The file list to be filtered
+ * @param {{files: string[], directories: string[]}} paths - The file list to be filtered
  * @param {string[]} [packages] - The packages to be filtered
  * @returns {Promise<import('./types').Package>} - The package object
  */
-async function getRootPackage(directory, files, packages = []) {
+async function getRootPackage(directory, paths, packages = []) {
 
 	const ignorePatterns = [
 		...packages.map(p =>
@@ -72,9 +72,11 @@ async function getRootPackage(directory, files, packages = []) {
 
 	return {
 		name: `${await getPackageName(directory)} [ROOT]`,
-		files: files.filter(f =>
-			// glob.isMatch(f, join(directory, '*/**')) &&
+		files: paths.files.filter(f =>
 			!glob.isMatch(f, ignorePatterns),
+		) ?? [],
+		directories: paths.directories.filter(d =>
+			!glob.isMatch(d, ignorePatterns),
 		) ?? [],
 	};
 }
@@ -185,7 +187,7 @@ class Cli {
 	 */
 	async getWorkspace() {
 		console.log(this.packages);
-		const rootPackage = await getRootPackage(this.dir, this.#paths?.files ?? [], this.packages);
+		const rootPackage = await getRootPackage(this.dir, this.#paths ?? { files: [], directories: [] }, this.packages);
 
 		/** @type {string[]} */
 		const packagesPaths = this.#paths?.directories.filter(d =>
@@ -199,6 +201,7 @@ class Cli {
 			packages.push({
 				name: await getPackageName(pkgPath),
 				files: this.#paths?.files.filter(f => glob.isMatch(f, join(pkgPath, '**/*'))) ?? [],
+				directories: this.#paths?.directories.filter(f => glob.isMatch(f, join(pkgPath, '**/*'))) ?? [],
 			});
 		}
 

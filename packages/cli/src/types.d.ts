@@ -14,4 +14,5 @@ export interface Workspace {
 export interface Package {
 	name: string
 	files: string[]
+	directories: string[]
 }
