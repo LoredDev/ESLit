@@ -11,11 +11,8 @@ export interface Config {
 	}[]
 }
 
-export interface Workspace {
-	packages: Package[]
-}
-
 export interface Package {
+	root?: boolean
 	name: string
 	path: string
 	files: string[]

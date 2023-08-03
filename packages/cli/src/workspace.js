@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import YAML from 'yaml';
 import path, { join } from 'node:path';
 import glob from 'picomatch';
+import picomatch from 'picomatch';
 
 
 /**
@@ -54,30 +55,6 @@ async function getPackageName(directory) {
 	return path.normalize(directory).split('/').at(-1) ?? directory;
 }
 
-/**
- * @param {string} directory - The directory path to work on
- * @param {{files: string[], directories: string[]}} paths - The file list to be filtered
- * @param {string[]} [packages] - The packages to be filtered
- * @returns {Promise<import('./types').Package>} - The package object
- */
-async function getRootPackage(directory, paths, packages = []) {
-
-	const ignorePatterns = [
-		...packages.map(p =>
-			`${join(directory, p, '**/*')}`,
-		)];
-
-	return {
-		name: `${await getPackageName(directory)} [ROOT]`,
-		files: paths.files.filter(f =>
-			!glob.isMatch(f, ignorePatterns),
-		) ?? [],
-		directories: paths.directories.filter(d =>
-			!glob.isMatch(d, ignorePatterns),
-		) ?? [],
-		path: directory,
-	};
-}
 export default class Workspace {
 	/** @type {{files: string[], directories: string[]} | undefined} */
 	paths;
@@ -126,7 +103,10 @@ export default class Workspace {
 			}
 		}
 
-		return { files, directories };
+		return {
+			files: files.map(p => path.normalize(p.replace(this.dir, './'))),
+			directories: directories.map(p => path.normalize(p.replace(this.dir, './'))),
+		};
 	}
 
 	/** @type {string[] | undefined} */
@@ -135,10 +115,10 @@ export default class Workspace {
 	/**
 	 * @returns {Promise<string[]>} - List of packages on a directory;
 	 */
-	async getPackages() {
+	async getPackagePatterns() {
 
 		/** @type {string[]} */
-		let packages = [];
+		let packagePatterns = [];
 
 		const pnpmWorkspace =
 			existsSync(join(this.dir, 'pnpm-workspace.yaml'))
@@ -148,67 +128,77 @@ export default class Workspace {
 					: null;
 
 		if (pnpmWorkspace) {
-			const fileYaml = await fs.readFile(join(this.dir, pnpmWorkspace), 'utf8');
+			const pnpmWorkspaceYaml = await fs.readFile(join(this.dir, pnpmWorkspace), 'utf8');
 
 			/** @type {{packages?: string[]}} */
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const fileObj = YAML.parse(fileYaml);
+			const pnpmWorkspaceObj = YAML.parse(pnpmWorkspaceYaml);
 
-			packages.push(...(fileObj?.packages ?? []));
+			packagePatterns.push(...(pnpmWorkspaceObj?.packages ?? []));
 		}
 		else if (existsSync(join(this.dir, 'package.json'))) {
 			const packageJson = await fs.readFile(join(this.dir, 'package.json'), 'utf8');
 
 			/** @type {{workspaces?: string[]}} */
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const packageObj = JSON.parse(packageJson);
+			const packageJsonObj = JSON.parse(packageJson);
 
-			packages.push(...(packageObj?.workspaces ?? []));
+			packagePatterns.push(...(packageJsonObj?.workspaces ?? []));
 		}
-		return packages;
+
+		return packagePatterns.map(p => {
+			p = path.normalize(p);
+			p = p.startsWith('/') ? p.replace('/', '') : p;
+			p = p.endsWith('/') ? p.slice(0, p.length - 1) : p;
+			return p;
+		});
 	}
 
-	/** @type {import('./types').Workspace | undefined} */
-	workspace;
-
 	/**
-	 * @returns {Promise<import('./types').Workspace>}
-	 * The workspace structure and packages founded
+	 * @returns {Promise<import('./types').Package[]>} - The list of packages that exist in the workspace
 	 */
-	async getWorkspace() {
-		console.log(this.packages);
-		const rootPackage = await getRootPackage(this.dir, this.paths ?? { files: [], directories: [] }, this.packages);
+	async getPackages() {
 
-		/** @type {string[]} */
-		const packagesPaths = this.paths?.directories.filter(d =>
-			glob.isMatch(d, this.packages?.map(p => join(this.dir, p)) ?? ''),
-		) ?? [];
+		const paths = await this.getPaths();
+		const packagePatterns = await this.getPackagePatterns();
+		const packagePaths = paths.directories.filter(d => picomatch.isMatch(d, packagePatterns));
+
+		console.log(packagePatterns);
+
+		/** @type {import('./types').Package} */
+		const rootPackage = {
+			root: true,
+			name: await getPackageName(this.dir),
+			path: this.dir,
+			files: paths.files,
+			directories: paths.directories,
+		};
 
 		/** @type {import('./types').Package[]} */
 		const packages = [];
 
-		for (const pkgPath of packagesPaths) {
+		for (const packagePath of packagePaths) {
 			packages.push({
-				name: await getPackageName(pkgPath),
-				files: this.paths?.files.filter(f => glob.isMatch(f, join(pkgPath, '**/*'))) ?? [],
-				directories: this.paths?.directories.filter(f => glob.isMatch(f, join(pkgPath, '**/*'))) ?? [],
-				path: pkgPath,
+				root: false,
+				path: join(this.dir, packagePath),
+				name: await getPackageName(join(this.dir, packagePath)),
+				files: paths.files
+					.filter(f => picomatch.isMatch(f, `${packagePath}/**/*`))
+					.map(f => f.replace(`${packagePath}/`, '')),
+				directories: paths.directories
+					.filter(d => picomatch.isMatch(d, `${packagePath}/**/*`))
+					.map(d => d.replace(`${packagePath}/`, '')),
 			});
+
+			rootPackage.files = rootPackage.files
+				.filter(f => picomatch.isMatch(f, `!${packagePath}/**/*`));
+
+			rootPackage.directories = rootPackage.directories
+				.filter(d => picomatch.isMatch(d, `!${packagePath}/**/*`));
 		}
 
-		return {
-			packages: [
-				rootPackage,
-				...packages,
-			],
-		};
+		return [rootPackage, ...packages];
+
 	}
 
-	async get() {
-		this.packages ||= await this.getPackages();
-		this.paths = await this.getPaths();
-		this.workspace = await this.getWorkspace();
-
-		return this.workspace;
-	}
 }

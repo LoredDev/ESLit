@@ -1,5 +1,5 @@
 #!node
-import path, { join } from 'node:path';
+import path from 'node:path';
 import { createSpinner } from 'nanospinner';
 import glob from 'picomatch';
 import c from 'picocolors';
@@ -9,28 +9,20 @@ export default class Cli {
 	/** @type {string} */
 	dir = process.cwd();
 
-	/** @type {boolean} */
-	debug = false;
-
 	/** @type {import('./types').Config[]} */
 	configs;
-
-	/** @type {import('./types').Workspace | undefined} */
-	#workspace;
 
 	/**
 	 * @param {{
 	 * 	configs: import('./types').Config[]
 	 * 	packages?: string[],
-	 * 	workspace?: import('./types').Workspace,
+	 * 	workspace?: import('./types').Package[],
 	 * 	directory?: string,
 	 * 	debug?: boolean,
 	 * }} options - Cli options
 	 */
 	constructor(options) {
 		this.configs = options?.configs;
-		this.packages = options.packages;
-		this.#workspace = options.workspace;
 		this.dir = path.normalize(options.directory ?? this.dir);
 		this.debug = options.debug ?? this.debug;
 	}
@@ -62,7 +54,7 @@ export default class Cli {
 			}
 			else if (!option.detect) continue;
 
-			const match = glob(option.detect.map(p => join(pkg.path, p)));
+			const match = glob(option.detect);
 
 			const files = pkg.files.filter(f => match ? match(f) : false);
 			const directories = pkg.directories.filter(f => match ? match(f) : false);
@@ -106,20 +98,20 @@ export default class Cli {
 			spinner.update({ text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: config ${config.name}`)}` });
 		}
 
-		spinner.success({ text: `Configuring ${c.bold(c.blue(pkg.name))}` });
+		spinner.success({ text: `Configuring ${c.bold(c.blue(pkg.name))}\n${c.dim(JSON.stringify(pkgConfig))}\n` });
 		return pkgConfig;
 	}
 
 	async run() {
-		const workspace = this.#workspace ?? await new Workspace(this.dir).get();
+		let packages = await new Workspace(this.dir).getPackages();
 
-		workspace.packages = workspace.packages.map(
+		packages = packages.map(
 			pkg => {
 				pkg.config = this.detectConfig(pkg); return pkg;
 			},
 		);
 
-		console.log(JSON.stringify(workspace.packages, null, 2));
+		console.log(packages);
 
 	}
 }
