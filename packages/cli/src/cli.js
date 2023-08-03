@@ -102,6 +102,39 @@ export default class Cli {
 		return pkgConfig;
 	}
 
+	/**
+	 * @param {import('./types').Package[]} packages Packages to generate the map from
+	 * @returns {import('./types').PackagesConfigsMap} A map of what packages has some configuration
+	 */
+	generateConfigMap(packages) {
+
+		/** @type {import('./types').PackagesConfigsMap} */
+		const configMap = new Map();
+
+		for (const pkg of packages) {
+
+			Object.entries(pkg.config ?? {}).forEach(([key, options]) => {
+				/** @type {Map<string, string[]>} */
+				const optionsMap = configMap.get(key) ?? new Map();
+
+				options.forEach(option => {
+					const paths = optionsMap.get(option) ?? [];
+					optionsMap.set(option, [pkg.path, ...paths]);
+
+					if (paths.length >= packages.length - 2 || paths.includes(this.dir)) {
+						console.log('a', packages.length, paths.length);
+						optionsMap.set(option, [this.dir]);
+					}
+				});
+
+				configMap.set(key, optionsMap);
+			});
+		}
+
+		return configMap;
+
+	}
+
 	async run() {
 		let packages = await new Workspace(this.dir).getPackages();
 
@@ -111,7 +144,8 @@ export default class Cli {
 			},
 		);
 
-		console.log(packages);
+		console.log(packages.length);
+		console.log(this.generateConfigMap(packages));
 
 	}
 }

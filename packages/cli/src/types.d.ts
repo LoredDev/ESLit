@@ -6,10 +6,13 @@ export interface Config {
 	options: {
 		name: string
 		packages: Record<string, string | string[] | [string, string][]>
-		rules: string[]
+		configs?: string[]
+		rules?: string[]
 		detect?: string[] | true
 	}[]
 }
+
+export type PackagesConfigsMap = Map<string, Map<string, string[]>>;
 
 export interface Package {
 	root?: boolean
