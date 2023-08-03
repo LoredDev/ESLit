@@ -12,19 +12,20 @@ export default class Cli {
 	/** @type {import('./types').Config[]} */
 	configs;
 
+	/** @type {string[] | undefined} */
+	#packagesPatterns;
+
 	/**
 	 * @param {{
-	 * 	configs: import('./types').Config[]
+	 * 	configs: import('./types').Config[],
 	 * 	packages?: string[],
-	 * 	workspace?: import('./types').Package[],
 	 * 	directory?: string,
-	 * 	debug?: boolean,
 	 * }} options - Cli options
 	 */
 	constructor(options) {
+		this.#packagesPatterns = options.packages;
 		this.configs = options?.configs;
 		this.dir = path.normalize(options.directory ?? this.dir);
-		this.debug = options.debug ?? this.debug;
 	}
 
 	/**
@@ -136,7 +137,7 @@ export default class Cli {
 	}
 
 	async run() {
-		let packages = await new Workspace(this.dir).getPackages();
+		let packages = await new Workspace(this.dir, this.#packagesPatterns).getPackages();
 
 		packages = packages.map(
 			pkg => {
@@ -144,8 +145,7 @@ export default class Cli {
 			},
 		);
 
-		console.log(packages.length);
-		console.log(this.generateConfigMap(packages));
+		console.log(packages);
 
 	}
 }

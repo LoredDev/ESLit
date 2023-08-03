@@ -56,14 +56,14 @@ async function getPackageName(directory) {
 }
 
 export default class Workspace {
-	/** @type {{files: string[], directories: string[]} | undefined} */
-	paths;
 
 	/**
 	 * @param {string} directory - The directory to get the workspace from
+	 * @param {string[]} [packagePatterns] - List of package patterns
 	 */
-	constructor(directory) {
+	constructor(directory, packagePatterns) {
 		this.dir = directory;
+		this.packagePatterns = packagePatterns;
 	}
 
 	/**
@@ -108,9 +108,6 @@ export default class Workspace {
 			directories: directories.map(p => path.normalize(p.replace(this.dir, './'))),
 		};
 	}
-
-	/** @type {string[] | undefined} */
-	packages;
 
 	/**
 	 * @returns {Promise<string[]>} - List of packages on a directory;
@@ -160,10 +157,8 @@ export default class Workspace {
 	async getPackages() {
 
 		const paths = await this.getPaths();
-		const packagePatterns = await this.getPackagePatterns();
+		const packagePatterns = this.packagePatterns ?? await this.getPackagePatterns();
 		const packagePaths = paths.directories.filter(d => picomatch.isMatch(d, packagePatterns));
-
-		console.log(packagePatterns);
 
 		/** @type {import('./types').Package} */
 		const rootPackage = {
