@@ -36,32 +36,6 @@ export default class Cli {
 	}
 
 	/**
-	 * @param {import('./types').Package} pkg - The package to detect configs
-	 * @returns {import('./types').Package['config']} - Detected configs record
-	 */
-	detectConfig(pkg) {
-
-		const spinner = createSpinner(`Configuring ${c.bold(c.blue(pkg.name))}`);
-		spinner.start();
-
-		/** @type {import('./types').Package['config']} */
-		const pkgConfig = {};
-
-		for (const config of this.configs) {
-			pkgConfig[config.name] = this.detectOptions(
-				pkg,
-				config.options,
-				config.type === 'single',
-				spinner,
-			);
-			spinner.update({ text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: config ${config.name}`)}` });
-		}
-
-		spinner.success({ text: `Configuring ${c.bold(c.blue(pkg.name))}` });
-		return pkgConfig;
-	}
-
-	/**
 	 * @param {import('./types').Package} pkg - Package to detect from
 	 * @param {import('./types').Config['options']} options - Options to be passed
 	 * @param {boolean} single - Whether to only detect one option
@@ -108,6 +82,32 @@ export default class Cli {
 		}
 
 		return detectedOptions;
+	}
+
+	/**
+	 * @param {import('./types').Package} pkg - The package to detect configs
+	 * @returns {import('./types').Package['config']} - Detected configs record
+	 */
+	detectConfig(pkg) {
+
+		const spinner = createSpinner(`Configuring ${c.bold(c.blue(pkg.name))}`);
+		spinner.start();
+
+		/** @type {import('./types').Package['config']} */
+		const pkgConfig = {};
+
+		for (const config of this.configs) {
+			pkgConfig[config.name] = this.detectOptions(
+				pkg,
+				config.options,
+				config.type === 'single',
+				spinner,
+			);
+			spinner.update({ text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: config ${config.name}`)}` });
+		}
+
+		spinner.success({ text: `Configuring ${c.bold(c.blue(pkg.name))}` });
+		return pkgConfig;
 	}
 
 	async run() {
