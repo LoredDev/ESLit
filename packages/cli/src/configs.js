@@ -3,7 +3,7 @@
 export default [
 	{
 		name: 'framework',
-		type: 'single',
+		type: 'multiple',
 		options: [
 			{
 				name: 'svelte',

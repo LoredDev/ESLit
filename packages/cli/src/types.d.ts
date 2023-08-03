@@ -1,3 +1,10 @@
+import type { OptionValues } from 'commander';
+
+export type CliArgs = {
+	packages?: string[]
+	mergeToRoot?: boolean
+	dir: string
+} & OptionValues;
 
 export interface Config {
 	name: string
