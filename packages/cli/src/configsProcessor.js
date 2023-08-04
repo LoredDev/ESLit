@@ -4,6 +4,7 @@ import glob from 'picomatch';
 import prompts from 'prompts';
 import c from 'picocolors';
 import str from './lib/str.js';
+import notNull from './lib/notNull.js';
 
 export default class ConfigsProcessor {
 	/** @type {string} */
@@ -101,7 +102,10 @@ export default class ConfigsProcessor {
 			if (selectedOptions[config.name].length === 0) continue;
 
 			if (packages.length <= 1) {
-				packages[0].config = { ...packages[0].config, ...selectedOptions };
+				packages[0].config = new Map([
+					...(packages[0].config ?? []),
+					...Object.entries(selectedOptions),
+				]);
 				continue;
 			}
 
@@ -128,7 +132,12 @@ export default class ConfigsProcessor {
 			});
 			selected.packages = selected.packages ?? [];
 
-			selected.packages.map(pkg => { pkg.config = { ...pkg.config, ...selectedOptions }; return pkg; });
+			selected.packages.map(pkg => {
+				pkg.config = new Map([
+					...(pkg.config ?? []),
+					...Object.entries(selectedOptions),
+				]); return pkg;
+			});
 			packages.map(pkg => selected.packages.find(s => s.name === pkg.name) ?? pkg);
 		}
 
@@ -143,14 +152,14 @@ export default class ConfigsProcessor {
 	detectConfig(pkg) {
 
 		/** @type {import('./types.js').Package['config']} */
-		const pkgConfig = {};
+		const pkgConfig = new Map();
 
 		for (const config of this.configs.filter(c => !c.manual)) {
-			pkgConfig[config.name] = this.detectOptions(
+			pkgConfig.set(config.name, this.detectOptions(
 				pkg,
 				config.options,
 				config.type !== 'multiple',
-			);
+			));
 		}
 
 		return pkgConfig;
@@ -167,7 +176,7 @@ export default class ConfigsProcessor {
 
 		for (const pkg of packages) {
 
-			Object.entries(pkg.config ?? {}).forEach(([key, options]) => {
+			notNull(pkg.config).forEach((options, key) => {
 				/** @type {Map<string, string[]>} */
 				const optionsMap = configMap.get(key) ?? new Map();
 

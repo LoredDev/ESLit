@@ -40,5 +40,5 @@ export interface Package {
 	path: string
 	files: string[]
 	directories: string[]
-	config?: Record<string, string[]>
+	config?: Map<string, string[]>
 }
