@@ -6,6 +6,7 @@ import c from 'picocolors';
 import path from 'node:path';
 import { createSpinner } from 'nanospinner';
 import count from './lib/count.js';
+import prompts from 'prompts';
 
 export default class Cli {
 
@@ -54,12 +55,29 @@ export default class Cli {
 				return pkg;
 			});
 
-		spinner.success({ text:
-			'Detecting workspace configuration ' +
-			c.dim(`${count.packagesWithConfigs(packages)} configs founded`),
+		spinner.success({
+			text:
+				'Detecting workspace configuration ' +
+				c.dim(`${count.packagesWithConfigs(packages)} configs founded\n`),
 		});
 
-		packages = await processor.questionConfig(packages, configs.filter(c => c.manual));
+		const merge = this.args.mergeToRoot ?? packages.length > 1 ?
+				/** @type {{merge: boolean}} */
+				(await prompts({
+					name: 'merge',
+					message:
+						`Would you like to merge all configuration files into one root ${c.blue('eslint.config.js?')}` +
+						c.italic(c.dim('\nAll configurations will be applied to the entire workspace and packages')),
+					initial: true,
+					type: 'confirm',
+				})).merge : true;
+
+		console.log(c.dim('\nPlease select which options you prefer\n'));
+
+		packages = await processor.questionConfig(
+			merge ? workspace.mergePackages(packages) : packages,
+			configs.filter(c => c.manual),
+		);
 
 		const configsMaps = processor.generateConfigMap(packages);
 

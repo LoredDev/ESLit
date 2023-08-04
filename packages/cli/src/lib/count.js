@@ -5,8 +5,7 @@
  */
 function packagesWithConfigs(packages) {
 	return packages.map(p =>
-		Object.entries(p.config ?? {})
-			.filter(([, options]) => options.length > 0).length,
+		[...p.config?.values() ?? []].filter((options) => options.length > 0).length,
 	).reduce((partial, sum) => partial + sum, 0);
 }
 

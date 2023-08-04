@@ -59,7 +59,8 @@ export default class Workspace {
 
 	/**
 	 * @param {string} directory - The directory to get the workspace from
-	 * @param {string[]} [packagePatterns] - List of package patterns
+	 * @param {string[] | false} [packagePatterns]
+	 * List of package patterns (`false` to explicitly tell that this workspace is not a monorepo)
 	 */
 	constructor(directory, packagePatterns) {
 		this.dir = directory;
@@ -157,8 +158,6 @@ export default class Workspace {
 	async getPackages() {
 
 		const paths = await this.getPaths();
-		const packagePatterns = this.packagePatterns ?? await this.getPackagePatterns();
-		const packagePaths = paths.directories.filter(d => picomatch.isMatch(d, packagePatterns));
 
 		/** @type {import('./types').Package} */
 		const rootPackage = {
@@ -168,6 +167,11 @@ export default class Workspace {
 			files: paths.files,
 			directories: paths.directories,
 		};
+
+		if (this.packagePatterns === false) return [rootPackage];
+
+		const packagePatterns = this.packagePatterns ?? await this.getPackagePatterns();
+		const packagePaths = paths.directories.filter(d => picomatch.isMatch(d, packagePatterns));
 
 		/** @type {import('./types').Package[]} */
 		const packages = [];
@@ -193,6 +197,50 @@ export default class Workspace {
 		}
 
 		return [rootPackage, ...packages];
+
+	}
+
+	/**
+	 * @param {import('./types').Package[]} packages - Packages to be merged into root
+	 * @returns {[import('./types').Package]} A array containing only the root package
+	 */
+	mergePackages(packages) {
+
+		const rootPackage = packages.find(p => p.root) ?? packages[0];
+
+		const merged = packages.reduce((accumulated, pkg) => {
+
+			const files = [...new Set([
+				...accumulated.files,
+				...pkg.files.map(f => join(pkg.path, f)),
+			]
+				.map(p => p.replace(`${rootPackage.path}/`, '')),
+			)];
+
+			const directories = [...new Set([
+				...accumulated.directories,
+				...pkg.directories.map(d => join(pkg.path, d)),
+			]
+				.map(p => p.replace(`${rootPackage.path}/`, ''))),
+			];
+
+			const mergedConfig = new Map();
+			for (const [config, options] of pkg.config ?? []) {
+				const accumulatedOptions = accumulated.config?.get(config) ?? [];
+				mergedConfig.set(config, [...new Set([...options, ...accumulatedOptions])]);
+			}
+
+			return {
+				root: true,
+				path: rootPackage.path,
+				name: rootPackage.name,
+				files,
+				directories,
+				config: mergedConfig,
+			};
+		}, rootPackage);
+
+		return [merged];
 
 	}
 
