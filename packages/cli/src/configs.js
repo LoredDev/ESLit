@@ -4,6 +4,8 @@ export default [
 	{
 		name: 'framework',
 		type: 'multiple',
+		description: 'The UI frameworks being used in the project',
+		manual: true,
 		options: [
 			{
 				name: 'svelte',

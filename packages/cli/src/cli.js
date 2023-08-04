@@ -13,17 +13,20 @@ export default class Cli {
 		dir: process.cwd(),
 	};
 
-	setArgs() {
+	/**
+	 * @param {import('./types').CliArgs} [args] Cli arguments object
+	 */
+	constructor(args) {
 		this.#program
 			.option('--packages <string...>')
 			.option('--merge-to-root')
-			.option('--dir <path>', undefined);
-
-		this.#program.parse();
+			.option('--dir <path>', undefined)
+			.parse();
 
 		this.args = {
 			...this.args,
 			...this.#program.opts(),
+			...args,
 		};
 
 		this.args.dir = !this.args.dir.startsWith('/')
@@ -33,17 +36,15 @@ export default class Cli {
 	}
 
 	async run() {
-		this.setArgs();
-
-		console.log(this.args.dir);
 
 		const processor = new ConfigsProcessor({ configs });
-		const packages = (await new Workspace(this.args.dir, this.args?.packages )
-			.getPackages())
+		const workspace = new Workspace(this.args.dir, this.args?.packages);
+		let packages = (await workspace.getPackages())
 			.map(pkg => {
 				pkg.config = processor.detectConfig(pkg);
 				return pkg;
 			});
+		packages = await processor.questionConfigs(packages);
 
 		const configsMaps = processor.generateConfigMap(packages);
 

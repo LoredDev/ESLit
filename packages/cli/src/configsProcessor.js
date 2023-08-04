@@ -1,8 +1,9 @@
 #!node
 import path from 'node:path';
-import { createSpinner } from 'nanospinner';
 import glob from 'picomatch';
+import prompts from 'prompts';
 import c from 'picocolors';
+import str from './lib/str.js';
 
 export default class ConfigsProcessor {
 	/** @type {string} */
@@ -31,25 +32,17 @@ export default class ConfigsProcessor {
 	 * @param {import('./types.js').Package} pkg - Package to detect from
 	 * @param {import('./types.js').Config['options']} options - Options to be passed
 	 * @param {boolean} single - Whether to only detect one option
-	 * @param {import('nanospinner').Spinner} spinner - Spinner to update
 	 * @returns {string[]} - The detected options
 	 */
-	detectOptions(pkg, options, single, spinner) {
+	detectOptions(pkg, options, single) {
 
 		/** @type {string[]} */
 		const detectedOptions = [];
 
 		for (const option of options) {
 
-			spinner.update({
-				text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: option ${c.bold(option.name)}`)}`,
-			});
-
 			if (option.detect === true) {
 				detectedOptions.push(option.name);
-				spinner.update({
-					text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: option ${c.bold(option.name)} ${c.green('✓')}`)}`,
-				});
 				continue;
 			}
 			else if (!option.detect) continue;
@@ -61,15 +54,7 @@ export default class ConfigsProcessor {
 
 			if (files.length > 0 || directories.length > 0) {
 				detectedOptions.push(option.name);
-				spinner.update({
-					text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: option ${c.bold(option.name)} ${c.green('✔')}`)}`,
-				});
 				if (single) break;
-			}
-			else {
-				spinner.update({
-					text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: option ${c.bold(option.name)} ${c.red('✖')}`)}`,
-				});
 			}
 		}
 
@@ -77,38 +62,88 @@ export default class ConfigsProcessor {
 	}
 
 	/**
-	 * @param {import('./types.js').Package} pkg - The package to detect configs
-	 * @returns {import('./types.js').Package['config']} - Detected configs record
+	 * @param {import('./types.js').Package[]} packages - The package to detect configs
+	 * @returns {Promise<import('./types.js').Package[]>} - The selected options by the user
+	 */
+	async questionConfigs(packages) {
+
+		const instructions = c.dim(`\n${c.bold('A: Toggle all')} - ↑/↓: Highlight option - ←/→/[space]: Toggle selection - enter/return: Complete answer`);
+
+		for (const config of this.configs.filter(c => c.manual)) {
+
+			/** @type {import('prompts').Choice[]} */
+			const configChoices = config.options.map(option => {return { title: `${str.capitalize(option.name)}`, value: option.name };});
+
+			/** @type {Record<string, string[]>} */
+			const selectedOptions = await prompts({
+				name: config.name,
+				type: config.type === 'single' ? 'select' : 'multiselect',
+				message: str.capitalize(config.name),
+				choices: configChoices,
+				hint: config.description,
+				instructions: instructions + c.dim(c.italic('\nSelect none if you don\'t want to use this configuration\n')),
+			});
+
+			if (selectedOptions[config.name].length === 0) continue;
+
+			/** @type {{title: string, value: import('./types').Package}[]} */
+			const packagesOptions = packages
+				.map(pkg => {
+					return !pkg.root
+						? {
+								title: `${pkg.name} ${c.dim(pkg.path.replace(this.dir, '.'))}`,
+								value: pkg,
+							}
+						: { title: 'root', value: pkg };
+				})
+				.filter(p => p.title !== 'root');
+
+			/** @type {Record<'packages', import('./types').Package[]>} */
+			const selected = await prompts({
+				name: 'packages',
+				type: 'multiselect',
+				message: `What packages would you like to apply ${config.type === 'single' ? 'this choice' : 'these choices'}?`,
+				choices: packagesOptions,
+				min: 1,
+				instructions: instructions + c.dim(c.italic('\nToggle all to use in the root configuration\n')),
+			});
+			selected.packages = selected.packages ?? [];
+
+			selected.packages.map(pkg => { pkg.config = { ...pkg.config, ...selectedOptions }; return pkg; });
+			packages.map(pkg => selected.packages.find(s => s.name === pkg.name) ?? pkg);
+		}
+
+		return packages;
+
+	}
+
+	/**
+	 * @param {import('./types').Package} pkg - The package to detect configs
+	 * @returns {import('./types').Package['config']} - Detected configs record
 	 */
 	detectConfig(pkg) {
-
-		const spinner = createSpinner(`Configuring ${c.bold(c.blue(pkg.name))}`);
-		spinner.start();
 
 		/** @type {import('./types.js').Package['config']} */
 		const pkgConfig = {};
 
-		for (const config of this.configs) {
+		for (const config of this.configs.filter(c => !c.manual)) {
 			pkgConfig[config.name] = this.detectOptions(
 				pkg,
 				config.options,
 				config.type === 'single',
-				spinner,
 			);
-			spinner.update({ text: `Configuring ${c.bold(c.blue(pkg.name))}${c.dim(`: config ${config.name}`)}` });
 		}
 
-		spinner.success({ text: `Configuring ${c.bold(c.blue(pkg.name))}\n${c.dim(JSON.stringify(pkgConfig))}\n` });
 		return pkgConfig;
 	}
 
 	/**
-	 * @param {import('./types.js').Package[]} packages Packages to generate the map from
-	 * @returns {import('./types.js').PackagesConfigsMap} A map of what packages has some configuration
+	 * @param {import('./types').Package[]} packages Packages to generate the map from
+	 * @returns {import('./types').PackagesConfigsMap} A map of what packages has some configuration
 	 */
 	generateConfigMap(packages) {
 
-		/** @type {import('./types.js').PackagesConfigsMap} */
+		/** @type {import('./types').PackagesConfigsMap} */
 		const configMap = new Map();
 
 		for (const pkg of packages) {
@@ -122,7 +157,6 @@ export default class ConfigsProcessor {
 					optionsMap.set(option, [pkg.path, ...paths]);
 
 					if (paths.length >= packages.length - 2 || paths.includes(this.dir)) {
-						console.log('a', packages.length, paths.length);
 						optionsMap.set(option, [this.dir]);
 					}
 				});

@@ -10,6 +10,7 @@ export interface Config {
 	name: string
 	type: 'single' | 'multiple'
 	manual?: boolean
+	description?: string
 	options: {
 		name: string
 		packages: Record<string, string | string[] | [string, string][]>
