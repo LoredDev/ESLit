@@ -5,7 +5,6 @@ export default [
 		name: 'framework',
 		type: 'multiple',
 		description: 'The UI frameworks being used in the project',
-		manual: true,
 		options: [
 			{
 				name: 'svelte',
@@ -20,5 +19,15 @@ export default [
 				detect: ['nuxt.config.{js,ts,cjs,cts}', '**/*.vue'],
 			},
 		],
+	},
+	{
+		name: 'strict',
+		type: 'confirm',
+		manual: true,
+		options: [{
+			name: 'yes',
+			packages: { '@eslint/config': 'config' },
+			configs: ['config.strict'],
+		}],
 	},
 ];

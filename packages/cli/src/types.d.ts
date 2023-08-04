@@ -6,21 +6,33 @@ export type CliArgs = {
 	dir: string
 } & OptionValues;
 
-export interface Config {
+export type Config = {
 	name: string
 	type: 'single' | 'multiple'
 	manual?: boolean
 	description?: string
 	options: {
 		name: string
-		packages: Record<string, string | string[] | [string, string][]>
+		packages?: Record<string, string | string[] | [string, string][]>
 		configs?: string[]
 		rules?: string[]
 		detect?: string[] | true
 	}[]
-}
+} | {
+	name: string
+	type: 'confirm'
+	manual: true
+	description?: string
+	options: [{
+		name: 'yes'
+		packages?: Record<string, string | string[] | [string, string][]>
+		configs?: string[]
+		rules?: string[]
+		detect?: undefined
+	}]
+};
 
-export type PackagesConfigsMap = Map<string, Map<string, string[]>>;
+export type PackagesConfigsMap = Map<string, Map<string, string[] | ['yes']>>;
 
 export interface Package {
 	root?: boolean

@@ -62,14 +62,17 @@ export default class ConfigsProcessor {
 	}
 
 	/**
-	 * @param {import('./types.js').Package[]} packages - The package to detect configs
+	 * @param {import('./types.js').Package[] | import('./types.js').Package} pkg - The packages to questions the configs
+	 * @param {import('./types').Config[]} configs - The configs to be used
 	 * @returns {Promise<import('./types.js').Package[]>} - The selected options by the user
 	 */
-	async questionConfigs(packages) {
+	async questionConfig(pkg, configs) {
+
+		const packages = Array.isArray(pkg) ? [...pkg] : [pkg];
 
 		const instructions = c.dim(`\n${c.bold('A: Toggle all')} - ↑/↓: Highlight option - ←/→/[space]: Toggle selection - enter/return: Complete answer`);
 
-		for (const config of this.configs.filter(c => c.manual)) {
+		for (const config of configs) {
 
 			/** @type {import('prompts').Choice[]} */
 			const configChoices = config.options.map(option => {return { title: `${str.capitalize(option.name)}`, value: option.name };});
@@ -77,14 +80,30 @@ export default class ConfigsProcessor {
 			/** @type {Record<string, string[]>} */
 			const selectedOptions = await prompts({
 				name: config.name,
-				type: config.type === 'single' ? 'select' : 'multiselect',
+				type: config.type === 'multiple' ? 'multiselect' : 'select',
 				message: str.capitalize(config.name),
-				choices: configChoices,
+				choices: config.type === 'confirm' ? [
+					{
+						title: 'Yes',
+						value: ['yes'],
+					},
+					{
+						title: 'No',
+						value: null,
+					},
+				] : configChoices,
 				hint: config.description,
 				instructions: instructions + c.dim(c.italic('\nSelect none if you don\'t want to use this configuration\n')),
 			});
 
+			if (selectedOptions[config.name] === null) continue;
+
 			if (selectedOptions[config.name].length === 0) continue;
+
+			if (packages.length <= 1) {
+				packages[0].config = selectedOptions;
+				continue;
+			}
 
 			/** @type {{title: string, value: import('./types').Package}[]} */
 			const packagesOptions = packages
@@ -130,7 +149,7 @@ export default class ConfigsProcessor {
 			pkgConfig[config.name] = this.detectOptions(
 				pkg,
 				config.options,
-				config.type === 'single',
+				config.type !== 'multiple',
 			);
 		}
 
@@ -142,6 +161,8 @@ export default class ConfigsProcessor {
 	 * @returns {import('./types').PackagesConfigsMap} A map of what packages has some configuration
 	 */
 	generateConfigMap(packages) {
+
+		console.log(packages);
 
 		/** @type {import('./types').PackagesConfigsMap} */
 		const configMap = new Map();
