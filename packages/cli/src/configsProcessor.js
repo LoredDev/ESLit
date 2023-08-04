@@ -101,7 +101,7 @@ export default class ConfigsProcessor {
 			if (selectedOptions[config.name].length === 0) continue;
 
 			if (packages.length <= 1) {
-				packages[0].config = selectedOptions;
+				packages[0].config = { ...packages[0].config, ...selectedOptions };
 				continue;
 			}
 
@@ -161,8 +161,6 @@ export default class ConfigsProcessor {
 	 * @returns {import('./types').PackagesConfigsMap} A map of what packages has some configuration
 	 */
 	generateConfigMap(packages) {
-
-		console.log(packages);
 
 		/** @type {import('./types').PackagesConfigsMap} */
 		const configMap = new Map();
