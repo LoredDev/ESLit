@@ -9,13 +9,13 @@ export default [
 			{
 				name: 'svelte',
 				packages: { '@eslit/svelte': 'svelte' },
-				rules: ['svelte.default'],
+				configs: ['svelte.recommended'],
 				detect: ['**/*.svelte', 'svelte.config.{js,ts,cjs,cts}'],
 			},
 			{
 				name: 'vue',
-				packages: { '@eslint/vue': 'vue' },
-				rules: ['vue.default'],
+				packages: { '@eslit/vue': ['vue', ['hello', 'world']], '@eslit/svelte': ['hello'] },
+				configs: ['vue.recommended'],
 				detect: ['nuxt.config.{js,ts,cjs,cts}', '**/*.vue'],
 			},
 		],
@@ -26,7 +26,7 @@ export default [
 		manual: true,
 		options: [{
 			name: 'yes',
-			packages: { '@eslint/config': 'config' },
+			packages: { '@eslit/config': 'config', '@eslit/vue': ['test1'] },
 			configs: ['config.strict'],
 		}],
 	},

@@ -13,9 +13,10 @@ export type Config = {
 	description?: string
 	options: {
 		name: string
-		packages?: Record<string, string | string[] | [string, string][]>
+		packages?: Record<string, string | (string | [string, string])[]>
 		configs?: string[]
 		rules?: string[]
+		presets?: string[]
 		detect?: string[] | true
 	}[]
 } | {
@@ -25,14 +26,13 @@ export type Config = {
 	description?: string
 	options: [{
 		name: 'yes'
-		packages?: Record<string, string | string[] | [string, string][]>
+		packages?: Record<string, string | (string | [string, string])[]>
 		configs?: string[]
 		rules?: string[]
+		presets?: string[]
 		detect?: undefined
 	}]
 };
-
-export type PackagesConfigsMap = Map<string, Map<string, string[] | ['yes']>>;
 
 export interface Package {
 	root?: boolean
@@ -41,4 +41,13 @@ export interface Package {
 	files: string[]
 	directories: string[]
 	config?: Map<string, string[]>
+	configFile?: ConfigFile
+}
+
+export interface ConfigFile {
+	path: string
+	imports: Map<string, string | (string | [string, string])[]>
+	configs: string[]
+	presets: string[]
+	rules: string[]
 }

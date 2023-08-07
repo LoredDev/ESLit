@@ -7,6 +7,7 @@ import path from 'node:path';
 import { createSpinner } from 'nanospinner';
 import count from './lib/count.js';
 import prompts from 'prompts';
+import ConfigsWriter from './configsWriter.js';
 
 export default class Cli {
 
@@ -79,9 +80,11 @@ export default class Cli {
 			configs.filter(c => c.manual),
 		);
 
-		const configsMaps = processor.generateConfigMap(packages);
+		const writer = new ConfigsWriter(configs, packages.find(c => c.root)?.path);
 
-		console.log(configsMaps);
+		console.log(packages[0].config);
+
+		packages.map(pkg => {pkg.configFile = writer.generateFileObj(pkg); return pkg;});
 
 	}
 
