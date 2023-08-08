@@ -84,7 +84,11 @@ export default class Cli {
 
 		console.log(packages[0].config);
 
-		packages.map(pkg => {pkg.configFile = writer.generateFileObj(pkg); return pkg;});
+		packages.map(async pkg => {
+			pkg.configFile = writer.generateObj(pkg);
+			console.log(await writer.write(pkg.configFile));
+			return pkg;
+		});
 
 	}
 
