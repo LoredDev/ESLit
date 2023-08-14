@@ -7,7 +7,11 @@ import path from 'node:path';
 import { createSpinner } from 'nanospinner';
 import count from './lib/count.js';
 import prompts from 'prompts';
-import ConfigsWriter from './configsWriter.js';
+import ConfigsFile from './configsFile.js';
+import * as cardinal from 'cardinal';
+import ansi from 'sisteransi';
+
+const stdout = process.stdout;
 
 export default class Cli {
 
@@ -63,12 +67,12 @@ export default class Cli {
 		});
 
 		const merge = this.args.mergeToRoot ?? packages.length > 1 ?
-				/** @type {{merge: boolean}} */
+		/** @type {{merge: boolean}} */
 				(await prompts({
 					name: 'merge',
 					message:
-						`Would you like to merge all configuration files into one root ${c.blue('eslint.config.js?')}` +
-						c.italic(c.dim('\nAll configurations will be applied to the entire workspace and packages')),
+					`Would you like to merge all configuration files into one root ${c.blue('eslint.config.js?')}` +
+					c.italic(c.dim('\nAll configurations will be applied to the entire workspace and packages')),
 					initial: true,
 					type: 'confirm',
 				})).merge : true;
@@ -80,15 +84,28 @@ export default class Cli {
 			configs.filter(c => c.manual),
 		);
 
-		const writer = new ConfigsWriter(configs, packages.find(c => c.root)?.path);
+		const fileHandler = new ConfigsFile(configs, packages.find(c => c.root)?.path);
 
-		console.log(packages[0].config);
+		for (const pkg of packages) {
 
-		packages.map(async pkg => {
-			pkg.configFile = writer.generateObj(pkg);
-			console.log(await writer.write(pkg.configFile));
-			return pkg;
-		});
+			pkg.configFile = fileHandler.generateObj(pkg);
+			pkg.configFile.content = await fileHandler.generate(pkg.configFile),
+
+			await prompts({
+				type: 'confirm',
+				name: 'write',
+				message: `Do you want to write this config file for ${pkg.root
+							? c.blue('the root directory')
+							: c.blue(pkg.name)
+						}?\n\n${cardinal.highlight(pkg.configFile.content)}`,
+				initial: true,
+			});
+
+			stdout.write(ansi.erase.lines(pkg.configFile.content.split('\n').length + 2));
+
+			await fileHandler.write(pkg.configFile.path, pkg.configFile.content);
+
+		}
 
 	}
 

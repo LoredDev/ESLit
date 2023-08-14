@@ -50,4 +50,5 @@ export interface ConfigFile {
 	configs: string[]
 	presets: string[]
 	rules: string[]
+	content?: string
 }

@@ -141,6 +141,8 @@ export default class ConfigsWriter {
 	 * @param {import('./types').ConfigFile['configs']} configs The configs objects defined in the config file
 	 * @returns {(import('estree').MemberExpression | import('estree').Identifier | import('estree').CallExpression)[]}
 	 * The ast expressions nodes to be printed
+	 *
+	 * @private
 	 */
 	createConfigExpressions(configs) {
 		return configs
@@ -154,8 +156,9 @@ export default class ConfigsWriter {
 
 	/**
 	 * @param {import('./types').ConfigFile['presets']} presets The presets objects defined in the config file
-	 * @returns {import('estree').SpreadElement[]}
-	 * The ast expressions nodes to be printed
+	 * @returns {import('estree').SpreadElement[]} The ast expressions nodes to be printed
+	 *
+	 * @private
 	 */
 	createPresetExpressions(presets) {
 		return presets
@@ -177,8 +180,9 @@ export default class ConfigsWriter {
 
 	/**
 	 * @param {import('./types').ConfigFile['rules']} rules The rules objects defined in the config file
-	 * @returns {import('estree').ObjectExpression}
-	 * The ast object expression nodes to be printed
+	 * @returns {import('estree').ObjectExpression} The ast object expression nodes to be printed
+	 *
+	 * @private
 	 */
 	createRulesExpression(rules) {
 		/** @type {import('estree').ObjectExpression} */
@@ -221,6 +225,8 @@ export default class ConfigsWriter {
 	/**
 	 * @param {import('./types').ConfigFile['imports']} imports The import map to be used to create the nodes
 	 * @returns {import('estree').ImportDeclaration[]} The ImportDeclaration nodes
+	 *
+	 * @private
 	 */
 	createImportDeclarations(imports) {
 		/** @type {import('estree').ImportDeclaration[]} */
@@ -267,9 +273,9 @@ export default class ConfigsWriter {
 
 	/**
 	 * @param {import('./types').ConfigFile} config The config file object to be transformed into a eslint.config.js file
-	 * @returns {Promise<void>}
+	 * @returns {Promise<string>} The generated config file contents
 	 */
-	async write(config) {
+	async generate(config) {
 
 		const existingConfig = existsSync(config.path) ? await fs.readFile(config.path, 'utf-8') : '';
 
@@ -336,8 +342,18 @@ export default class ConfigsWriter {
 		ast.body.push(defaultExport);
 
 		const finalCode = recast.prettyPrint(ast, { parser: (await import('recast/parsers/babel.js')) }).code;
-		console.log(finalCode, config.imports);
 
+		return finalCode;
+
+	}
+
+	/**
+	 * @param {string} path The path to the file to be written
+	 * @param {string} content The content of the file
+	 * @returns {Promise<void>}
+	 */
+	async write(path, content) {
+		await fs.writeFile(path, content, 'utf-8');
 	}
 
 }
