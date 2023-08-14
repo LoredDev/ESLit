@@ -89,21 +89,24 @@ export default class Cli {
 		for (const pkg of packages) {
 
 			pkg.configFile = fileHandler.generateObj(pkg);
-			pkg.configFile.content = await fileHandler.generate(pkg.configFile),
+			pkg.configFile.content = await fileHandler.generate(pkg.configFile);
 
-			await prompts({
-				type: 'confirm',
-				name: 'write',
-				message: `Do you want to write this config file for ${pkg.root
-							? c.blue('the root directory')
-							: c.blue(pkg.name)
+			/** @type {boolean} */
+			const shouldWrite =
+				/** @type {{write: boolean}} */
+				(await prompts({
+					type: 'confirm',
+					name: 'write',
+					message: `Do you want to write this config file for ${pkg.root
+						? c.blue('the root directory')
+						: c.blue(pkg.name)
 						}?\n\n${cardinal.highlight(pkg.configFile.content)}`,
-				initial: true,
-			});
+					initial: true,
+				})).write;
 
 			stdout.write(ansi.erase.lines(pkg.configFile.content.split('\n').length + 2));
 
-			await fileHandler.write(pkg.configFile.path, pkg.configFile.content);
+			if (shouldWrite) await fileHandler.write(pkg.configFile.path, pkg.configFile.content);
 
 		}
 
