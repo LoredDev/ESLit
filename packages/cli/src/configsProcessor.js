@@ -4,7 +4,6 @@ import glob from 'picomatch';
 import prompts from 'prompts';
 import c from 'picocolors';
 import str from './lib/str.js';
-import notNull from './lib/notNull.js';
 
 export default class ConfigsProcessor {
 	/** @type {string} */
@@ -124,7 +123,7 @@ export default class ConfigsProcessor {
 			/** @type {Record<'packages', import('./types').Package[]>} */
 			const selected = await prompts({
 				name: 'packages',
-				type: 'multiselect',
+				type: 'autocompleteMultiselect',
 				message: `What packages would you like to apply ${config.type === 'single' ? 'this choice' : 'these choices'}?`,
 				choices: packagesOptions,
 				min: 1,
@@ -165,36 +164,5 @@ export default class ConfigsProcessor {
 		return pkgConfig;
 	}
 
-	/**
-	 * @param {import('./types').Package[]} packages Packages to generate the map from
-	 * @returns {import('./types').PackagesConfigsMap} A map of what packages has some configuration
-	 */
-	generateConfigMap(packages) {
-
-		/** @type {import('./types').PackagesConfigsMap} */
-		const configMap = new Map();
-
-		for (const pkg of packages) {
-
-			notNull(pkg.config).forEach((options, key) => {
-				/** @type {Map<string, string[]>} */
-				const optionsMap = configMap.get(key) ?? new Map();
-
-				options.forEach(option => {
-					const paths = optionsMap.get(option) ?? [];
-					optionsMap.set(option, [pkg.path, ...paths]);
-
-					if (paths.length >= packages.length - 2 || paths.includes(this.dir)) {
-						optionsMap.set(option, [this.dir]);
-					}
-				});
-
-				configMap.set(key, optionsMap);
-			});
-		}
-
-		return configMap;
-
-	}
 }
 
