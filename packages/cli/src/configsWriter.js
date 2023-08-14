@@ -219,6 +219,53 @@ export default class ConfigsWriter {
 	}
 
 	/**
+	 * @param {import('./types').ConfigFile['imports']} imports The import map to be used to create the nodes
+	 * @returns {import('estree').ImportDeclaration[]} The ImportDeclaration nodes
+	 */
+	createImportDeclarations(imports) {
+		/** @type {import('estree').ImportDeclaration[]} */
+		const importsDeclarations = [];
+		for (const [pkgName, values] of imports) {
+			/** @type {import('estree').ImportDeclaration} */
+			const declaration = {
+				type: 'ImportDeclaration',
+				specifiers: [],
+				source: {
+					type: 'Literal',
+					value: pkgName,
+				},
+			};
+
+			if (typeof values === 'string') {
+				declaration.specifiers.push({
+					type: 'ImportDefaultSpecifier',
+					local: { type: 'Identifier', name: values },
+				});
+				importsDeclarations.push(declaration);
+				continue;
+			}
+
+			declaration.specifiers = values.map(v => {
+				/** @type {import('estree').ImportSpecifier} */
+				const specifier = {
+					type: 'ImportSpecifier',
+					imported: {
+						type: 'Identifier',
+						name: typeof v === 'string' ? v : v[0],
+					},
+					local: {
+						type: 'Identifier',
+						name: typeof v === 'string' ? v : v[1],
+					},
+				};
+				return specifier;
+			});
+			importsDeclarations.push(declaration);
+		}
+		return importsDeclarations;
+	}
+
+	/**
 	 * @param {import('./types').ConfigFile} config The config file object to be transformed into a eslint.config.js file
 	 * @returns {Promise<void>}
 	 */
@@ -243,8 +290,7 @@ export default class ConfigsWriter {
 		const { program: ast } = recast.parse(existingConfig, { parser: (await import('recast/parsers/babel.js')) });
 
 		/** @type {import('estree').ExportDefaultDeclaration | undefined} */
-		// @ts-expect-error because the types don't match, but are expected to be correct here
-		// as the type needs to be ExportDefaultDeclaration
+		// @ts-expect-error because the type to find has to be ExportDefaultDeclaration
 		let defaultExport = ast.body.find(n => n.type === 'ExportDefaultDeclaration');
 		if (!defaultExport) {
 			defaultExport = defaultExportTemplate;
@@ -269,6 +315,9 @@ export default class ConfigsWriter {
 			});
 		}
 
+		if (config.imports.size > 0)
+			ast.body.unshift(...this.createImportDeclarations(config.imports));
+
 		const elementsExpressions = [];
 
 		if (config.presets.length > 0)
@@ -287,7 +336,7 @@ export default class ConfigsWriter {
 		ast.body.push(defaultExport);
 
 		const finalCode = recast.prettyPrint(ast, { parser: (await import('recast/parsers/babel.js')) }).code;
-		console.log(finalCode);
+		console.log(finalCode, config.imports);
 
 	}
 
