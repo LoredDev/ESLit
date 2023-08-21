@@ -3,6 +3,7 @@ import notNull from './lib/notNull.js';
 import * as recast from 'recast';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import astUtils from './lib/astUtils.js';
 
 /**
  * @param {import('./types').ConfigFile['imports']} map1 - The map to has it values merged from map2
@@ -24,7 +25,10 @@ function mergeImportsMaps(map1, map2) {
 		 */
 		switch ([typeof imports1 === 'string', typeof imports2 === 'string'].join(',')) {
 			case 'true,true':
-				map1.set(key, imports1);
+				if (imports1.toString() === imports2.toString())
+					map1.set(key, value);
+				else
+					map1.set(key, [['default', imports1.toString()], ['default', imports2.toString()]]);
 				break;
 			case 'true,false':
 				map1.set(key, [['default', imports1.toString()], ...imports2]);
@@ -36,7 +40,8 @@ function mergeImportsMaps(map1, map2) {
 				map1.set(key, [...imports1, ...imports2]);
 				break;
 		}
-		map1.set(key, [...new Set(map1.get(key))]);
+		if (typeof map1.get(key) !== 'string')
+			map1.set(key,  [...new Set(map1.get(key))]);
 	}
 	return map1;
 }
@@ -138,138 +143,164 @@ export default class ConfigsWriter {
 	 */
 
 	/**
-	 * @param {import('./types').ConfigFile['configs']} configs The configs objects defined in the config file
-	 * @returns {(import('estree').MemberExpression | import('estree').Identifier | import('estree').CallExpression)[]}
-	 * The ast expressions nodes to be printed
+	 * @typedef {import('estree').Program} Program
+	 *
+	 * @typedef {(
+	 * 	import('./lib/astUtils.js').ExpressionOrIdentifier |
+	 * 	import('estree').ObjectExpression |
+	 * 	import('estree').SpreadElement
+	 * )} ConfigArrayElement
+	 */
+
+	/**
+	 * @param {Program} ast The program ast to be manipulated
+	 * @returns {Promise<Program>} The final ast with the recreated default export
 	 *
 	 * @private
 	 */
-	createConfigExpressions(configs) {
-		return configs
-			.map(c => {
-				/** @type {import('estree').MemberExpression | import('estree').Identifier | import('estree').CallExpression} */
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-				const e = recast.parse(c).program.body[0].expression; return e;
-			})
-			.filter(e => ['MemberExpression', 'Identifier', 'CallExpression'].includes(e.type));
+	async addDefaultExport(ast) {
+
+		/** @type {{program: Program}} */
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+		const { program: exportTemplateAst } = recast.parse([
+			'/** @type {import(\'eslint\').Linter.FlatConfig[]} */',
+			'export default [',
+			'',
+			'];',
+		].join('\n'), { parser: (await import('recast/parsers/babel.js')) });
+		/** @type {import('estree').ExportDefaultDeclaration} */
+		// @ts-expect-error Node type needs to be ExportDefaultDeclaration to be founded
+		const exportTemplateNode = exportTemplateAst.body.find(n => n.type === 'ExportDefaultDeclaration');
+
+		/** @type {import('estree').ExportDefaultDeclaration | undefined} */
+		// @ts-expect-error Node type needs to be ExportDefaultDeclaration to be founded
+		let astExport = ast.body.find(n => n.type === 'ExportDefaultDeclaration');
+		if (!astExport) { ast.body.push(exportTemplateNode); return ast; }
+
+		/** @type {import('estree').VariableDeclaration | undefined} */
+		const oldExportValue = astExport.declaration.type !== 'ArrayExpression'
+			// @ts-expect-error astExport.declaration is a expression
+			? astUtils.createVariable('oldConfig', 'const', astExport.declaration)
+			: undefined;
+
+		if (!oldExportValue) return ast;
+
+		// @ts-expect-error declaration is a ArrayExpression
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+		exportTemplateNode.declaration.elements.push({
+			type: 'SpreadElement',
+			argument: { type: 'Identifier', name: 'oldConfig' },
+		});
+
+		const astExportIdx = ast.body.indexOf(astExport);
+		ast.body[astExportIdx] = exportTemplateNode;
+		ast.body.splice(astExportIdx - 1, 0, oldExportValue);
+
+		return ast;
+
 	}
 
 	/**
-	 * @param {import('./types').ConfigFile['presets']} presets The presets objects defined in the config file
-	 * @returns {import('estree').SpreadElement[]} The ast expressions nodes to be printed
+	 * @param {import('./types').ConfigFile['rules']} rules The rules to be used to create the object
+	 * @returns {import('estree').ObjectExpression} The object containing the spread rules
 	 *
 	 * @private
 	 */
-	createPresetExpressions(presets) {
-		return presets
-			.map(p => {
-				/** @type {import('estree').MemberExpression | import('estree').Identifier | import('estree').CallExpression} */
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-				const e = recast.parse(p).program.body[0].expression; return e;
-			})
-			.filter(e => ['MemberExpression', 'Identifier', 'CallExpression'].includes(e.type))
-			.map(e => {
-				/** @type {import('estree').SpreadElement} */
-				const spreadElement = {
-					type: 'SpreadElement',
-					argument: e,
-				};
-				return spreadElement;
-			});
-	}
-
-	/**
-	 * @param {import('./types').ConfigFile['rules']} rules The rules objects defined in the config file
-	 * @returns {import('estree').ObjectExpression} The ast object expression nodes to be printed
-	 *
-	 * @private
-	 */
-	createRulesExpression(rules) {
-		/** @type {import('estree').ObjectExpression} */
-		const rulesObjectExpression = rules
+	createRulesObject(rules) {
+		/** @type {import('estree').SpreadElement[]} */
+		// @ts-expect-error The array is filtered to remove undefined's
+		const expressions = rules
 			.map(r => {
-				/** @type {import('estree').MemberExpression | import('estree').Identifier | import('estree').CallExpression} */
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-				const e = recast.parse(r).program.body[0].expression; return e;
-			})
-			.filter(e => ['MemberExpression', 'Identifier', 'CallExpression'].includes(e.type))
-			.map(e => {
-				/** @type {import('estree').SpreadElement} */
-				const spreadElement = {
-					type: 'SpreadElement',
-					argument: e,
-				};
-				return spreadElement;
-			}).reduce((acc, spreadElement) => {
-				acc.properties.push(spreadElement);
-				return acc;
-			}, {
-				/** @type {import('estree').ObjectExpression['type']} */
-				type: 'ObjectExpression',
-				/** @type {import('estree').ObjectExpression['properties']} */
-				properties: [],
-			});
-		/** @type {import('estree').ObjectExpression} */
-		const rulesExpression = {
+				const e = astUtils.stringToExpression(r);
+				if (e) return astUtils.toSpreadElement(e);
+				else undefined;
+			}).filter(e => e);
+
+		return {
 			type: 'ObjectExpression',
 			properties: [{
 				// @ts-expect-error because ObjectProperty doesn't exist in estree types
 				type: 'ObjectProperty',
 				key: { type: 'Identifier', name: 'rules' },
-				value: rulesObjectExpression,
+				value: {
+					type: 'ObjectExpression',
+					properties: expressions,
+				},
 			}],
 		};
-		return rulesExpression;
+
 	}
 
 	/**
-	 * @param {import('./types').ConfigFile['imports']} imports The import map to be used to create the nodes
-	 * @returns {import('estree').ImportDeclaration[]} The ImportDeclaration nodes
+	 * Adds elements to the default export node, without adding duplicates
+	 *
+	 * @typedef {import('estree').ArrayExpression} ArrayExpression
+	 *
+	 * @param {Program} ast The program ast to be manipulated
+	 * @param {ConfigArrayElement[]} elements The elements to be added to the array
+	 * @returns {Program} The final ast with the recreated default export
 	 *
 	 * @private
 	 */
-	createImportDeclarations(imports) {
-		/** @type {import('estree').ImportDeclaration[]} */
-		const importsDeclarations = [];
-		for (const [pkgName, values] of imports) {
-			/** @type {import('estree').ImportDeclaration} */
-			const declaration = {
-				type: 'ImportDeclaration',
-				specifiers: [],
-				source: {
-					type: 'Literal',
-					value: pkgName,
-				},
-			};
+	addElementsToExport(ast, elements) {
+		/** @type {import('estree').ExportDefaultDeclaration} */
+		// @ts-expect-error Node type needs to be ExportDefaultDeclaration to be founded
+		const exportNode = ast.body.find(n => n.type === 'ExportDefaultDeclaration');
+		const exportNodeIdx = ast.body.indexOf(exportNode);
 
-			if (typeof values === 'string') {
-				declaration.specifiers.push({
-					type: 'ImportDefaultSpecifier',
-					local: { type: 'Identifier', name: values },
+		/** @type {ArrayExpression} */
+		// @ts-expect-error declaration is a ArrayExpression
+		const array = exportNode.declaration;
+
+		for (const e of elements) {
+			if (e.type !== 'ObjectExpression' && astUtils.findInArray(array, e)) continue;
+			array.elements.push(e);
+		}
+
+		exportNode.declaration = array;
+		ast.body[exportNodeIdx] = exportNode;
+
+		return ast;
+	}
+
+	/**
+	 * @param {Program} ast The program ast to be manipulated
+	 * @param {import('./types').ConfigFile['imports']} imports The imports map to be used
+	 * @returns {Program} The final ast with the recreated default export
+	 */
+	addPackageImports(ast, imports) {
+
+		/** @type {import('estree').ImportDeclaration[]} */
+		const importDeclarations = [];
+
+		console.log(imports);
+
+		for (const [pkgName, specifiers] of imports) {
+			/** @type {import('estree').ImportDeclaration | undefined} */
+			// @ts-expect-error type error, the specifier has to be ImportDeclaration to be founded
+			const existingDeclaration = ast.body.find(s => s.type === 'ImportDeclaration' && s.source.value === pkgName);
+
+			const importDeclaration = astUtils.createImportDeclaration(
+				pkgName, typeof specifiers === 'string' ? specifiers : undefined, existingDeclaration,
+			);
+
+			if (typeof specifiers !== 'string') {
+				specifiers.forEach(s => {
+					if (typeof s === 'string') return importDeclaration.addSpecifier(s);
+					else return importDeclaration.addSpecifier(s[0], s[1]);
 				});
-				importsDeclarations.push(declaration);
-				continue;
 			}
 
-			declaration.specifiers = values.map(v => {
-				/** @type {import('estree').ImportSpecifier} */
-				const specifier = {
-					type: 'ImportSpecifier',
-					imported: {
-						type: 'Identifier',
-						name: typeof v === 'string' ? v : v[0],
-					},
-					local: {
-						type: 'Identifier',
-						name: typeof v === 'string' ? v : v[1],
-					},
-				};
-				return specifier;
-			});
-			importsDeclarations.push(declaration);
+			if (existingDeclaration) ast.body[ast.body.indexOf(existingDeclaration)] = importDeclaration.body;
+			else importDeclarations.push(importDeclaration.body);
+
 		}
-		return importsDeclarations;
+
+		ast.body.unshift(...importDeclarations);
+
+		return ast;
 	}
+
 
 	/**
 	 * @param {import('./types').ConfigFile} config The config file object to be transformed into a eslint.config.js file
@@ -279,70 +310,32 @@ export default class ConfigsWriter {
 
 		const existingConfig = existsSync(config.path) ? await fs.readFile(config.path, 'utf-8') : '';
 
-		/** @type {import('estree').ExportDefaultDeclaration}} */
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-		const defaultExportTemplate = recast.parse([
-			'/** @type {import(\'eslint\').Linter.FlatConfig[]} */',
-			'export default [',
-			'',
-			'];',
-		].join('\n'), {
-			parser: (await import('recast/parsers/babel.js')),
-		}).program.body.find((/** @type {{ type: string; }} */ n) => n.type === 'ExportDefaultDeclaration');
-
-
-		/** @type {{program: import('estree').Program}} */
+		/** @type {{program: Program}} */
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		const { program: ast } = recast.parse(existingConfig, { parser: (await import('recast/parsers/babel.js')) });
 
-		/** @type {import('estree').ExportDefaultDeclaration | undefined} */
-		// @ts-expect-error because the type to find has to be ExportDefaultDeclaration
-		let defaultExport = ast.body.find(n => n.type === 'ExportDefaultDeclaration');
-		if (!defaultExport) {
-			defaultExport = defaultExportTemplate;
-		}
-		else if (defaultExport.declaration.type !== 'ArrayExpression') {
-			ast.body.push({
-				type: 'VariableDeclaration',
-				kind: 'const',
-				declarations: [{
-					type: 'VariableDeclarator',
-					id: { type: 'Identifier', name: 'oldConfig' },
-					// @ts-expect-error because defaultExport's declaration is a ArrayExpression
-					init: defaultExport.declaration,
-				}],
-			});
-			defaultExport = defaultExportTemplate;
-			// @ts-expect-error because defaultExport's declaration is a ArrayExpression
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-			defaultExport.declaration.elements.push({
-				type: 'SpreadElement',
-				argument: { type: 'Identifier', name: 'oldConfig' },
-			});
-		}
+		await this.addDefaultExport(ast);
 
-		if (config.imports.size > 0)
-			ast.body.unshift(...this.createImportDeclarations(config.imports));
+		/**
+		 * @type {ConfigArrayElement[]}
+		 */
+		// @ts-expect-error The array is filtered to remove undefined's
+		const elements = [
+			...config.configs.map(c => astUtils.stringToExpression(c)),
+			...config.presets.map(p => {
+				const e = astUtils.stringToExpression(p);
+				if (e) return astUtils.toSpreadElement(e);
+				else undefined;
+			}),
+			config.rules.length > 0
+				? this.createRulesObject(config.rules)
+				: undefined,
+		].filter(e => e);
 
-		const elementsExpressions = [];
-
-		if (config.presets.length > 0)
-			elementsExpressions.push(...this.createPresetExpressions(config.presets));
-		if (config.configs.length > 0)
-			elementsExpressions.push(...this.createConfigExpressions(config.configs));
-		if (config.rules.length > 0)
-			elementsExpressions.push(this.createRulesExpression(config.rules));
-
-		// @ts-expect-error because defaultExport's declaration is a ArrayExpression
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-		defaultExport.declaration.elements.push(...elementsExpressions);
-
-		const idx = ast.body.findIndex(n => n.type === 'ExportDefaultDeclaration');
-		if (idx > -1) ast.body.splice(idx, 1);
-		ast.body.push(defaultExport);
+		this.addElementsToExport(ast, elements);
+		this.addPackageImports(ast, config.imports);
 
 		const finalCode = recast.prettyPrint(ast, { parser: (await import('recast/parsers/babel.js')) }).code;
-
 		return finalCode;
 
 	}
