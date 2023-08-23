@@ -71,7 +71,7 @@ export default class Cli {
 				c.dim(`${count.packagesWithConfigs(packages)} configs founded\n`),
 		});
 
-		const merge = this.args.mergeToRoot ?? packages.length > 1 ?
+		const merge = this.args.mergeToRoot !== undefined ? this.args.mergeToRoot : packages.length > 1 ?
 		/** @type {{merge: boolean}} */
 				(await prompts({
 					name: 'merge',
@@ -124,7 +124,7 @@ export default class Cli {
 				(await prompts({
 					name: 'install',
 					message:
-					`Would you like to ESLit to install the npm packages with ${c.green(installer.packageManager.name)}?`,
+					`Would you like to ESLit to install the npm packages with ${c.green(installer.packageManager.name)}?\n${c.reset(c.dim(`  Packages to install: ${[...new Set([...packagesMap.values()])].join(' ')}\n`))}`,
 					choices: [
 						{ title: 'Yes, install all packages', value: true, description: installer.packageManager.description },
 						{ title: 'No, I will install them manually', value: false },
@@ -144,6 +144,9 @@ export default class Cli {
 				type: 'select',
 			});
 			installer.packageManager = installer.packageManagers[prompt.manager];
+
+			if (!installer.packageManager) throw console.log(c.red('You must select a package manager'));
+
 			installPkgs = true;
 		}
 

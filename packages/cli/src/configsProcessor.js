@@ -96,7 +96,7 @@ export default class ConfigsProcessor {
 				instructions: instructions + c.dim(c.italic('\nSelect none if you don\'t want to use this configuration\n')),
 			});
 
-			if (selectedOptions[config.name] === null) continue;
+			if (!selectedOptions[config.name]) continue;
 
 			if (selectedOptions[config.name].length === 0) continue;
 
