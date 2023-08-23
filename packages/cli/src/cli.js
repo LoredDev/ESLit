@@ -10,6 +10,8 @@ import prompts from 'prompts';
 import ConfigsFile from './configsFile.js';
 import * as cardinal from 'cardinal';
 import ansi from 'sisteransi';
+import PackageInstaller from './packageInstaller.js';
+import notNull from './lib/notNull.js';
 
 const stdout = process.stdout;
 
@@ -28,8 +30,9 @@ export default class Cli {
 	constructor(args) {
 		this.#program
 			.option('--packages <string...>')
-			.option('--merge-to-root')
 			.option('--dir <path>', undefined)
+			.option('--merge-to-root')
+			.option('--install-pkgs')
 			.parse();
 
 		this.args = {
@@ -45,6 +48,8 @@ export default class Cli {
 	}
 
 	async run() {
+
+		process.chdir(this.args.dir);
 
 		const spinner = createSpinner('Detecting workspace configuration');
 
@@ -109,6 +114,40 @@ export default class Cli {
 			if (shouldWrite) await fileHandler.write(pkg.configFile.path, pkg.configFile.content);
 
 		}
+
+		const packagesMap = new Map(packages.map(p => [p.path, [...notNull(p.configFile).imports.keys()]]));
+		const installer = new PackageInstaller(packagesMap, packages.find(p => p.root === true)?.path ?? this.args.dir);
+
+		/** @type {boolean | 'changePackage'} */
+		let installPkgs = this.args.installPkgs !== undefined ? true :
+		/** @type {{install: boolean | 'changePackage'}} */
+				(await prompts({
+					name: 'install',
+					message:
+					`Would you like to ESLit to install the npm packages with ${c.green(installer.packageManager.name)}?`,
+					choices: [
+						{ title: 'Yes, install all packages', value: true, description: installer.packageManager.description },
+						{ title: 'No, I will install them manually', value: false },
+						{ title: 'Change package manager', value: 'changePackage' },
+					],
+					type: 'select',
+				})).install;
+
+		if (installPkgs === 'changePackage') {
+			/** @type {{manager: import('./types').PackageManagerName}} */
+			const prompt = await prompts({
+				name: 'manager',
+				message: 'What package manager do you want ESLit to use?',
+				choices: Object.values(installer.packageManagers).map(m => {
+					return { title: m.name, description: m.description, value: m.name };
+				}),
+				type: 'select',
+			});
+			installer.packageManager = installer.packageManagers[prompt.manager];
+			installPkgs = true;
+		}
+
+		if (installPkgs) await installer.install();
 
 	}
 

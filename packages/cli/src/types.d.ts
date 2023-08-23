@@ -1,8 +1,11 @@
 import type { OptionValues } from 'commander';
 
+export type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun' | 'deno';
+
 export type CliArgs = {
 	packages?: string[]
 	mergeToRoot?: boolean
+	installPkgs?: boolean | PackageManagerName
 	dir: string
 } & OptionValues;
 
@@ -51,4 +54,8 @@ export interface ConfigFile {
 	presets: string[]
 	rules: string[]
 	content?: string
+}
+
+export interface PackageManagerHandler {
+	install(path: string, packages: string[]): Promise<void> | void
 }

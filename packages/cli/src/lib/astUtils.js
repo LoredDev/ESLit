@@ -8,19 +8,12 @@ import * as recast from 'recast';
  *  import('estree').NewExpression
  * )} ExpressionOrIdentifier
  * This type only includes the expressions used in the cli's config type
- *
  * @typedef {import('estree').VariableDeclaration} VariableDeclaration
- *
  * @typedef {import('estree').Identifier['name']} IdentifierName
- *
  * @typedef {VariableDeclaration['kind']} VariableKind
- *
  * @typedef {import('estree').VariableDeclarator['init']} VariableInit
- *
  * @typedef {import('estree').SpreadElement} SpreadElement
- *
  * @typedef {import('estree').Expression} Expression
- *
  * @typedef {import('estree').ArrayExpression} ArrayExpression
  */
 
@@ -97,7 +90,6 @@ export function toSpreadElement(expression) {
  *  addSpecifier: (specifier: string, alias?: string) => ThisType<ImportDeclarationHelper>
  *  convertDefaultSpecifier: () => ThisType<ImportDeclarationHelper>
  * }} ImportDeclarationHelper
- *
  * @param {string} source The package name or source path to be imported
  * @param {string} [defaultImported] The default specifier imported
  * @param {import('estree').ImportDeclaration} [body] The body of the import declaration to start with
@@ -119,12 +111,10 @@ export function createImportDeclaration(source, defaultImported, body) {
 		},
 		/**
 		 * Converts a default specifier to a specifier with a alias.
-		 *
 		 * @example
 		 * import eslit from 'eslit';
 		 * // Is converted to
 		 * import { default as eslit } from 'eslit';
-		 *
 		 * @returns {ThisType<ImportDeclarationHelper>} This helper with the converted default specifier
 		 */
 		convertDefaultSpecifier() {

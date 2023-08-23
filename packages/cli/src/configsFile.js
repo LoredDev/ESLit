@@ -144,7 +144,6 @@ export default class ConfigsWriter {
 
 	/**
 	 * @typedef {import('estree').Program} Program
-	 *
 	 * @typedef {(
 	 * 	import('./lib/astUtils.js').ExpressionOrIdentifier |
 	 * 	import('estree').ObjectExpression |
@@ -155,7 +154,6 @@ export default class ConfigsWriter {
 	/**
 	 * @param {Program} ast The program ast to be manipulated
 	 * @returns {Promise<Program>} The final ast with the recreated default export
-	 *
 	 * @private
 	 */
 	async addDefaultExport(ast) {
@@ -203,7 +201,6 @@ export default class ConfigsWriter {
 	/**
 	 * @param {import('./types').ConfigFile['rules']} rules The rules to be used to create the object
 	 * @returns {import('estree').ObjectExpression} The object containing the spread rules
-	 *
 	 * @private
 	 */
 	createRulesObject(rules) {
@@ -233,13 +230,10 @@ export default class ConfigsWriter {
 
 	/**
 	 * Adds elements to the default export node, without adding duplicates
-	 *
 	 * @typedef {import('estree').ArrayExpression} ArrayExpression
-	 *
 	 * @param {Program} ast The program ast to be manipulated
 	 * @param {ConfigArrayElement[]} elements The elements to be added to the array
 	 * @returns {Program} The final ast with the recreated default export
-	 *
 	 * @private
 	 */
 	addElementsToExport(ast, elements) {
@@ -272,8 +266,6 @@ export default class ConfigsWriter {
 
 		/** @type {import('estree').ImportDeclaration[]} */
 		const importDeclarations = [];
-
-		console.log(imports);
 
 		for (const [pkgName, specifiers] of imports) {
 			/** @type {import('estree').ImportDeclaration | undefined} */

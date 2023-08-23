@@ -8,7 +8,6 @@ import picomatch from 'picomatch';
 
 /**
  * @template T
- *
  * @param {Promise<T>} promise - The async function to try running
  * @returns {Promise<T | null>} - Returns the result of the async function, or null if it errors
  */
