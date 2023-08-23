@@ -42,5 +42,8 @@
 		"@types/estree": "^1.0.1",
 		"@types/node": "^20.4.2",
 		"@types/prompts": "^2.4.4"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
