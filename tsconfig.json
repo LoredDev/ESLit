@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"checkJs": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"module": "ES2022",
+		"target": "ES2022",
+		"alwaysStrict": true,
+		"outDir": "./dir"
+	},
+	"include": ["eslint.config.js", "commitlint.config.cjs"],
+	"exclude": ["./node_modules/**", "./dist/**"]
+}
