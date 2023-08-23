@@ -1,16 +1,16 @@
 {
-	"name": "@eslit-fixtures/library",
-  "version": "1.0.0",
+  "name": "@eslit-fixtures/library",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
-	"private": true,
+  "private": true,
   "scripts": {
     "test": "pnpm cli"
   },
   "dependencies": {
-		"@eslit/cli": "workspace:*"
-	},
-	"keywords": [],
+    "@eslit/cli": "workspace:*"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC"
 }
