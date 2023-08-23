@@ -27,6 +27,8 @@ jobs:
 
       - name: Update versions
         run: pnpm changeset version --snapshot next
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release packages
         run: pnpm run release --tag next
