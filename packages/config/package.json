@@ -5,11 +5,11 @@
   "main": "index.js",
   "module": "./src/index.js",
   "source": "./src/index.js",
-	"files": [
-		"src",
-		"index.d.ts"
-	],
-	"homepage": "https://github.com/LoredDev/ESLit",
+  "files": [
+    "src",
+    "index.d.ts"
+  ],
+  "homepage": "https://github.com/LoredDev/ESLit",
   "exports": {
     "default": "./src/index.js",
     "import": "./src/index.js",
@@ -21,16 +21,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
   },
-	"repository": {
-		"directory": "packages/config",
-		"type": "git",
-		"url": "https://github.com/LoredDev/ESLit"
-	},
+  "repository": {
+    "directory": "packages/config",
+    "type": "git",
+    "url": "https://github.com/LoredDev/ESLit"
+  },
   "author": {
-		"email": "contact.guz013@gmail.com",
-		"name": "Gustavo \"Guz\" L. de Mello",
-		"url": "https://guz.one"
-	},
+    "email": "contact.guz013@gmail.com",
+    "name": "Gustavo \"Guz\" L. de Mello",
+    "url": "https://guz.one"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/eslint__js": "^8.42.0",
@@ -44,14 +44,13 @@
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "eslint-plugin-jsdoc": "^46.4.4",
-    "globals": "^13.20.0",
-    "yaml": "^2.3.1"
+    "globals": "^13.20.0"
   },
   "peerDependencies": {
     "eslint": "^8.45.0",
     "typescript": "^5.1.6"
   },
-	"publishConfig": {
-		"access": "public"
-	}
+  "publishConfig": {
+    "access": "public"
+  }
 }

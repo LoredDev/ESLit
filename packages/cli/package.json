@@ -1,0 +1,46 @@
+{
+	"name": "@eslit/cli",
+	"version": "0.0.0",
+	"description": "",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint ."
+	},
+	"keywords": [],
+	"author": {
+		"email": "contact.guz013@gmail.com",
+		"name": "Gustavo \"Guz\" L. de Mello",
+		"url": "https://guz.one"
+	},
+	"module": "./src/index.js",
+	"source": "./src/index.js",
+	"files": [
+		"src",
+		"index.d.ts"
+	],
+	"homepage": "https://github.com/LoredDev/ESLit",
+	"type": "module",
+	"repository": {
+		"directory": "packages/config",
+		"type": "git",
+		"url": "https://github.com/LoredDev/ESLit"
+	},
+	"bin": "./src/index.js",
+	"license": "MIT",
+	"dependencies": {
+		"cardinal": "^2.1.1",
+		"commander": "^11.0.0",
+		"nanospinner": "^1.1.0",
+		"picocolors": "^1.0.0",
+		"picomatch": "^2.3.1",
+		"prompts": "^2.4.2",
+		"recast": "^0.23.3",
+		"sisteransi": "^1.0.5",
+		"yaml": "^2.3.1"
+	},
+	"devDependencies": {
+		"@types/estree": "^1.0.1",
+		"@types/node": "^20.4.2",
+		"@types/prompts": "^2.4.4"
+	}
+}
