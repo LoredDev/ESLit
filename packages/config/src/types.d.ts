@@ -23,7 +23,6 @@ export interface EnvOptions {
 	 * ---
 	 * **Option: `never`** (default)
 	 * Types are always explicit in Typescript
-	 *
 	 * @example ```ts
 			// Typescript
 			const id: number = 10;
@@ -32,7 +31,6 @@ export interface EnvOptions {
 	 * ---
 	 * **Option: `always`**
 	 * Types are always inferred in Typescript
-	 *
 	 * @example ```ts
 			// Typescript
 			const id = 10;

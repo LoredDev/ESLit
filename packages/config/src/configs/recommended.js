@@ -3,7 +3,6 @@ import js from '@eslint/js';
 
 /**
  * Recommended configuration overrides of ESLit
- *
  * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {

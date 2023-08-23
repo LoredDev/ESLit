@@ -2,7 +2,6 @@ import type { ESLint } from 'eslint';
 
 /**
  * @see {@link https://www.npmjs.org/package/eslint-plugin-jsdoc npm package}
- *
  * @summary JSDoc specific linting rules for ESLint.
  *
  * ---

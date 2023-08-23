@@ -2,7 +2,6 @@ import type { ESLint, Linter } from 'eslint';
 
 /**
  * @see {@link https://www.npmjs.com/package/@typescript-eslint/eslint-plugin npm package}
- *
  * @summary An ESLint plugin which provides lint rules for TypeScript codebases.
  *
  * ---
@@ -33,7 +32,6 @@ declare module '@typescript-eslint/eslint-plugin' {
 
 /**
  * @see {@link https://www.npmjs.com/package/@typescript-eslint/parser npm package}
- *
  * @summary An ESLint parser which leverages TypeScript ESTree to allow for ESLint
  * to lint TypeScript source code.
  *

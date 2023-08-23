@@ -1,6 +1,5 @@
 /**
  * Formatting rules/configuration overrides for Javascript and Typescript
- *
  * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {

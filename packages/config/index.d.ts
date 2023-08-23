@@ -3,7 +3,6 @@ import type { Linter } from 'eslint';
 
 /**
  * Helper functions for creating/configuring ESLint.
- *
  * @param config - Array or function returning an array of ESLint's configuration objects array to be used.
  * @param environment - An object with environment variables to be declared and used by the configuration.
  * @returns The array of ESLint's configuration objects.

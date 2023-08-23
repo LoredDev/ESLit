@@ -2,7 +2,6 @@ import jsdoc from 'eslint-plugin-jsdoc';
 
 /**
  * Typescript specific configuration overrides
- *
  * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {

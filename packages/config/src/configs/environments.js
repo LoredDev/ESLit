@@ -2,7 +2,6 @@ import globals from 'globals';
 
 /**
  * Configuration for Node development environment
- *
  * @type {import('eslint').Linter.FlatConfig}
  */
 const node = {
@@ -16,7 +15,6 @@ const node = {
 
 /**
  * Configuration for Deno development environment
- *
  * @type {import('eslint').Linter.FlatConfig}
  */
 const deno = {
@@ -31,7 +29,6 @@ const deno = {
 
 /**
  * Configuration for browser development environment
- *
  * @type {import('eslint').Linter.FlatConfig}
  */
 const browser = {

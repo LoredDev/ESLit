@@ -3,10 +3,8 @@ import { eslintrc } from './eslintrc-compact.js';
 /**
  * @param {import('./types').Config} config
  * Array or function returning an array of ESLint's configuration objects array to be used.
- *
  * @param {import('./types').EnvOptions | undefined} environment
  * An object with environment variables to be declared and used by the configuration.
- *
  * @returns {Promise<import('eslint').Linter.FlatConfig[]>}
  * The array of ESLint's configuration objects.
  */

@@ -5,7 +5,6 @@ import jsdoc from 'eslint-plugin-jsdoc';
 /**
  * **This configuration is necessary to be used before any other one**.
  * Common configuration for using ESLit rules overrides.
- *
  * @type {Readonly<import('eslint').Linter.FlatConfig>}
  */
 const config = {
