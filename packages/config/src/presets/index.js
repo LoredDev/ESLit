@@ -1,4 +1,5 @@
 
 import defaultPreset from './default.js';
 
-export default { default: defaultPreset };
+const presets = { default: defaultPreset };
+export default presets;

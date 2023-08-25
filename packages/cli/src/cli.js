@@ -8,8 +8,8 @@ import { createSpinner } from 'nanospinner';
 import count from './lib/count.js';
 import prompts from 'prompts';
 import ConfigsFile from './configsFile.js';
-import * as cardinal from 'cardinal';
-import ansi from 'sisteransi';
+import cardinal from 'cardinal';
+import { erase } from 'sisteransi';
 import PackageInstaller from './packageInstaller.js';
 import notNull from './lib/notNull.js';
 
@@ -29,6 +29,7 @@ export default class Cli {
 	 */
 	constructor(args) {
 		this.#program
+			.argument('[url-to-config]')
 			.option('--packages <string...>')
 			.option('--dir <path>', undefined)
 			.option('--merge-to-root')
@@ -109,7 +110,7 @@ export default class Cli {
 					initial: true,
 				})).write;
 
-			stdout.write(ansi.erase.lines(pkg.configFile.content.split('\n').length + 2));
+			stdout.write(erase.lines(pkg.configFile.content.split('\n').length + 2));
 
 			if (shouldWrite) await fileHandler.write(pkg.configFile.path, pkg.configFile.content);
 

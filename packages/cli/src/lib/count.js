@@ -9,4 +9,5 @@ function packagesWithConfigs(packages) {
 	).reduce((partial, sum) => partial + sum, 0);
 }
 
-export default { packagesWithConfigs };
+const count = { packagesWithConfigs };
+export default count;

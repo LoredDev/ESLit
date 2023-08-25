@@ -5,4 +5,5 @@ import recommended from './recommended.js';
 import environments from './environments.js';
 import common from './common.js';
 
-export default { formatting, jsdoc, typescript, recommended, environments, common };
+const configs = { formatting, jsdoc, typescript, recommended, environments, common };
+export default configs;

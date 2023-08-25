@@ -2,7 +2,6 @@ import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import YAML from 'yaml';
 import path, { join } from 'node:path';
-import glob from 'picomatch';
 import picomatch from 'picomatch';
 
 
@@ -85,7 +84,7 @@ export default class Workspace {
 
 		const paths = (await fs.readdir(directory))
 			.map((f) => path.normalize(join(directory, f)))
-			.filter((p) => !glob.isMatch(p, ignores));
+			.filter((p) => !picomatch.isMatch(p, ignores));
 
 		/** @type {string[]} */
 		const files = [];

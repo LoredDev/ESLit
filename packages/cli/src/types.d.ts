@@ -1,15 +1,19 @@
 import type { OptionValues } from 'commander';
 
-export type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun' | 'deno';
+type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun' | 'deno';
 
-export type CliArgs = {
+type CliArgs = {
 	packages?: string[]
 	mergeToRoot?: boolean
 	installPkgs?: boolean | PackageManagerName
 	dir: string
 } & OptionValues;
 
-export type Config = {
+interface PackageManagerHandler {
+	install(path: string, packages: string[]): Promise<void> | void
+}
+
+type Config = {
 	name: string
 	type: 'single' | 'multiple'
 	manual?: boolean
@@ -37,7 +41,7 @@ export type Config = {
 	}]
 };
 
-export interface Package {
+interface Package {
 	root?: boolean
 	name: string
 	path: string
@@ -47,7 +51,7 @@ export interface Package {
 	configFile?: ConfigFile
 }
 
-export interface ConfigFile {
+interface ConfigFile {
 	path: string
 	imports: Map<string, string | (string | [string, string])[]>
 	configs: string[]
@@ -56,6 +60,4 @@ export interface ConfigFile {
 	content?: string
 }
 
-export interface PackageManagerHandler {
-	install(path: string, packages: string[]): Promise<void> | void
-}
+export type { PackageManagerName, PackageManagerHandler, CliArgs, Config, Package, ConfigFile };

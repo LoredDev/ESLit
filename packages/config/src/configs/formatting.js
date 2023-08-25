@@ -7,6 +7,16 @@ const config = {
 	rules: {
 		// Formatting rules
 
+		'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+
+		'import/exports-last': 'error',
+
+		'import/first': 'error',
+
+		'import/group-exports': 'error',
+
+		'import/newline-after-import': ['error', { considerComments: true }],
+
 		'brace-style': 'off',
 		'@typescript-eslint/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
 

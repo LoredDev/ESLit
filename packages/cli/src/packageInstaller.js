@@ -1,11 +1,10 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { exec } from 'node:child_process';
 import { createSpinner } from 'nanospinner';
 import c from 'picocolors';
-import * as recast from 'recast';
+import { parse, prettyPrint } from 'recast';
 import { readFile, writeFile } from 'node:fs/promises';
-import { readFileSync } from 'node:fs';
 
 
 /**
@@ -78,7 +77,7 @@ class DenoHandler {
 		const configFile = await readFile(configPath, 'utf8');
 		/** @type {{program: import('estree').Program}}*/
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const { program: ast } = recast.parse(configFile, { parser: (await import('recast/parsers/babel.js')) });
+		const { program: ast } = parse(configFile, { parser: (await import('recast/parsers/babel.js')) });
 
 		ast.body.map((node) => {
 			if (node.type !== 'ImportDeclaration') return node;
@@ -89,7 +88,7 @@ class DenoHandler {
 			return node;
 		});
 
-		await writeFile(configPath, recast.prettyPrint(ast).code, 'utf-8');
+		await writeFile(configPath, prettyPrint(ast).code, 'utf-8');
 
 		console.log(c.green('Added npm: specifier to dependencies'));
 

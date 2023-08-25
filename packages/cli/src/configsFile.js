@@ -1,6 +1,6 @@
 import path from 'node:path';
 import notNull from './lib/notNull.js';
-import * as recast from 'recast';
+import { parse, prettyPrint } from 'recast';
 import fs from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import astUtils from './lib/astUtils.js';
@@ -160,7 +160,7 @@ export default class ConfigsWriter {
 
 		/** @type {{program: Program}} */
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-		const { program: exportTemplateAst } = recast.parse([
+		const { program: exportTemplateAst } = parse([
 			'/** @type {import(\'eslint\').Linter.FlatConfig[]} */',
 			'export default [',
 			'',
@@ -304,7 +304,7 @@ export default class ConfigsWriter {
 
 		/** @type {{program: Program}} */
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		const { program: ast } = recast.parse(existingConfig, { parser: (await import('recast/parsers/babel.js')) });
+		const { program: ast } = parse(existingConfig, { parser: (await import('recast/parsers/babel.js')) });
 
 		await this.addDefaultExport(ast);
 
@@ -327,7 +327,7 @@ export default class ConfigsWriter {
 		this.addElementsToExport(ast, elements);
 		this.addPackageImports(ast, config.imports);
 
-		const finalCode = recast.prettyPrint(ast, { parser: (await import('recast/parsers/babel.js')) }).code;
+		const finalCode = prettyPrint(ast, { parser: (await import('recast/parsers/babel.js')) }).code;
 		return finalCode;
 
 	}

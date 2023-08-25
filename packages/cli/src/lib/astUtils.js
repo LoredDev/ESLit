@@ -1,4 +1,4 @@
-import * as recast from 'recast';
+import { parse, print } from 'recast';
 
 /**
  * @typedef {(
@@ -23,7 +23,7 @@ import * as recast from 'recast';
  * @param {VariableInit} [init] Initial value of the variable
  * @returns {VariableDeclaration} The variable declaration ast node object
  */
-export function createVariable(identifier, kind = 'const', init) {
+function createVariable(identifier, kind = 'const', init) {
 	return {
 		type: 'VariableDeclaration',
 		kind,
@@ -39,10 +39,10 @@ export function createVariable(identifier, kind = 'const', init) {
  * @param {string} string The expression in string
  * @returns {ExpressionOrIdentifier | undefined} The expression or identifier node of that string (undefined if string is not a expression)
  */
-export function stringToExpression(string) {
+function stringToExpression(string) {
 	/** @type {ExpressionOrIdentifier} */
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-	const e = recast.parse(string).program.body[0].expression;
+	const e = parse(string).program.body[0].expression;
 	if (['MemberExpression', 'Identifier', 'CallExpression', 'NewExpression'].includes(e.type)) return e;
 	else return undefined;
 }
@@ -52,7 +52,7 @@ export function stringToExpression(string) {
  * @param {ExpressionOrIdentifier | SpreadElement} element The element to be search
  * @returns {ExpressionOrIdentifier | undefined} The element of the array founded, undefined if it isn't found
  */
-export function findInArray(array, element) {
+function findInArray(array, element) {
 
 	/** @type {ExpressionOrIdentifier[]} */
 	// @ts-expect-error The array should have just tge type above
@@ -66,8 +66,8 @@ export function findInArray(array, element) {
 			return n;
 		}).filter(n => n && n.type === element.type);
 
-	const toStringElements = filteredElements.map(n => recast.print(n).code);
-	const toStringElement = recast.print(element).code;
+	const toStringElements = filteredElements.map(n => print(n).code);
+	const toStringElement = print(element).code;
 
 	const idx = toStringElements.findIndex(e => e === toStringElement);
 	return filteredElements[idx];
@@ -77,7 +77,7 @@ export function findInArray(array, element) {
  * @param {ExpressionOrIdentifier} expression The expression to be spread
  * @returns {SpreadElement} The spread element node
  */
-export function toSpreadElement(expression) {
+function toSpreadElement(expression) {
 	return {
 		type: 'SpreadElement',
 		argument: expression,
@@ -95,7 +95,7 @@ export function toSpreadElement(expression) {
  * @param {import('estree').ImportDeclaration} [body] The body of the import declaration to start with
  * @returns {ImportDeclarationHelper} A helper object for manipulating the import declaration
  */
-export function createImportDeclaration(source, defaultImported, body) {
+function createImportDeclaration(source, defaultImported, body) {
 	const helper = {
 		/** @type {import('estree').ImportDeclaration} */
 		body: body ?? {
@@ -161,10 +161,11 @@ export function createImportDeclaration(source, defaultImported, body) {
 
 }
 
-export default {
+const astUtils = {
 	createVariable,
 	stringToExpression,
 	toSpreadElement,
 	findInArray,
 	createImportDeclaration,
 };
+export default astUtils;

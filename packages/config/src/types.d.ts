@@ -2,9 +2,9 @@ import type { FlatCompat } from '@eslint/eslintrc';
 import type { Linter } from 'eslint';
 
 type MaybePromise<T> = Promise<T> | T;
-export type Config = Linter.FlatConfig[] | ((eslintrc: FlatCompat) => MaybePromise<Linter.FlatConfig[]>);
+type Config = Linter.FlatConfig[] | ((eslintrc: FlatCompat) => MaybePromise<Linter.FlatConfig[]>);
 
-export interface EnvOptions {
+interface EnvOptions {
 	ESLIT_TSCONFIG?: string | string[] | true
 	ESLIT_ROOT?: string
 	ESLIT_INDENT?: 'tab' | 'space' | number
@@ -41,7 +41,7 @@ export interface EnvOptions {
 	[ENV: string]: unknown
 }
 
-export type inferrableTypesOptions = [
+type inferrableTypesOptions = [
 	'never' | 'always',
 	{
 		/** @see {@link https://typescript-eslint.io/rules/no-inferrable-types#ignoreparameters} */
@@ -52,3 +52,5 @@ export type inferrableTypesOptions = [
 		returnValues?: boolean
 	},
 ] | 'never' | 'always';
+
+export type { inferrableTypesOptions, EnvOptions, Config };

@@ -3,7 +3,7 @@ import path from 'node:path';
 import glob from 'picomatch';
 import prompts from 'prompts';
 import c from 'picocolors';
-import str from './lib/str.js';
+import capitalize from './lib/capitalize.js';
 
 export default class ConfigsProcessor {
 	/** @type {string} */
@@ -75,13 +75,13 @@ export default class ConfigsProcessor {
 		for (const config of configs) {
 
 			/** @type {import('prompts').Choice[]} */
-			const configChoices = config.options.map(option => {return { title: `${str.capitalize(option.name)}`, value: option.name };});
+			const configChoices = config.options.map(option => {return { title: `${capitalize(option.name)}`, value: option.name };});
 
 			/** @type {Record<string, string[]>} */
 			const selectedOptions = await prompts({
 				name: config.name,
 				type: config.type === 'multiple' ? 'multiselect' : 'select',
-				message: str.capitalize(config.name),
+				message: capitalize(config.name),
 				choices: config.type === 'confirm' ? [
 					{
 						title: 'Yes',

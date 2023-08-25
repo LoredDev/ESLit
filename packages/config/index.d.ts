@@ -7,9 +7,9 @@ import type { Linter } from 'eslint';
  * @param environment - An object with environment variables to be declared and used by the configuration.
  * @returns The array of ESLint's configuration objects.
  */
-export async function defineConfig(config: Config, environment?: EnvOptions): Promise<Linter.FlatConfig[]>;
+async function defineConfig(config: Config, environment?: EnvOptions): Promise<Linter.FlatConfig[]>;
 
-export const configs: Readonly<{
+const configs: Readonly<{
 	/**
 	 * **This configuration is necessary to be used before any other one**.
 	 * Common configuration for using ESLit rules overrides.
@@ -50,6 +50,8 @@ export const configs: Readonly<{
 	jsdoc: Linter.FlatConfig
 }>;
 
-export const presets: Readonly<{
+const presets: Readonly<{
 	default: Linter.FlatConfig[]
 }>;
+
+export { presets, configs, defineConfig };

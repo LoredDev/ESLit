@@ -1,6 +1,6 @@
 
 /** @type {import('./types').Config[]} */
-export default [
+const cliConfig = [
 	{
 		name: 'framework',
 		type: 'multiple',
@@ -31,3 +31,4 @@ export default [
 		}],
 	},
 ];
+export default cliConfig;

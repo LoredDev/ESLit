@@ -41,4 +41,5 @@ const browser = {
 	},
 };
 
-export default { node, deno, browser };
+const environments = { node, deno, browser };
+export default environments;

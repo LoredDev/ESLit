@@ -1,6 +1,9 @@
 import tsESLint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+
+// eslint-disable-next-line import/namespace, import/default, import/no-named-as-default, import/no-named-as-default-member
 import jsdoc from 'eslint-plugin-jsdoc';
+import importPlugin from 'eslint-plugin-i';
 
 /**
  * **This configuration is necessary to be used before any other one**.
@@ -13,6 +16,18 @@ const config = {
 		'@typescript-eslint': tsESLint,
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		'jsdoc': jsdoc,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+		'import': importPlugin,
+	},
+	settings: {
+		'import/extensions': ['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts'],
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.js', '.cjs', '.mjs', '.ts', '.cts', '.mts'],
+		},
+		'import/resolver': {
+			typescript: true,
+			node: true,
+		},
 	},
 	languageOptions: {
 		parser: tsParser,
@@ -30,6 +45,9 @@ const config = {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 			() => {return JSON.parse(process.env.ESLIT_ECMASCRIPT ?? '"latest"');}
 		)(),
+	},
+	rules: {
+		...importPlugin.configs['typescript'].rules,
 	},
 };
 export default config;
