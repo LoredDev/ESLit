@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'loreddev/eslit' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.repository == 'loreddev/eslegant' }}
     name: Release preview
     env:
       HUSKY: 0
