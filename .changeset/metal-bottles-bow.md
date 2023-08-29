@@ -1,6 +1,6 @@
 ---
-"@eslit/config": patch
-"@eslit/cli": patch
+"@eslegant/config": patch
+"@eslegant/cli": patch
 ---
 
 Updated dependencies

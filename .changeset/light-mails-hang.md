@@ -1,5 +1,5 @@
 ---
-"@eslit/cli": minor
+"@eslegant/cli": minor
 ---
 
 Now the cli exports a API that runs the application and the configs object needs to be passed to the Cli class, this way any other package can run and have their configs array.
