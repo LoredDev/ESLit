@@ -1,5 +1,5 @@
 {
-	"name": "@eslit/cli",
+	"name": "@eslegant/cli",
 	"version": "0.1.0",
 	"description": "",
 	"scripts": {
@@ -19,12 +19,12 @@
 		"index.js",
 		"index.d.ts"
 	],
-	"homepage": "https://github.com/LoredDev/ESLit",
+	"homepage": "https://github.com/LoredDev/ESLegant",
 	"type": "module",
 	"repository": {
 		"directory": "packages/config",
 		"type": "git",
-		"url": "https://github.com/LoredDev/ESLit"
+		"url": "https://github.com/LoredDev/ESLegant"
 	},
 	"license": "MIT",
 	"dependencies": {

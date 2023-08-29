@@ -13,14 +13,14 @@
 		"./configs.js"
 	],
 	"dependencies": {
-		"@eslit/cli": "workspace:*"
+		"@eslegant/cli": "workspace:*"
 	},
-	"homepage": "https://github.com/LoredDev/ESLit",
+	"homepage": "https://github.com/LoredDev/ESLegant",
 	"type": "module",
 	"repository": {
 		"directory": "packages/create-eslegant",
 		"type": "git",
-		"url": "https://github.com/LoredDev/ESLit"
+		"url": "https://github.com/LoredDev/ESLegant"
 	},
 	"bin": "./bin.js",
 	"license": "MIT",
