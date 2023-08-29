@@ -1,5 +1,5 @@
 {
-	"name": "@eslit-fixtures/svelte",
+	"name": "fixtures/svelte",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
