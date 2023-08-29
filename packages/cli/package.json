@@ -16,6 +16,7 @@
 	"source": "./src/index.js",
 	"files": [
 		"src",
+		"index.js",
 		"index.d.ts"
 	],
 	"homepage": "https://github.com/LoredDev/ESLit",
@@ -25,7 +26,6 @@
 		"type": "git",
 		"url": "https://github.com/LoredDev/ESLit"
 	},
-	"bin": "./src/index.js",
 	"license": "MIT",
 	"dependencies": {
 		"cardinal": "^2.1.1",

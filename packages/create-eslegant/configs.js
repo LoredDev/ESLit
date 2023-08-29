@@ -1,5 +1,5 @@
 
-/** @type {import('./types').Config[]} */
+/** @type {import('@eslit/cli').Config[]} */
 const cliConfig = [
 	{
 		name: 'framework',
