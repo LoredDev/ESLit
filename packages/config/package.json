@@ -9,7 +9,7 @@
     "src",
     "index.d.ts"
   ],
-  "homepage": "https://github.com/LoredDev/ESLit",
+  "homepage": "https://github.com/LoredDev/ESLegant",
   "exports": {
     "default": "./src/index.js",
     "import": "./src/index.js",
@@ -24,7 +24,7 @@
   "repository": {
     "directory": "packages/config",
     "type": "git",
-    "url": "https://github.com/LoredDev/ESLit"
+    "url": "https://github.com/LoredDev/ESLegant"
   },
   "author": {
     "email": "contact.guz013@gmail.com",
