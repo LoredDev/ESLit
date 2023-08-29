@@ -7,6 +7,7 @@ type CliArgs = {
 	mergeToRoot?: boolean
 	installPkgs?: boolean | PackageManagerName
 	dir: string
+	configs: Config[]
 } & OptionValues;
 
 interface PackageManagerHandler {

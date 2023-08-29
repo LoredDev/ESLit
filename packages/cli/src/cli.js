@@ -1,6 +1,5 @@
 import { Command } from 'commander';
 import ConfigsProcessor from './configsProcessor.js';
-import configs from './configs.js';
 import Workspace from './workspace.js';
 import c from 'picocolors';
 import path from 'node:path';
@@ -22,6 +21,7 @@ export default class Cli {
 	/** @type {import('./types').CliArgs} */
 	args = {
 		dir: process.cwd(),
+		configs: [],
 	};
 
 	/**
@@ -45,13 +45,13 @@ export default class Cli {
 		this.args.dir = !this.args.dir.startsWith('/')
 			? path.join(process.cwd(), this.args.dir)
 			: this.args.dir;
-
 	}
 
 	async run() {
 
 		process.chdir(this.args.dir);
 
+		const configs = this.args.configs;
 		const spinner = createSpinner('Detecting workspace configuration');
 
 		const processor = new ConfigsProcessor({ configs });
