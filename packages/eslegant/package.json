@@ -13,7 +13,7 @@
 		"./configs.js"
 	],
 	"dependencies": {
-		"@eslit/cli": "workspace:*"
+		"@eslegant/cli": "workspace:*"
 	},
 	"homepage": "https://github.com/LoredDev/ESLit",
 	"type": "module",

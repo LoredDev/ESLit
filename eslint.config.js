@@ -1,4 +1,4 @@
-import { configs, defineConfig, presets } from '@eslit/config';
+import { configs, defineConfig, presets } from '@eslegant/config';
 
 export default defineConfig([
 	...presets.default,

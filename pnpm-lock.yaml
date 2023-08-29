@@ -8,7 +8,7 @@ importers:
 
   .:
     dependencies:
-      '@eslit/config':
+      '@eslegant/config':
         specifier: workspace:*
         version: link:packages/config
     devDependencies:
@@ -21,12 +21,12 @@ importers:
       '@commitlint/types':
         specifier: ^17.4.4
         version: 17.4.4
-      '@eslit/cli':
-        specifier: workspace:*
-        version: link:packages/cli
       '@svitejs/changesets-changelog-github-compact':
         specifier: ^1.1.0
         version: 1.1.0
+      eslegant:
+        specifier: workspace:*
+        version: link:packages/eslegant
       eslint:
         specifier: ^8.47.0
         version: 8.47.0
@@ -39,19 +39,19 @@ importers:
 
   fixtures/library:
     dependencies:
-      '@eslit/cli':
+      '@eslegant/cli':
         specifier: workspace:*
         version: link:../../packages/cli
 
   fixtures/monorepo:
     devDependencies:
-      '@eslit/cli':
+      '@eslegant/cli':
         specifier: workspace:*
         version: link:../../packages/cli
 
   fixtures/svelte:
     devDependencies:
-      '@eslit/cli':
+      '@eslegant/cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@fontsource/fira-mono':
@@ -179,7 +179,7 @@ importers:
 
   packages/create-eslegant:
     dependencies:
-      '@eslit/cli':
+      '@eslegant/cli':
         specifier: workspace:*
         version: link:../cli
     devDependencies:
@@ -189,7 +189,7 @@ importers:
 
   packages/eslegant:
     dependencies:
-      '@eslit/cli':
+      '@eslegant/cli':
         specifier: workspace:*
         version: link:../cli
     devDependencies:

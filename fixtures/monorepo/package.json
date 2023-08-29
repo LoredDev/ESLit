@@ -4,7 +4,7 @@
     "test:cli": "pnpm cli"
   },
   "devDependencies": {
-    "@eslit/cli": "workspace:*"
+    "@eslegant/cli": "workspace:*"
   },
   "packageManager": "pnpm@8.6.10",
   "name": "monorepo",
