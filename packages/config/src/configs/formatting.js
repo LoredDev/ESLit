@@ -1,8 +1,8 @@
-/**
- * Formatting rules/configuration overrides for Javascript and Typescript
- * @type {Readonly<import('eslint').Linter.FlatConfig>}
- */
-const config = {
+import coreConfig from './core.js';
+
+/** @type {import('eslint').Linter.FlatConfig} */
+const recommended = {
+	...coreConfig,
 	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
 	rules: {
 		// Formatting rules
@@ -24,28 +24,16 @@ const config = {
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 
 		'indent': 'off',
-		'@typescript-eslint/indent': ['error', (() => {
-			/** @type {import('../types').EnvOptions['ESLIT_INDENT']} */
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const indent = JSON.parse(process.env.ESLINT_INDENT ?? '"tab"');
-
-			if (indent === 'space') return 2;
-			else return indent;
-		})(), {
-			SwitchCase: 1,
+		'@typescript-eslint/indent': ['error', 'tab', { SwitchCase: 1,
 			VariableDeclarator: 1,
 			outerIIFEBody: 1,
 			MemberExpression: 1,
-			FunctionDeclaration: { parameters: 1, body: 1 },
-			FunctionExpression: { parameters: 1, body: 1 },
-			CallExpression: { arguments: 1 },
-			ArrayExpression: 1,
+			FunctionDeclaration: { parameters: 1,
+				body: 1 }, FunctionExpression: { parameters: 1,
+				body: 1 }, CallExpression: { arguments: 1 }, ArrayExpression: 1,
 			ObjectExpression: 1,
 			ImportDeclaration: 1,
-			flatTernaryExpressions: false,
-			offsetTernaryExpressions: true,
-			ignoreComments: false,
-			ignoredNodes: [
+			flatTernaryExpressions: false, offsetTernaryExpressions: true, ignoreComments: false, ignoredNodes: [
 				'TemplateLiteral *',
 				'JSXElement',
 				'JSXElement > *',
@@ -56,7 +44,7 @@ const config = {
 				'JSXSpreadAttribute',
 				'JSXExpressionContainer',
 				'JSXOpeningElement',
-				'JSXClosingElement',
+				'Element',
 				'JSXFragment',
 				'JSXOpeningFragment',
 				'JSXClosingFragment',
@@ -83,13 +71,13 @@ const config = {
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
 
 		'quotes': 'off',
-		'@typescript-eslint/quotes': ['error', process.env.ESLINT_QUOTES ?? 'single'],
+		'@typescript-eslint/quotes': ['error', 'single'],
 
 		'semi': 'off',
 		'@typescript-eslint/semi': ['error', 'always'],
 
 		'space-before-blocks': 'off',
-		'@typescript-eslint/space-before-blocks': ['error', process.env.ESLIT_SEMI ?? 'always'],
+		'@typescript-eslint/space-before-blocks': ['error', 'always'],
 
 		'space-before-function-paren': 'off',
 		'@typescript-eslint/space-before-function-paren': ['error', {
@@ -103,4 +91,11 @@ const config = {
 
 	},
 };
-export default config;
+
+/** @type {import('eslint').Linter.FlatConfig} */
+const strict = {
+	...recommended,
+};
+
+const formatting = { recommended, strict };
+export default formatting;

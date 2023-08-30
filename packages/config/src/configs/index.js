@@ -1,9 +1,8 @@
-import formatting from './formatting.js';
-import jsdoc from './jsdoc.js';
-import typescript from './typescript.js';
-import recommended from './recommended.js';
-import environments from './environments.js';
-import common from './common.js';
 
-const configs = { formatting, jsdoc, typescript, recommended, environments, common };
+import core from './core.js';
+import javascript from './javascript.js';
+import typescript from './typescript.js';
+import formatting from './formatting.js';
+
+const configs = { core, javascript, typescript, formatting };
 export default configs;

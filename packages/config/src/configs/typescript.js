@@ -1,18 +1,18 @@
-import jsdoc from 'eslint-plugin-jsdoc';
 
-/**
- * Typescript specific configuration overrides
- * @type {Readonly<import('eslint').Linter.FlatConfig>}
- */
-const config = {
-	files: ['**/*.ts', '**/*.cts', '**/*.mts'],
-	// See plugins['jsdoc'] on index.js for more info on this error
+import coreConfig from './core.js';
+import { tsFiles } from '../constants.js';
+import jsdocPlugin from 'eslint-plugin-jsdoc';
+import importPlugin from 'eslint-plugin-i';
+
+/** @type {import('eslint').Linter.FlatConfig}*/
+const recommended = {
+	...coreConfig,
+	files: [...tsFiles],
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	rules: {
-
-		// See plugins['jsdoc'] on index.js for more info on this error
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-		...jsdoc.configs['recommended-typescript-error'].rules,
+		...jsdocPlugin.configs['recommended-typescript-error'].rules,
+		...importPlugin.configs['typescript'].rules,
 
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': 'error',
@@ -30,35 +30,14 @@ const config = {
 		'@typescript-eslint/prefer-for-of': 'error',
 		'@typescript-eslint/prefer-function-type': 'error',
 		'@typescript-eslint/prefer-namespace-keyword': 'error',
-
-		...(
-			/** @type {() => import('eslint').Linter.RulesRecord} */
-			() => {
-				/** @type {import('../types').inferrableTypesOptions} */
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-				const inferrableTypes = JSON.parse(process.env.ESLIT_INFER_TYPES ?? '"never"');
-
-				if (typeof inferrableTypes === 'string') {
-					return {
-						'@typescript-eslint/explicit-function-return-type': inferrableTypes === 'always' ? 'off' : 'error',
-						'@typescript-eslint/no-inferrable-types': inferrableTypes === 'always' ? 'off' : 'error',
-					};
-				}
-				else {
-					return {
-						'@typescript-eslint/explicit-function-return-type': inferrableTypes[1].returnValues ? 'off' : 'error',
-						'@typescript-eslint/no-inferrable-types': [
-							inferrableTypes[0] === 'always' ? 'off' : 'error',
-							{
-								ignoreParameters: inferrableTypes[1].parameters ?? false,
-								ignoreProperties: inferrableTypes[1].properties ?? false,
-							},
-						],
-					};
-				}
-			}
-		)(),
-
+		'@typescript-eslint/explicit-function-return-type': 'error',
+		'@typescript-eslint/no-inferrable-types': 'error',
 	},
 };
-export default config;
+
+/** @type {import('eslint').Linter.FlatConfig}*/
+const strict = {
+	...recommended,
+};
+const typescript = { recommended, strict };
+export default typescript;

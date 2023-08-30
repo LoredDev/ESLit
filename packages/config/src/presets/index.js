@@ -1,5 +1,4 @@
+import recommended from './recommended.js';
 
-import defaultPreset from './default.js';
-
-const presets = { default: defaultPreset };
+const presets = { recommended };
 export default presets;
