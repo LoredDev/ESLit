@@ -1,6 +1,11 @@
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config relates to possible logic and syntax errors JavaScript and TypeScript
+ * Recommended alternative, better for projects in prototyping phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const recommended = {
 	rules: {
+		...{}, // ESLint rules
 		'constructor-super': 'error',
 		'for-direction': 'error',
 		'getter-return': 'error',
@@ -52,7 +57,7 @@ const recommended = {
 		'use-isnan': 'error',
 		'valid-typeof': 'error',
 
-		...{}, // Plugin @typescript-eslint
+		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/no-loss-of-precision': 'error',
 		'@typescript-eslint/no-redeclare': 'error',
 		'no-loss-of-precision': 'off',
@@ -60,10 +65,15 @@ const recommended = {
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config relates to possible logic and syntax errors JavaScript and TypeScript
+ * Strict alternative, better for projects in refactoring and/or production phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const strict = {
 	...recommended,
 	rules: {
+		...{}, // ESLint rules
 		'no-constant-binary-expression': 'error',
 		'no-new-native-nonconstructor': 'error',
 		'no-promise-executor-return': 'error',

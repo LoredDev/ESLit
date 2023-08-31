@@ -1,7 +1,11 @@
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import { jsFiles, tsFiles } from '../constants.js';
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config relates to code formatting and style in JavaScript and TypeScript
+ * Recommended alternative, better for projects in prototyping phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const recommended = {
 	files: [...tsFiles, ...jsFiles],
 	plugins: {
@@ -9,7 +13,7 @@ const recommended = {
 		perfectionist: perfectionistPlugin,
 	},
 	rules: {
-
+		...{}, // ESLint rules
 		'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
 		'comma-style': 'error',
 		'curly': ['error', 'multi-or-nest', 'consistent'],
@@ -28,7 +32,7 @@ const recommended = {
 		}],
 		'template-curly-spacing': ['error', 'never'],
 
-		...{}, // Typescript ESLint
+		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/block-spacing': ['error', 'always'],
 		'@typescript-eslint/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
@@ -97,14 +101,14 @@ const recommended = {
 		'space-before-function-paren': 'off',
 		'space-infix-ops': 'off',
 
-		...{}, // Import plugin
+		...{}, // Plugin: eslint-plugin-i (eslint-plugin-import)
 		'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
 		'import/exports-last': 'error',
 		'import/first': 'error',
 		'import/group-exports': 'error',
 		'import/newline-after-import': ['error', { considerComments: true }],
 
-		// Perfectionist plugin
+		...{}, // Plugin: eslint-plugin-perfectionist
 		...perfectionistPlugin.configs['recommended-natural'].rules,
 
 		'perfectionist/sort-exports': ['error', { type: 'line-length' }],
@@ -113,7 +117,11 @@ const recommended = {
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config relates to code formatting and style in JavaScript and TypeScript
+ * Strict alternative, better for projects in refactoring and/or production phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const strict = {
 	...recommended,
 };

@@ -1,6 +1,10 @@
 import { jsFiles, tsFiles } from '../constants.js';
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config suggest alternate ways of doing things in JavaScript and TypeScript
+ * Recommended alternative, better for projects in prototyping phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const recommended = {
 	files: [...tsFiles, ...jsFiles],
 	rules: {
@@ -28,10 +32,16 @@ const recommended = {
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config suggest alternate ways of doing things in JavaScript and TypeScript
+ * Strict alternative, better for projects in refactoring and/or production phases.
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const strict = {
 	...recommended,
 	rules: {
+
+		...{}, // ESLint rules
 		'accessor-pairs': 'error',
 		'arrow-body-style': ['error', 'as-needed'],
 		'block-scoped-var': 'error',
@@ -105,7 +115,7 @@ const strict = {
 		'symbol-description': 'error',
 		'yoda': ['error', 'never'],
 
-		...{}, // Typescript rules
+		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/class-methods-use-this': 'error',
 		'@typescript-eslint/default-param-last': 'error',
 		'@typescript-eslint/dot-notation': 'error',

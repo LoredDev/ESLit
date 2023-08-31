@@ -5,7 +5,11 @@ import jsdocPlugin from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-i';
 import process from 'node:process';
 
-/** @type {import('eslint').Linter.FlatConfig} */
+/**
+ * This config adds necessary plugins and configuration for ESLint to use in the other configs
+ * **This should always be in the top of the configuration array**
+ * @type {import('eslint').Linter.FlatConfig}
+ */
 const config = {
 	files: [...tsFiles, ...jsFiles],
 	languageOptions: {
