@@ -1,12 +1,10 @@
-import coreConfig from './core.js';
 import tsESLint from '@typescript-eslint/eslint-plugin';
-import js from '@eslint/js';
-import importPlugin from 'eslint-plugin-i';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
+import importPlugin from 'eslint-plugin-i';
+import js from '@eslint/js';
 
-/** @type {import('eslint').Linter.FlatConfig}*/
+/** @type {import('eslint').Linter.FlatConfig} */
 const recommended = {
-	...coreConfig,
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	rules: {
 		...js.configs.recommended.rules,
@@ -20,7 +18,7 @@ const recommended = {
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig}*/
+/** @type {import('eslint').Linter.FlatConfig} */
 const strict = {
 	...recommended,
 };

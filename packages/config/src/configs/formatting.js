@@ -1,39 +1,47 @@
-import coreConfig from './core.js';
+import perfectionistPlugin from 'eslint-plugin-perfectionist';
+import { jsFiles, tsFiles } from '../constants.js';
 
 /** @type {import('eslint').Linter.FlatConfig} */
 const recommended = {
-	...coreConfig,
-	files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.ts', '**/*.cts', '**/*.mts'],
+	files: [...tsFiles, ...jsFiles],
+	plugins: {
+		perfectionist: perfectionistPlugin,
+	},
 	rules: {
-		// Formatting rules
 
-		'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+		'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
+		'comma-style': 'error',
+		'curly': ['error', 'multi-or-nest', 'consistent'],
+		'generator-star-spacing': ['error', 'before'],
+		'spaced-comment': ['error', 'always', {
+			block: {
+				balanced: true,
+				exceptions: ['*'],
+				markers: ['!'],
+			},
+			line: {
+				exceptions: ['/', '#'],
+				markers: ['/'],
+			},
+		}],
+		'template-curly-spacing': ['error', 'never'],
 
-		'import/exports-last': 'error',
-
-		'import/first': 'error',
-
-		'import/group-exports': 'error',
-
-		'import/newline-after-import': ['error', { considerComments: true }],
-
-		'brace-style': 'off',
+		...{}, // Typescript ESLint
+		'@typescript-eslint/block-spacing': ['error', 'always'],
 		'@typescript-eslint/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
-
-		'comma-dangle': 'off',
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
-
-		'indent': 'off',
-		'@typescript-eslint/indent': ['error', 'tab', { SwitchCase: 1,
+		'@typescript-eslint/comma-spacing': 'error',
+		'@typescript-eslint/func-call-spacing': 'error',
+		'@typescript-eslint/indent': ['error', 'tab', { ArrayExpression: 1,
+			CallExpression: { arguments: 1 },
+			FunctionDeclaration: { body: 1,
+				parameters: 1 },
+			FunctionExpression: { body: 1,
+				parameters: 1 },
+			ImportDeclaration: 1, MemberExpression: 1, ObjectExpression: 1, SwitchCase: 1,
 			VariableDeclarator: 1,
-			outerIIFEBody: 1,
-			MemberExpression: 1,
-			FunctionDeclaration: { parameters: 1,
-				body: 1 }, FunctionExpression: { parameters: 1,
-				body: 1 }, CallExpression: { arguments: 1 }, ArrayExpression: 1,
-			ObjectExpression: 1,
-			ImportDeclaration: 1,
-			flatTernaryExpressions: false, offsetTernaryExpressions: true, ignoreComments: false, ignoredNodes: [
+			flatTernaryExpressions: false,
+			ignoreComments: false, ignoredNodes: [
 				'TemplateLiteral *',
 				'JSXElement',
 				'JSXElement > *',
@@ -55,39 +63,50 @@ const recommended = {
 				'FunctionExpression > .params[decorators.length > 0]',
 				'FunctionExpression > .params > :matches(Decorator, :not(:first-child))',
 				'ClassBody.body > PropertyDefinition[decorators.length > 0] > .key',
-			],
+			], offsetTernaryExpressions: true, outerIIFEBody: 1,
 		}],
-
-		'keyword-spacing': 'off',
-		'@typescript-eslint/keyword-spacing': ['error', { before: true, after: true }],
-
-		'lines-between-class-members': 'off',
+		'@typescript-eslint/key-spacing': ['error', { afterColon: true, beforeColon: false }],
+		'@typescript-eslint/keyword-spacing': ['error', { after: true, before: true }],
 		'@typescript-eslint/lines-between-class-members': ['error'],
-
-		'no-extra-parens': 'off',
 		'@typescript-eslint/no-extra-parens': ['error', 'functions'],
-
-		'object-curly-spacing': 'off',
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
-
-		'quotes': 'off',
 		'@typescript-eslint/quotes': ['error', 'single'],
-
-		'semi': 'off',
 		'@typescript-eslint/semi': ['error', 'always'],
-
-		'space-before-blocks': 'off',
 		'@typescript-eslint/space-before-blocks': ['error', 'always'],
-
-		'space-before-function-paren': 'off',
 		'@typescript-eslint/space-before-function-paren': ['error', {
 			anonymous: 'always',
-			named: 'never',
 			asyncArrow: 'always',
+			named: 'never',
 		}],
-
-		'space-infix-ops': 'off',
 		'@typescript-eslint/space-infix-ops': 'error',
+		'block-spacing': 'off',
+		'brace-style': 'off',
+		'comma-dangle': 'off',
+		'comma-spacing': 'off',
+		'func-call-spacing': 'off',
+		'indent': 'off',
+		'key-spacing': 'off',
+		'keyword-spacing': 'off',
+		'lines-between-class-members': 'off',
+		'object-curly-spacing': 'off',
+		'quotes': 'off',
+		'semi': 'off',
+		'space-before-blocks': 'off',
+		'space-before-function-paren': 'off',
+		'space-infix-ops': 'off',
+
+		...{}, // Import plugin
+		'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
+		'import/exports-last': 'error',
+		'import/first': 'error',
+		'import/group-exports': 'error',
+		'import/newline-after-import': ['error', { considerComments: true }],
+
+		// Perfectionist plugin
+		...perfectionistPlugin.configs['recommended-natural'].rules,
+
+		'perfectionist/sort-exports': ['error', { type: 'line-length' }],
+		'perfectionist/sort-imports': ['error', { order: 'desc', type: 'line-length' }],
 
 	},
 };

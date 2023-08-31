@@ -1,12 +1,10 @@
 
-import coreConfig from './core.js';
-import { tsFiles } from '../constants.js';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-i';
+import { tsFiles } from '../constants.js';
 
-/** @type {import('eslint').Linter.FlatConfig}*/
+/** @type {import('eslint').Linter.FlatConfig} */
 const recommended = {
-	...coreConfig,
 	files: [...tsFiles],
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	rules: {
@@ -22,20 +20,20 @@ const recommended = {
 		'@typescript-eslint/consistent-type-assertions': 'error',
 		'@typescript-eslint/consistent-type-definitions': 'error',
 		'@typescript-eslint/consistent-type-exports': ['error'],
-		'@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: true }],
-		'@typescript-eslint/no-confusing-non-null-assertion': 'error',
+		'@typescript-eslint/consistent-type-imports': ['error', { disallowTypeAnnotations: true, prefer: 'type-imports' }],
+		'@typescript-eslint/explicit-function-return-type': 'error',
 		'@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
-		'@typescript-eslint/type-annotation-spacing': 'error',
+		'@typescript-eslint/no-confusing-non-null-assertion': 'error',
 		'@typescript-eslint/no-empty-interface': 'error',
+		'@typescript-eslint/no-inferrable-types': 'error',
 		'@typescript-eslint/prefer-for-of': 'error',
 		'@typescript-eslint/prefer-function-type': 'error',
 		'@typescript-eslint/prefer-namespace-keyword': 'error',
-		'@typescript-eslint/explicit-function-return-type': 'error',
-		'@typescript-eslint/no-inferrable-types': 'error',
+		'@typescript-eslint/type-annotation-spacing': 'error',
 	},
 };
 
-/** @type {import('eslint').Linter.FlatConfig}*/
+/** @type {import('eslint').Linter.FlatConfig} */
 const strict = {
 	...recommended,
 };
