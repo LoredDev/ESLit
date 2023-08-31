@@ -5,6 +5,7 @@ import { jsFiles, tsFiles } from '../constants.js';
 const recommended = {
 	files: [...tsFiles, ...jsFiles],
 	plugins: {
+		// @ts-expect-error because plugin doesn't export correct type
 		perfectionist: perfectionistPlugin,
 	},
 	rules: {
@@ -13,6 +14,7 @@ const recommended = {
 		'comma-style': 'error',
 		'curly': ['error', 'multi-or-nest', 'consistent'],
 		'generator-star-spacing': ['error', 'before'],
+		'no-mixed-spaces-and-tabs': 'error',
 		'spaced-comment': ['error', 'always', {
 			block: {
 				balanced: true,
