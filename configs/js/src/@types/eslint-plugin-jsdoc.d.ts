@@ -10,6 +10,7 @@ import type { ESLint } from 'eslint';
  * new flat config.
  */
 declare module 'eslint-plugin-jsdoc' {
+	// eslint-disable-next-line unicorn/prevent-abbreviations
 	interface jsDocESlintPlugin extends ESLint.Plugin {
 		configs: ESLint.Plugin['configs'] & {
 			recommended: ESLint.ConfigData

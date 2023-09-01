@@ -1,3 +1,4 @@
+// eslint-disable-next-line unicorn/prevent-abbreviations
 import type { ESLint, Linter } from 'eslint';
 
 /**

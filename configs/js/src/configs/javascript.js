@@ -12,7 +12,7 @@ const recommended = {
 		...tsESLint.configs['recommended-requiring-type-checking'].rules,
 		...tsESLint.configs['eslint-recommended'].rules,
 		...tsESLint.configs.strict.rules,
-		...importPlugin.configs['recommended'].rules,
+		...importPlugin.configs.recommended.rules,
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		...jsdocPlugin.configs['recommended-typescript-flavor-error'].rules,
 	},

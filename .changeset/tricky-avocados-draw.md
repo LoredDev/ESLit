@@ -1,7 +1,7 @@
 ---
 "create-eslegant": minor
 "eslegant": minor
-"@eslegant/config": minor
+"@eslegant/js": minor
 "@eslegant/cli": minor
 ---
 

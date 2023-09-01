@@ -19,8 +19,8 @@ const config = {
 		parserOptions: {
 			project: process.env.ESLEGANT_TSCONFIG ?? [
 				'./{ts,js}config{.eslint,}.json',
-				'./packages/*/{ts,js}config{.eslint,}.json',
-				'./apps/*/{ts,js}config{.eslint,}.json',
+				'./*/{ts,js}config{.eslint,}.json',
+				'./*/*/{ts,js}config{.eslint,}.json',
 			],
 			tsconfigRootDir: process.env.ESLEGANT_ROOT ?? process.cwd(),
 		},

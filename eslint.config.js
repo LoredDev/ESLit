@@ -1,4 +1,4 @@
-import { presets } from '@eslegant/config';
+import { presets } from '@eslegant/js';
 
 export default [
 	...presets.strict,

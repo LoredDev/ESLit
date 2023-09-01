@@ -10,7 +10,7 @@ const recommended = {
 	rules: {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		...jsdocPlugin.configs['recommended-typescript-error'].rules,
-		...importPlugin.configs['typescript'].rules,
+		...importPlugin.configs.typescript.rules,
 
 		'@typescript-eslint/adjacent-overload-signatures': 'error',
 		'@typescript-eslint/array-type': 'error',

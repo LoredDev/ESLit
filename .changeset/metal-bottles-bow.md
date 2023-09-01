@@ -1,5 +1,5 @@
 ---
-"@eslegant/config": patch
+"@eslegant/js": patch
 "@eslegant/cli": patch
 ---
 
