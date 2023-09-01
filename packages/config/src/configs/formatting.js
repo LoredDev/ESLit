@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-useless-spread */
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 import { jsFiles, tsFiles } from '../constants.js';
 

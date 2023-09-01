@@ -1,5 +1,6 @@
 import tsESLint from '@typescript-eslint/eslint-plugin';
 import { jsFiles, tsFiles } from '../constants.js';
+import unicornPlugin from 'eslint-plugin-unicorn';
 import tsParser from '@typescript-eslint/parser';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-i';
@@ -29,6 +30,8 @@ const config = {
 		'import': importPlugin,
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		'jsdoc': jsdocPlugin,
+		// @ts-expect-error because eslint-plugin-unicorn doesn't export correct types
+		'unicorn': unicornPlugin,
 	},
 	settings: {
 		'import/extensions': [...tsFiles, ...jsFiles],

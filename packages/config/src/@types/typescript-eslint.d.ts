@@ -12,13 +12,13 @@ import type { ESLint, Linter } from 'eslint';
 declare module '@typescript-eslint/eslint-plugin' {
 	interface typescriptEslintPlugin extends ESLint.Plugin {
 		configs: {
+			'eslint-recommended': {
+				rules: Linter.RulesRecord
+			}
 			recommended: {
 				rules: Linter.RulesRecord
 			}
 			'recommended-requiring-type-checking': {
-				rules: Linter.RulesRecord
-			}
-			'eslint-recommended': {
 				rules: Linter.RulesRecord
 			}
 			strict: {

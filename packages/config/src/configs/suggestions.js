@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-useless-spread */
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
@@ -15,6 +16,7 @@ const recommended = {
 		'no-constant-condition': 'error',
 		'no-delete-var': 'error',
 		'no-empty': 'error',
+		'no-lonely-if': 'error',
 		'no-useless-catch': 'error',
 		'no-useless-escape': 'error',
 		'no-var': 'error',
@@ -29,6 +31,98 @@ const recommended = {
 		'prefer-template': 'error',
 		'quote-props': ['error', 'consistent-as-needed'],
 		'require-yield': 'error',
+
+		...{}, // Plugin: eslint-plugin-unicorn
+		'unicorn/better-regex': 'error',
+		'unicorn/catch-error-name': 'error',
+		'unicorn/consistent-destructuring': 'error',
+		'unicorn/consistent-function-scoping': 'error',
+		'unicorn/empty-brace-spaces': 'error',
+		'unicorn/error-message': 'error',
+		'unicorn/escape-case': 'error',
+		'unicorn/expiring-todo-comments': ['error', { allowWarningComments: false }],
+		'unicorn/explicit-length-check': 'error',
+		'unicorn/new-for-builtins': 'error',
+		'unicorn/no-abusive-eslint-disable': 'error',
+		'unicorn/no-array-callback-reference': 'error',
+		'unicorn/no-array-for-each': 'error',
+		'unicorn/no-array-method-this-argument': 'error',
+		'unicorn/no-array-push-push': 'error',
+		'unicorn/no-array-reduce': 'error',
+		'unicorn/no-await-expression-member': 'error',
+		'unicorn/no-console-spaces': 'error',
+		'unicorn/no-document-cookie': 'error',
+		'unicorn/no-empty-file': 'error',
+		'unicorn/no-for-loop': 'error',
+		'unicorn/no-hex-escape': 'error',
+		'unicorn/no-instanceof-array': 'error',
+		'unicorn/no-invalid-remove-event-listener': 'error',
+		'unicorn/no-lonely-if': 'error',
+		'unicorn/no-new-array': 'error',
+		'unicorn/no-new-buffer': 'error',
+		'unicorn/no-object-as-default-parameter': 'error',
+		'unicorn/no-process-exit': 'error',
+		'unicorn/no-static-only-class': 'error',
+		'unicorn/no-thenable': 'error',
+		'unicorn/no-this-assignment': 'error',
+		'unicorn/no-typeof-undefined': 'error',
+		'unicorn/no-unnecessary-await': 'error',
+		'unicorn/no-unreadable-array-destructuring': 'error',
+		'unicorn/no-unreadable-iife': 'error',
+		'unicorn/no-useless-fallback-in-spread': 'error',
+		'unicorn/no-useless-length-check': 'error',
+		'unicorn/no-useless-promise-resolve-reject': 'error',
+		'unicorn/no-useless-spread': 'error',
+		'unicorn/no-useless-switch-case': 'error',
+		/*
+		 * TODO (@guz013) [>=1.0.0]: 'unicorn/no-useless-undefined' rule
+		 * It could be better to use a invert to this rule instead, as
+		 * explicity code could be better then implicitly.
+		 */
+		'unicorn/no-zero-fractions': 'error',
+		'unicorn/number-literal-case': 'error',
+		'unicorn/numeric-separators-style': 'error',
+		'unicorn/prefer-array-find': ['error', { checkFromLast: true }],
+		'unicorn/prefer-array-flat': 'error',
+		'unicorn/prefer-array-flat-map': 'error',
+		'unicorn/prefer-array-index-of': 'error',
+		'unicorn/prefer-array-some': 'error',
+		'unicorn/prefer-at': 'error',
+		'unicorn/prefer-blob-reading-methods': 'error',
+		'unicorn/prefer-code-point': 'error',
+		'unicorn/prefer-date-now': 'error',
+		'unicorn/prefer-default-parameters': 'error',
+		'unicorn/prefer-event-target': 'error',
+		'unicorn/prefer-export-from': 'error',
+		'unicorn/prefer-includes': 'error',
+		'unicorn/prefer-logical-operator-over-ternary': 'error',
+		'unicorn/prefer-math-trunc': 'error',
+		'unicorn/prefer-modern-math-apis': 'error',
+		'unicorn/prefer-module': 'error',
+		'unicorn/prefer-native-coercion-functions': 'error',
+		'unicorn/prefer-negative-index': 'error',
+		'unicorn/prefer-number-properties': 'error',
+		'unicorn/prefer-optional-catch-binding': 'error',
+		'unicorn/prefer-prototype-methods': 'error',
+		'unicorn/prefer-reflect-apply': 'error',
+		'unicorn/prefer-regexp-test': 'error',
+		'unicorn/prefer-set-has': 'error',
+		'unicorn/prefer-set-size': 'error', // TODO [>=1.0.0]: Should this be on a "performance" preset?
+		'unicorn/prefer-spread': 'error', // TODO [>=1.0.0]: Should this be disabled on a "performance" preset?
+		'unicorn/prefer-string-replace-all': 'error',
+		'unicorn/prefer-string-slice': 'error',
+		'unicorn/prefer-string-starts-ends-with': 'error',
+		'unicorn/prefer-string-trim-start-end': 'error',
+		'unicorn/prefer-switch': ['error', { emptyDefaultCase: 'do-nothing-comment' }],
+		'unicorn/prefer-ternary': 'error',
+		'unicorn/prefer-top-level-await': 'error',
+		'unicorn/prefer-type-error': 'error',
+		'unicorn/relative-url-style': 'error',
+		'unicorn/require-array-join-separator': 'error',
+		'unicorn/require-number-to-fixed-digits-argument': 'error',
+		'unicorn/switch-case-braces': 'error',
+		'unicorn/text-encoding-identifier-case': 'error',
+		'unicorn/throw-new-error': 'error',
 	},
 };
 
@@ -87,7 +181,6 @@ const strict = {
 		'no-multi-assign': 'error',
 		'no-multi-str': 'error',
 		'no-negated-condition': 'error',
-		'no-nested-ternary': 'error',
 		'no-new': 'error',
 		'no-new-func': 'error',
 		'no-new-object': 'error',
@@ -144,6 +237,20 @@ const strict = {
 		'no-useless-constructor': 'off',
 		'require-await': 'off',
 		// 'no-magic-numbers': 'off',
+
+		...{}, // Plugin: eslint-plugin-unicorn
+		'no-nested-ternary': 'off',
+		'unicorn/custom-error-definition': 'error',
+		'unicorn/no-negated-condition': 'error',
+		'unicorn/no-nested-ternary': 'error',
+		/*
+		 * TODO (@guz013) [>=1.0.0]: 'unicorn/no-null' rule
+		 * It could be better to use a invert to this rule instead,
+		 * because the null type could be a better representation to
+		 * "no value" then undefined.
+		 */
+		'unicorn/no-unsafe-regex': 'error',
+		'unicorn/no-unused-properties': 'error',
 
 	},
 };

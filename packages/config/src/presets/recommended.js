@@ -7,5 +7,6 @@ const recommended = [
 	configs.typescript.recommended,
 	configs.suggestions.recommended,
 	configs.formatting.recommended,
+	configs.naming.recommended,
 ];
 export default recommended;

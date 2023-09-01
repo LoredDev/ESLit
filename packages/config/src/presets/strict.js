@@ -7,5 +7,6 @@ const strict = [
 	configs.typescript.strict,
 	configs.suggestions.strict,
 	configs.formatting.strict,
+	configs.naming.strict,
 ];
 export default strict;

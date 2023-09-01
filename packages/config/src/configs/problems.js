@@ -1,4 +1,5 @@
-import { jsFiles, tsFiles } from '../constants';
+/* eslint-disable unicorn/no-useless-spread */
+import { jsFiles, tsFiles } from '../constants.js';
 
 /**
  * This config relates to possible logic and syntax errors JavaScript and TypeScript
