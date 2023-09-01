@@ -8,7 +8,8 @@ import overrides from './overrides.js';
 import naming from './naming.js';
 import core from './core.js';
 
-const configs = { core,
+const configs = {
+	core,
 	environments,
 	formatting,
 	javascript,
