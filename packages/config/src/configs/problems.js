@@ -1,9 +1,12 @@
+import { jsFiles, tsFiles } from '../constants';
+
 /**
  * This config relates to possible logic and syntax errors JavaScript and TypeScript
  * Recommended alternative, better for projects in prototyping phases.
  * @type {import('eslint').Linter.FlatConfig}
  */
 const recommended = {
+	files: [...tsFiles, ...jsFiles],
 	rules: {
 		...{}, // ESLint rules
 		'constructor-super': 'error',
@@ -73,6 +76,8 @@ const recommended = {
 const strict = {
 	...recommended,
 	rules: {
+		...recommended.rules,
+
 		...{}, // ESLint rules
 		'no-constant-binary-expression': 'error',
 		'no-new-native-nonconstructor': 'error',

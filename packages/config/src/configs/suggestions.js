@@ -40,6 +40,7 @@ const recommended = {
 const strict = {
 	...recommended,
 	rules: {
+		...recommended.rules,
 
 		...{}, // ESLint rules
 		'accessor-pairs': 'error',

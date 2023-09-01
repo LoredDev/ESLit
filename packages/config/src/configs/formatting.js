@@ -124,6 +124,9 @@ const recommended = {
  */
 const strict = {
 	...recommended,
+	rules: {
+		...recommended.rules,
+	},
 };
 
 const formatting = { recommended, strict };
