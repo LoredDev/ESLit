@@ -44,9 +44,10 @@ const recommended = createVariations({
 		'no-irregular-whitespace': 'error',
 		'no-misleading-character-class': 'error',
 		'no-new-symbol': 'error',
+		'no-nonoctal-decimal-escape': 'error',
 		'no-obj-calls': 'error',
 		'no-octal': 'error',
-		'no-octal-decimal-escape': 'error',
+		'no-octal-escape': 'error',
 		'no-prototype-builtins': 'error',
 		'no-regex-spaces': 'error',
 		'no-self-assign': 'error',
@@ -61,7 +62,6 @@ const recommended = createVariations({
 		'no-unsafe-negation': 'error',
 		'no-unsafe-optional-chaining': 'error',
 		'no-unused-labels': 'error',
-		'no-unused-vars': 'error',
 		'no-useless-backreference': 'error',
 		'use-isnan': 'error',
 		'valid-typeof': 'error',
@@ -69,8 +69,10 @@ const recommended = createVariations({
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/no-loss-of-precision': 'error',
 		'@typescript-eslint/no-redeclare': 'error',
+		'@typescript-eslint/no-unused-vars': 'error',
 		'no-loss-of-precision': 'off',
 		'no-redeclare': 'off',
+		'no-unused-vars': 'off',
 
 		...{}, // Plugin: eslint-plugin-import
 		'import/default': 'error',
@@ -95,7 +97,6 @@ const strict = createVariations({
 		'no-unmodified-loop-condition': 'error',
 		'no-unreachable-loop': 'error',
 		'no-unused-private-class-members': 'error',
-		'no-use-before-define': 'error',
 		'require-atomic-updates': 'error',
 
 		...{}, // Plugin: eslint-plugin-import

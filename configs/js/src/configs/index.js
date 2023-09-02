@@ -11,6 +11,7 @@ import documentation from './documentation.js';
 import suggestions from './suggestions.js';
 import formatting from './formatting.js';
 import overrides from './overrides.js';
+import problems from './problems.js';
 import naming from './naming.js';
 import core from './core.js';
 
@@ -21,6 +22,7 @@ const configs = {
 	formatting,
 	naming,
 	overrides,
+	problems,
 	suggestions,
 	'suggestions-typescript': typescript,
 };

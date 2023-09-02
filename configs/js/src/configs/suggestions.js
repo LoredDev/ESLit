@@ -318,6 +318,7 @@ const strict = createVariations({
 		'no-underscore-dangle': 'error',
 		'no-unneeded-ternary': 'error',
 		'no-unused-expressions': 'error',
+		'no-use-before-define': 'error',
 		'no-useless-call': 'error',
 		'no-useless-rename': 'error',
 		'no-useless-return': 'error',
