@@ -131,14 +131,22 @@ const recommended = {
 		'import/group-exports': 'error',
 
 		...{}, // Plugin: eslint-plugin-perfectionist
-		...perfectionistPlugin.configs['recommended-natural'].rules,
-
+		'perfectionist/sort-array-includes': ['error', { type: 'natural' }],
+		'perfectionist/sort-classes': ['error', { type: 'natural' }],
+		'perfectionist/sort-enums': ['error', { type: 'natural' }],
 		'perfectionist/sort-exports': ['error', { type: 'line-length' }],
 		'perfectionist/sort-imports': ['error', {
 			order: 'desc',
 			type: 'line-length',
 		}],
 		'perfectionist/sort-interfaces': ['error', { type: 'natural' }],
+		'perfectionist/sort-jsx-props': ['error', { type: 'natural' }],
+		'perfectionist/sort-map-elements': ['error', { type: 'natural' }],
+		'perfectionist/sort-named-exports': ['error', { type: 'natural' }],
+		'perfectionist/sort-named-imports': ['error', { type: 'natural' }],
+		'perfectionist/sort-object-types': ['error', { type: 'natural' }],
+		'perfectionist/sort-objects': ['error', { type: 'natural' }],
+		'perfectionist/sort-union-types': ['error', { type: 'natural' }],
 
 	},
 };

@@ -37,7 +37,8 @@ const recommended = {
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		/*
 		 * '@typescript-eslint/adjacent-overload-signatures': 'error',
-		 * Incompatible with perfectionist/sort-interfaces
+		 * Incompatible with perfectionist/sort-interfaces and
+		 * perfectionist/sort-object-types.
 		 */
 		'@typescript-eslint/array-type': 'error',
 		'@typescript-eslint/await-thenable': 'error',
