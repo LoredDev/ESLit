@@ -2,6 +2,10 @@ import type { Linter } from 'eslint';
 
 const configs: Readonly<{
 	core: Linter.FlatConfig,
+	documentation: {
+		recommended: Linter.FlatConfig,
+		strict: Linter.FlatConfig,
+	},
 	environments: {
 		browser: {
 			recommended: Linter.FlatConfig,

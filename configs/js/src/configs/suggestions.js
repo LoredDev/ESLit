@@ -192,7 +192,7 @@ const recommended = {
 		'unicorn/text-encoding-identifier-case': 'error',
 		'unicorn/throw-new-error': 'error',
 
-		...{}, // Plugin: eslint-plugin-import'error',
+		...{}, // Plugin: eslint-plugin-import
 		'import/no-amd': 'error',
 		'import/no-commonjs': 'error',
 		'import/no-deprecated': 'error',
@@ -202,6 +202,36 @@ const recommended = {
 		'import/no-named-as-default-member': 'error',
 		'import/no-self-import': 'error',
 		'import/no-useless-path-segments': 'error',
+
+		...{}, // Plugin: eslint-plugin-jsdoc
+		'jsdoc/check-alignment': 'error',
+		'jsdoc/check-param-names': 'error',
+		'jsdoc/check-property-names': 'error',
+		'jsdoc/check-syntax': 'error',
+		'jsdoc/check-tag-names': 'error',
+		'jsdoc/check-types': 'error',
+		'jsdoc/check-values': 'error',
+		'jsdoc/empty-tags': 'error',
+		'jsdoc/implements-on-classes': 'error',
+		'jsdoc/multiline-blocks': 'error',
+		'jsdoc/no-multi-asterisks': ['error', { allowWhitespace: true }],
+		'jsdoc/require-asterisk-prefix': ['error', 'always'],
+		'jsdoc/require-jsdoc': 'error',
+		'jsdoc/require-param': 'error',
+		'jsdoc/require-param-name': 'error',
+		'jsdoc/require-param-type': 'error',
+		'jsdoc/require-property': 'error',
+		'jsdoc/require-property-name': 'error',
+		'jsdoc/require-property-type': 'error',
+		'jsdoc/require-returns': 'error',
+		'jsdoc/require-returns-check': 'error',
+		'jsdoc/require-returns-type': 'error',
+		'jsdoc/require-throws': 'error',
+		'jsdoc/require-yields': 'error',
+		'jsdoc/require-yields-check': 'error',
+		'jsdoc/sort-tags': 'error',
+		'jsdoc/valid-types': 'error',
+
 	},
 };
 
@@ -358,6 +388,15 @@ const strict = {
 		'import/no-unassigned-import': ['error', { allow: ['**/*.css', '**/*.scss', '**/*.less'] }],
 		'import/prefer-default-export': 'error',
 		'import/unambiguous': 'error',
+
+		...{}, // Plugin: eslint-plugin-jsdoc
+		'jsdoc/check-access': 'error',
+		'jsdoc/check-indentation': 'error',
+		'jsdoc/informative-docs': 'error',
+		'jsdoc/multiline-blocks': ['error', { noSingleLineBlocks: true }],
+		'jsdoc/no-bad-blocks': 'error',
+		'jsdoc/no-blank-block-descriptions': 'error',
+		'jsdoc/no-blank-blocks': 'error',
 
 	},
 };
