@@ -1,2 +1,2 @@
-export { default as presets } from './presets';
-export { default as configs } from './configs';
+export { default as presets } from './presets/index.d.ts';
+export { default as configs } from './configs/index.d.ts';

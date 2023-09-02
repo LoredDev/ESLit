@@ -76,6 +76,10 @@ const recommended = {
 		'@typescript-eslint/key-spacing': ['error', { afterColon: true, beforeColon: false }],
 		'@typescript-eslint/keyword-spacing': ['error', { after: true, before: true }],
 		'@typescript-eslint/lines-between-class-members': ['error'],
+		'@typescript-eslint/member-delimiter-style': ['error', {
+			multiline: { delimiter: 'comma', requireLast: true },
+			singleline: { delimiter: 'comma', requireLast: true },
+		}],
 		'@typescript-eslint/no-extra-parens': ['error', 'functions'],
 		'@typescript-eslint/object-curly-spacing': ['error', 'always'],
 		'@typescript-eslint/quotes': ['error', 'single'],
@@ -87,6 +91,7 @@ const recommended = {
 			named: 'never',
 		}],
 		'@typescript-eslint/space-infix-ops': 'error',
+		'@typescript-eslint/type-annotation-spacing': ['error', { after: true, before: false }],
 		'block-spacing': 'off',
 		'brace-style': 'off',
 		'comma-dangle': 'off',
@@ -103,7 +108,7 @@ const recommended = {
 		'space-before-function-paren': 'off',
 		'space-infix-ops': 'off',
 
-		...{}, // Plugin: eslint-plugin-i (eslint-plugin-import)
+		...{}, // Plugin: eslint-plugin-import
 		'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
 		'import/exports-last': 'error',
 		'import/first': 'error',
