@@ -44,6 +44,7 @@ const config = {
 			node: true,
 			typescript: true,
 		},
+		'jsdoc/mode': 'typescript',
 	},
 };
 export default config;

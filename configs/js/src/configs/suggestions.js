@@ -1,13 +1,15 @@
+/* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
-// eslint-disable-next-line import/no-relative-parent-imports
+import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
+
 
 /**
  * This config suggest alternate ways of doing things in JavaScript and TypeScript
  * Recommended alternative, better for projects in prototyping phases.
- * @type {import('eslint').Linter.FlatConfig}
+ * @type {import('./index.d.ts').ConfigVariations}
  */
-const recommended = {
+const recommended = createVariations({
 	files: [...tsFiles, ...jsFiles],
 	rules: {
 		'camelcase': 'error',
@@ -242,20 +244,20 @@ const recommended = {
 		'jsdoc/require-yields': 'error',
 		'jsdoc/require-yields-check': 'error',
 		'jsdoc/sort-tags': 'error',
-		'jsdoc/valid-types': 'error',
+		// 'jsdoc/valid-types': 'error', This is already handled by Typescript type checking mostly
 
 	},
-};
+});
 
 /**
  * This config suggest alternate ways of doing things in JavaScript and TypeScript
  * Strict alternative, better for projects in refactoring and/or production phases.
- * @type {import('eslint').Linter.FlatConfig}
+ * @type {import('./index.d.ts').ConfigVariations}
  */
-const strict = {
-	...recommended,
+const strict = createVariations({
+	...recommended.error,
 	rules: {
-		...recommended.rules,
+		...recommended.error.rules,
 
 		...{}, // ESLint rules
 		'accessor-pairs': 'error',
@@ -363,7 +365,6 @@ const strict = {
 		'@typescript-eslint/parameter-properties': 'error',
 		'@typescript-eslint/prefer-enum-initializers': 'error',
 		'@typescript-eslint/prefer-readonly': 'error',
-		'@typescript-eslint/prefer-readonly-parameter-types': 'error',
 		'@typescript-eslint/promise-function-async': 'error',
 		'@typescript-eslint/require-array-sort-compare': 'error',
 		'@typescript-eslint/require-await': 'error',
@@ -428,7 +429,7 @@ const strict = {
 		'jsdoc/no-blank-blocks': 'error',
 
 	},
-};
+});
 
 const suggestions = { recommended, strict };
 export default suggestions;

@@ -1,13 +1,14 @@
+/* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
-// eslint-disable-next-line import/no-relative-parent-imports
+import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
  * This config relates to possible logic and syntax errors JavaScript and TypeScript
  * Recommended alternative, better for projects in prototyping phases.
- * @type {import('eslint').Linter.FlatConfig}
+ * @type {import('./index.d.ts').ConfigVariations}
  */
-const recommended = {
+const recommended = createVariations({
 	files: [...tsFiles, ...jsFiles],
 	rules: {
 		...{}, // ESLint rules
@@ -75,17 +76,17 @@ const recommended = {
 		'import/namespace': 'error',
 		'import/no-unresolved': 'error',
 	},
-};
+});
 
 /**
  * This config relates to possible logic and syntax errors JavaScript and TypeScript
  * Strict alternative, better for projects in refactoring and/or production phases.
- * @type {import('eslint').Linter.FlatConfig}
+ * @type {import('./index.d.ts').ConfigVariations}
  */
-const strict = {
-	...recommended,
+const strict = createVariations({
+	...recommended.error,
 	rules: {
-		...recommended.rules,
+		...recommended.error.rules,
 
 		...{}, // ESLint rules
 		'no-constant-binary-expression': 'error',
@@ -102,7 +103,7 @@ const strict = {
 		...{}, // Plugin: eslint-plugin-import
 		'import/no-extraneous-dependencies': 'error',
 	},
-};
+});
 
 const problems = { recommended, strict };
 export default problems;

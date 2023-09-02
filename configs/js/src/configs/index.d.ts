@@ -1,41 +1,58 @@
 import type { Linter } from 'eslint';
 
+interface ConfigVariations {
+	/**
+	 * Enable all rules with `error` level.
+	 */
+	error: Linter.FlatConfig,
+	/**
+	 * Disable all rules in this config.
+	 */
+	off: Linter.FlatConfig,
+	/**
+	 * Enable all rules with `warn` level.
+	 */
+	warn: Linter.FlatConfig,
+}
+
 const configs: Readonly<{
 	core: Linter.FlatConfig,
 	documentation: {
-		recommended: Linter.FlatConfig,
-		strict: Linter.FlatConfig,
+		recommended: ConfigVariations,
+		strict: ConfigVariations,
 	},
 	environments: {
 		browser: {
-			recommended: Linter.FlatConfig,
-			strict: Linter.FlatConfig,
+			recommended: ConfigVariations,
+			strict: ConfigVariations,
 		},
 		node: {
-			commonjs: Linter.FlatConfig,
-			recommended: Linter.FlatConfig,
-			strict: Linter.FlatConfig,
+			commonjs: ConfigVariations,
+			recommended: ConfigVariations,
+			strict: ConfigVariations,
 		},
 	},
 	formatting: {
-		recommended: Linter.FlatConfig,
-		strict: Linter.FlatConfig,
+		recommended: ConfigVariations,
+		strict: ConfigVariations,
 	},
 	naming: {
-		recommended: Linter.FlatConfig,
-		strict: Linter.FlatConfig,
+		recommended: ConfigVariations,
+		strict: ConfigVariations,
 	},
 	overrides: {
-		performance: Linter.FlatConfig,
+		'inferrable-types': ConfigVariations,
+		performance: ConfigVariations,
 	},
 	suggestions: {
-		recommended: Linter.FlatConfig,
-		strict: Linter.FlatConfig,
+		recommended: ConfigVariations,
+		strict: ConfigVariations,
 	},
 	'suggestions-typescript': {
-		recommended: Linter.FlatConfig,
-		strict: Linter.FlatConfig,
+		recommended: ConfigVariations,
+		strict: ConfigVariations,
 	},
 }>;
 
 export default configs;
+export type { ConfigVariations };

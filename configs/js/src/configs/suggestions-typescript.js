@@ -1,10 +1,10 @@
+/* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
+import { createVariations } from '../lib/rule-variations.js';
+import { jsFiles, tsFiles } from '../constants.js';
 
-// eslint-disable-next-line import/no-relative-parent-imports
-import { tsFiles } from '../constants.js';
-
-/** @type {import('eslint').Linter.FlatConfig} */
-const recommended = {
+/** @type {import('./index.d.ts').ConfigVariations} */
+const recommended = createVariations({
 	files: [...tsFiles],
 	rules: {
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
@@ -17,18 +17,18 @@ const recommended = {
 		'jsdoc/require-property-type': 'off',
 		'jsdoc/require-returns-type': 'off',
 	},
-};
+});
 
-/** @type {import('eslint').Linter.FlatConfig} */
-const strict = {
-	...recommended,
+/** @type {import('./index.d.ts').ConfigVariations} */
+const strict = createVariations({
+	...recommended.error,
 	rules: {
-		...recommended.rules,
+		...recommended.error.rules,
 
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/explicit-member-accessibility': 'error',
 		'@typescript-eslint/explicit-module-boundary-types': 'error',
 	},
-};
+});
 const typescript = { recommended, strict };
 export default typescript;
