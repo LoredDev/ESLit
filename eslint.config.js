@@ -1,5 +1,16 @@
-import { presets } from '@eslegant/js';
+import { configs, defineConfig, presets } from '@eslegant/js';
 
-export default [
+export default defineConfig([
 	...presets.strict,
-];
+	configs.environments.node.strict.error,
+	{
+		...configs.documentation.strict.error,
+		files: ['configs/**/*.js', 'configs/**/*.ts'],
+	},
+	{
+		files: ['**/*.{js,ts,cjs,tjs,mjs,mts,jsx,tsx}'],
+		rules: {
+			'jsdoc/check-values': ['error', { allowedLicenses: ['MIT'] }],
+		},
+	},
+]);
