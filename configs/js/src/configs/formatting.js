@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/no-useless-spread */
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
@@ -107,7 +108,6 @@ const recommended = {
 		'import/exports-last': 'error',
 		'import/first': 'error',
 		'import/group-exports': 'error',
-		'import/newline-after-import': ['error', { considerComments: true }],
 
 		...{}, // Plugin: eslint-plugin-perfectionist
 		...perfectionistPlugin.configs['recommended-natural'].rules,

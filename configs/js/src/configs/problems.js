@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/no-useless-spread */
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
@@ -66,6 +67,13 @@ const recommended = {
 		'@typescript-eslint/no-redeclare': 'error',
 		'no-loss-of-precision': 'off',
 		'no-redeclare': 'off',
+
+		...{}, // Plugin: eslint-plugin-import
+		'import/default': 'error',
+		'import/export': 'error',
+		'import/named': 'error',
+		'import/namespace': 'error',
+		'import/no-unresolved': 'error',
 	},
 };
 
@@ -90,6 +98,9 @@ const strict = {
 		'no-unused-private-class-members': 'error',
 		'no-use-before-define': 'error',
 		'require-atomic-updates': 'error',
+
+		...{}, // Plugin: eslint-plugin-import
+		'import/no-extraneous-dependencies': 'error',
 	},
 };
 

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-relative-parent-imports
 import configs from '../configs/index.js';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */

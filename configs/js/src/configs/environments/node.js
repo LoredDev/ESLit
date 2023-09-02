@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/no-useless-spread */
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../../constants.js';
 
 /** @type {import('eslint').Linter.FlatConfig} */
@@ -11,6 +12,9 @@ const commonjs = {
 
 		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/prefer-module': 'off',
+
+		...{}, // Plugin: eslint-plugin-import
+		'import/no-commonjs': 'off',
 	},
 };
 
@@ -20,6 +24,9 @@ const recommended = {
 	rules: {
 		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/prefer-node-protocol': 'error',
+
+		...{}, // Plugin: eslint-plugin-import
+		'import/no-dynamic-require': 'error',
 	},
 };
 

@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/no-useless-spread */
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
@@ -190,6 +191,17 @@ const recommended = {
 		'unicorn/switch-case-braces': 'error',
 		'unicorn/text-encoding-identifier-case': 'error',
 		'unicorn/throw-new-error': 'error',
+
+		...{}, // Plugin: eslint-plugin-import'error',
+		'import/no-amd': 'error',
+		'import/no-commonjs': 'error',
+		'import/no-deprecated': 'error',
+		'import/no-duplicates': 'error',
+		'import/no-empty-named-blocks': 'error',
+		'import/no-named-as-default': 'error',
+		'import/no-named-as-default-member': 'error',
+		'import/no-self-import': 'error',
+		'import/no-useless-path-segments': 'error',
 	},
 };
 
@@ -331,6 +343,21 @@ const strict = {
 		 */
 		'unicorn/no-unsafe-regex': 'error',
 		'unicorn/no-unused-properties': 'error',
+
+		...{}, // Plugin: eslint-plugin-import
+		'import/extensions': ['error', 'always', { ignorePackages: true }],
+		'import/max-dependencies': ['error', { ignoreTypeImports: true, max: 10 }],
+		'import/no-absolute-path': 'error',
+		'import/no-anonymous-default-export': 'error',
+		'import/no-cycle': 'error',
+		'import/no-import-module-exports': 'error',
+		'import/no-mutable-exports': 'error',
+		'import/no-named-default': 'error',
+		'import/no-relative-packages': 'error',
+		'import/no-relative-parent-imports': 'error',
+		'import/no-unassigned-import': ['error', { allow: ['**/*.css', '**/*.scss', '**/*.less'] }],
+		'import/prefer-default-export': 'error',
+		'import/unambiguous': 'error',
 
 	},
 };

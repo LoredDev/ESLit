@@ -3,7 +3,7 @@
 This is a list of rules that implements the same features and/or end
 up fixing the same errors.
 
-- **[`@typescript/member-ordering`][ts/member-ordering], [`@typescript/sort-type-constituents`][ts/sort-type-constituents]**: 
+- **[`@typescript/member-ordering`][ts/member-ordering], [`@typescript/sort-type-constituents`][ts/sort-type-constituents], [`import/order`][in/order]**: 
   implements the same functions from [`eslint-plugin-perfectionist`][plugin-perfectionist]
 
 - **[`unicorn/no-for-loop`][un/no-for-loop] and [`@typescript/prefer-for-of`][ts/prefer-for-of]**: 
@@ -25,5 +25,7 @@ up fixing the same errors.
 [un/no-for-loop]: <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/6d15a02d48de7ecfc38d0683a8487b2f937d83a0/docs/rules/no-for-loop.md>
 [un/prefer-includes]: <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/6d15a02d48de7ecfc38d0683a8487b2f937d83a0/docs/rules/prefer-includes.md>
 [un/prefer-regexp-test]: <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/6d15a02d48de7ecfc38d0683a8487b2f937d83a0/docs/rules/prefer-regexp-test.md>
+
+[in/order]: <https://github.com/import-js/eslint-plugin-import/blob/6b95a021938139726b3f862beb37012d6e2afab2/docs/rules/order.md>
 
 [plugin-perfectionist]: <https://eslint-plugin-perfectionist.azat.io/>

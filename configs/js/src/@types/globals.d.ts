@@ -1,10 +1,10 @@
 declare module 'globals' {
 	const globals: {
-		browser: Record<string, boolean>
-		builtin: Record<string, boolean>
-		commonjs: Record<string, boolean>
-		node: Record<string, boolean>
-		nodeBuiltin: Record<string, boolean>
+		browser: { [rule: string]: boolean }
+		builtin: { [rule: string]: boolean }
+		commonjs: { [rule: string]: boolean }
+		node: { [rule: string]: boolean }
+		nodeBuiltin: { [rule: string]: boolean }
 	};
 	export default globals;
 }

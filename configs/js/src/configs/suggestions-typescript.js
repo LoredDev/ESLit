@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line import/no-relative-parent-imports
 import { tsFiles } from '../constants.js';
 
 /** @type {import('eslint').Linter.FlatConfig} */

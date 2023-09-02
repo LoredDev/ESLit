@@ -1,4 +1,5 @@
 import tsESLint from '@typescript-eslint/eslint-plugin';
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tsParser from '@typescript-eslint/parser';

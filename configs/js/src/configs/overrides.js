@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 
 // TODO [>=1.0.0]: Create a separate config for performance related practices

@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/no-useless-spread */
+// eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../../constants.js';
 
 /** @type {import('eslint').Linter.FlatConfig} */
