@@ -28,6 +28,10 @@ const configs: Readonly<{
 		recommended: Linter.FlatConfig
 		strict: Linter.FlatConfig
 	}
+	'suggestions-typescript': {
+		recommended: Linter.FlatConfig
+		strict: Linter.FlatConfig
+	}
 }>;
 
 export default configs;

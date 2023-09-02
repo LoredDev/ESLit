@@ -5,6 +5,11 @@ import { jsFiles, tsFiles } from '../../constants.js';
 const commonjs = {
 	files: ['**/*.cts', '**/*.cjs'],
 	rules: {
+		...{}, // Plugin: @typescript-eslint/eslint-plugin
+		'@typescript-eslint/no-require-imports': 'off',
+		'@typescript-eslint/no-var-requires': 'off',
+
+		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/prefer-module': 'off',
 	},
 };

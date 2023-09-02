@@ -6,8 +6,7 @@ const strict = [
 	// TODO [>=1.0.0]: remove .javascript and .typescript configs
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	configs.javascript.strict,
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-	configs.typescript.strict,
+	configs['suggestions-typescript'].strict,
 	configs.suggestions.strict,
 	configs.formatting.strict,
 	configs.naming.strict,

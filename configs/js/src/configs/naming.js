@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-useless-spread */
 import { jsFiles, tsFiles } from '../constants.js';
 
 /**
@@ -8,6 +9,7 @@ import { jsFiles, tsFiles } from '../constants.js';
 const recommended = {
 	files: [...tsFiles, ...jsFiles],
 	rules: {
+		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/filename-case': ['error', { case: 'kebabCase' }],
 		'unicorn/prevent-abbreviations': 'error',
 	},
@@ -22,7 +24,12 @@ const strict = {
 	...recommended,
 	rules: {
 		...recommended.rules,
+		...{}, // Plugin: @typescript-eslint/eslint-plugin
+		// '@typescript-eslint/naming-convention': 'error',
+
+		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/no-keyword-prefix': 'error',
+
 	},
 };
 

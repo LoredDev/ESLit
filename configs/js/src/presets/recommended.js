@@ -6,8 +6,7 @@ const recommended = [
 	// TODO [>=1.0.0]: remove .javascript and .typescript configs
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	configs.javascript.recommended,
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-	configs.typescript.recommended,
+	configs['suggestions-typescript'].recommended,
 	configs.suggestions.recommended,
 	configs.formatting.recommended,
 	configs.naming.recommended,

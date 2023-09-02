@@ -1,7 +1,7 @@
 
+import typescript from './suggestions-typescript.js';
 import environments from './environments/index.js';
 import suggestions from './suggestions.js';
-import typescript from './typescript.js';
 import formatting from './formatting.js';
 import javascript from './javascript.js';
 import overrides from './overrides.js';
@@ -16,6 +16,6 @@ const configs = {
 	naming,
 	overrides,
 	suggestions,
-	typescript,
+	'suggestions-typescript': typescript,
 };
 export default configs;

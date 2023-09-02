@@ -10,5 +10,15 @@ const performance = {
 	},
 };
 
-const overrides = { performance };
+/** @type {import('eslint').Linter.FlatConfig} */
+const inferrableTypes = {
+	files: [...tsFiles],
+	rules: {
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-inferrable-types': 'error',
+		'@typescript-eslint/typedef': 'off',
+	},
+};
+
+const overrides = { inferrableTypes, performance };
 export default overrides;
