@@ -1,10 +1,19 @@
+/**
+ * @file
+ * Overrides for specific scenarios or preferences of users. The objects
+ * are supposed to be placed on the end of the arrays and can
+ * change configs of multiple other categories.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ * @todo This file is not completed fully.
+ */
+
 /* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
 import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
 
 // TODO [>=1.0.0]: Create a separate config for performance related practices
-/** @type {import('./index.d.ts').ConfigVariations} */
 const performance = createVariations({
 	files: [...tsFiles, ...jsFiles],
 	rules: {
@@ -13,7 +22,6 @@ const performance = createVariations({
 	},
 });
 
-/** @type {import('./index.d.ts').ConfigVariations} */
 const inferrableTypes = createVariations({
 	files: [...tsFiles],
 	rules: {

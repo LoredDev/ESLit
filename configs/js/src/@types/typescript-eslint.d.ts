@@ -1,3 +1,12 @@
+/**
+ * @file
+ * Type declaration for the `@typescript-eslint/eslint-plugin` and
+ * `@typescript-eslint/parser` packages in a attempt to make it
+ * compatible with the new flat config.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
+
 import type { ESLint, Linter } from 'eslint';
 
 /**

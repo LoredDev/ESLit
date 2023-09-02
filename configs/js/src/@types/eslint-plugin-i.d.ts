@@ -1,3 +1,11 @@
+/**
+ * @file
+ * Type declaration for the `eslint-plugin-i` package in a attempt to make it
+ * compatible with the new flat config.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
+
 // eslint-disable-next-line unicorn/prevent-abbreviations
 import type { ESLint, Linter } from 'eslint';
 

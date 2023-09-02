@@ -1,18 +1,22 @@
+/**
+ * @file
+ * Configuration object that adds necessary plugins for the other objects.
+ * See more info on the configs type declaration file.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
+
 import tsESLint from '@typescript-eslint/eslint-plugin';
 // eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
 import unicornPlugin from 'eslint-plugin-unicorn';
+// @ts-expect-error because the package doesn't export correct types
 import tsParser from '@typescript-eslint/parser';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-i';
 import process from 'node:process';
 
-/**
- * This config adds necessary plugins and configuration for ESLint
- * to use in the other configs **This should always be in the top
- * of the configuration array**.
- * @type {import('eslint').Linter.FlatConfig}
- */
+/** @type {import('eslint').Linter.FlatConfig} */
 const config = {
 	files: [...tsFiles, ...jsFiles],
 	languageOptions: {

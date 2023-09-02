@@ -1,13 +1,16 @@
+/**
+ * @file
+ * Configuration objects for preventing possible syntax errors.
+ * See more info on the configs type declaration file.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
+
 /* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
 import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
 
-/**
- * This config relates to possible logic and syntax errors JavaScript and TypeScript
- * Recommended alternative, better for projects in prototyping phases.
- * @type {import('./index.d.ts').ConfigVariations}
- */
 const recommended = createVariations({
 	files: [...tsFiles, ...jsFiles],
 	rules: {
@@ -78,11 +81,6 @@ const recommended = createVariations({
 	},
 });
 
-/**
- * This config relates to possible logic and syntax errors JavaScript and TypeScript
- * Strict alternative, better for projects in refactoring and/or production phases.
- * @type {import('./index.d.ts').ConfigVariations}
- */
 const strict = createVariations({
 	...recommended.error,
 	rules: {

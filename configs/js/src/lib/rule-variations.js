@@ -1,11 +1,22 @@
+/**
+ * @file Utility functions used in the package to manipulate rules records.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
 
 /**
+ * @typedef {import('../configs/index').ConfigVariations} ConfigVariations
  * @typedef {import('eslint').Linter.RuleEntry} RuleEntry
  * @typedef {import('eslint').Linter.RuleLevel} RuleLevel
  * @typedef {import('eslint').Linter.FlatConfig} FlatConfig
  */
 
 /**
+ * Changes the level of a rule entry. Checking if it
+ * is a Array or a simple RuleLevel entry.
+ *
+ * Useful in conjunction with {@link iterateRules `iterateRules()`} function.
+ *
  * @param {Readonly<RuleEntry>} ruleEntry
  * - The rule entry to be modified.
  * @param {RuleLevel} level
@@ -27,6 +38,12 @@ function changeLevel(ruleEntry, level) {
 }
 
 /**
+ * Iterates through a rule entry record, using the handler
+ * on each entry and returns the resulting object.
+ *
+ * Useful for applying plugin prefixes or changing the rule
+ * level of the entries.
+ *
  * @param {Readonly<{[name: string]: RuleEntry}>} rules
  * - The object to be iterated through.
  * @param {([name, entry]: [string, RuleEntry]) => [string, RuleEntry]} handler
@@ -40,9 +57,14 @@ function iterateRules(rules, handler) {
 }
 
 /**
+ * Creates {@link ConfigVariations variations} for the given configuration object.
+ * With `error`, `warn` and `off` rule levels.
+ *
+ * Used in the configuration objects of this package.
+ *
  * @param {Readonly<FlatConfig>} config
  * - The configuration object to create `error`, `warn`, and `off` variations.
- * @returns {{error: FlatConfig, warn: FlatConfig, off: FlatConfig}}
+ * @returns {ConfigVariations}
  */
 function createVariations(config) {
 	const configError = {

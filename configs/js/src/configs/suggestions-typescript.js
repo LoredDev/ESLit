@@ -1,9 +1,16 @@
+/**
+ * @file
+ * Configuration objects that enforces different ways of coding in TypeScript specifically.
+ * See more info on the configs type declaration file.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
+
 /* eslint-disable import/no-relative-parent-imports */
 /* eslint-disable unicorn/no-useless-spread */
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { tsFiles } from '../constants.js';
 
-/** @type {import('./index.d.ts').ConfigVariations} */
 const recommended = createVariations({
 	files: [...tsFiles],
 	rules: {
@@ -19,7 +26,6 @@ const recommended = createVariations({
 	},
 });
 
-/** @type {import('./index.d.ts').ConfigVariations} */
 const strict = createVariations({
 	...recommended.error,
 	rules: {

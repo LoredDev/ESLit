@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Main export files for all the configs objects, merging then in one `configs` object.
+ * @license MIT
+ * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
+ */
 
 import typescript from './suggestions-typescript.js';
 import environments from './environments/index.js';
