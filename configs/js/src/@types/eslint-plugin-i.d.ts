@@ -5,9 +5,9 @@ import type { ESLint, Linter } from 'eslint';
  * @summary ESLint plugin with rules that help validate proper imports.
  *
  * ---
- * **Note:** Types in this project where overridden to be compatible with ESLint new flat
- * config types. ESlint already has backwards compatibility for plugins not created in the
- * new flat config.
+ * **Note:** Types in this project where overridden to be compatible with
+ * ESLint new flat config types. ESlint already has backwards compatibility
+ * for plugins not created in the new flat config.
  * @see {@link https://www.npmjs.com/package/eslint-plugin-import npm package}
  */
 declare module 'eslint-plugin-i' {

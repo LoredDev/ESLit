@@ -11,6 +11,7 @@ const recommended = {
 	files: [...tsFiles, ...jsFiles],
 	rules: {
 		'camelcase': 'error',
+		'max-len': ['error', { code: 80, comments: 100, ignoreUrls: true }],
 		'no-case-declarations': 'error',
 		'no-confusing-arrow': 'error',
 		'no-console': 'error',
@@ -34,7 +35,10 @@ const recommended = {
 		'require-yield': 'error',
 
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
-		'@typescript-eslint/adjacent-overload-signatures': 'error',
+		/*
+		 * '@typescript-eslint/adjacent-overload-signatures': 'error',
+		 * Incompatible with perfectionist/sort-interfaces
+		 */
 		'@typescript-eslint/array-type': 'error',
 		'@typescript-eslint/await-thenable': 'error',
 		'@typescript-eslint/ban-ts-comment': 'error',
@@ -42,6 +46,7 @@ const recommended = {
 		'@typescript-eslint/ban-types': 'error',
 		'@typescript-eslint/class-literal-property-style': 'error',
 		'@typescript-eslint/consistent-generic-constructors': 'error',
+		// eslint-disable-next-line max-len
 		'@typescript-eslint/consistent-indexed-object-style': ['error', 'index-signature'],
 		'@typescript-eslint/consistent-type-assertions': 'error',
 		'@typescript-eslint/consistent-type-definitions': 'error',
@@ -108,7 +113,9 @@ const recommended = {
 		'unicorn/empty-brace-spaces': 'error',
 		'unicorn/error-message': 'error',
 		'unicorn/escape-case': 'error',
-		'unicorn/expiring-todo-comments': ['error', { allowWarningComments: false }],
+		'unicorn/expiring-todo-comments': ['error', {
+			allowWarningComments: false,
+		}],
 		'unicorn/explicit-length-check': 'error',
 		'unicorn/new-for-builtins': 'error',
 		'unicorn/no-abusive-eslint-disable': 'error',
@@ -175,13 +182,17 @@ const recommended = {
 		'unicorn/prefer-reflect-apply': 'error',
 		'unicorn/prefer-regexp-test': 'error',
 		'unicorn/prefer-set-has': 'error',
-		'unicorn/prefer-set-size': 'error', // TODO [>=1.0.0]: Should this be on a "performance" preset?
-		'unicorn/prefer-spread': 'error', // TODO [>=1.0.0]: Should this be disabled on a "performance" preset?
+		// TODO [>=1.0.0]: Should this be on a "performance" preset?
+		'unicorn/prefer-set-size': 'error',
+		// TODO [>=1.0.0]: Should this be disabled on a "performance" preset?
+		'unicorn/prefer-spread': 'error',
 		'unicorn/prefer-string-replace-all': 'error',
 		'unicorn/prefer-string-slice': 'error',
 		'unicorn/prefer-string-starts-ends-with': 'error',
 		'unicorn/prefer-string-trim-start-end': 'error',
-		'unicorn/prefer-switch': ['error', { emptyDefaultCase: 'do-nothing-comment' }],
+		'unicorn/prefer-switch': ['error', {
+			emptyDefaultCase: 'do-nothing-comment',
+		}],
 		'unicorn/prefer-ternary': 'error',
 		'unicorn/prefer-top-level-await': 'error',
 		'unicorn/prefer-type-error': 'error',
@@ -260,11 +271,17 @@ const strict = {
 		'func-names': ['error', 'as-needed'],
 		'func-style': ['error', 'declaration'],
 		'grouped-accessor-pairs': ['error', 'setBeforeGet'],
-		'logical-assignment-operators': ['error', 'always', { enforceForIfStatements: true }],
+		'logical-assignment-operators': ['error', 'always', {
+			enforceForIfStatements: true,
+		}],
 		'max-classes-per-file': ['error', 1],
 		'max-depth': ['error', 4],
 		'max-lines': ['error', 500],
-		'max-lines-per-function': ['error', { max: 60, skipBlankLines: true, skipComments: true }],
+		'max-lines-per-function': ['error', {
+			max: 60,
+			skipBlankLines: true,
+			skipComments: true,
+		}],
 		'max-nested-callbacks': ['error', 10],
 		'max-params': ['error', 4],
 		'max-statements': ['error', 10],
@@ -320,8 +337,14 @@ const strict = {
 
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/class-methods-use-this': 'error',
-		'@typescript-eslint/consistent-type-exports': ['error', { fixMixedExportsWithInlineTypeSpecifier: false }],
-		'@typescript-eslint/consistent-type-imports': ['error', { disallowTypeAnnotations: true, fixStyle: 'separate-type-imports', prefer: 'type-imports' }],
+		'@typescript-eslint/consistent-type-exports': ['error', {
+			fixMixedExportsWithInlineTypeSpecifier: false,
+		}],
+		'@typescript-eslint/consistent-type-imports': ['error', {
+			disallowTypeAnnotations: true,
+			fixStyle: 'separate-type-imports',
+			prefer: 'type-imports',
+		}],
 		'@typescript-eslint/default-param-last': 'error',
 		'@typescript-eslint/dot-notation': 'error',
 		'@typescript-eslint/method-signature-style': ['error', 'method'],
@@ -376,7 +399,10 @@ const strict = {
 
 		...{}, // Plugin: eslint-plugin-import
 		'import/extensions': ['error', 'always', { ignorePackages: true }],
-		'import/max-dependencies': ['error', { ignoreTypeImports: true, max: 10 }],
+		'import/max-dependencies': ['error', {
+			ignoreTypeImports: true,
+			max: 10,
+		}],
 		'import/no-absolute-path': 'error',
 		'import/no-anonymous-default-export': 'error',
 		'import/no-cycle': 'error',
@@ -385,7 +411,9 @@ const strict = {
 		'import/no-named-default': 'error',
 		'import/no-relative-packages': 'error',
 		'import/no-relative-parent-imports': 'error',
-		'import/no-unassigned-import': ['error', { allow: ['**/*.css', '**/*.scss', '**/*.less'] }],
+		'import/no-unassigned-import': ['error', {
+			allow: ['**/*.css', '**/*.scss', '**/*.less'],
+		}],
 		'import/prefer-default-export': 'error',
 		'import/unambiguous': 'error',
 

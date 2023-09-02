@@ -4,9 +4,9 @@ import type { ESLint, Linter } from 'eslint';
  * @summary An ESLint plugin which provides lint rules for TypeScript codebases.
  *
  * ---
- * **Note:** Types in this project where overridden to be compatible with ESLint new flat
- * config types. ESlint already has backwards compatibility for plugins not created in the
- * new flat config.
+ * **Note:** Types in this project where overridden to be compatible with ESLint
+ * new flat config types. ESlint already has backwards compatibility for plugins
+ * not created in the new flat config.
  * @see {@link https://www.npmjs.com/package/@typescript-eslint/eslint-plugin npm package}
  */
 declare module '@typescript-eslint/eslint-plugin' {
@@ -31,13 +31,13 @@ declare module '@typescript-eslint/eslint-plugin' {
 }
 
 /**
- * @summary An ESLint parser which leverages TypeScript ESTree to allow for ESLint
- * to lint TypeScript source code.
+ * @summary An ESLint parser which leverages TypeScript ESTree to
+ * allow for ESLint to lint TypeScript source code.
  *
  * ---
- * **Note:** Types in this project where overridden to be compatible with ESLint new flat
- * config types. ESlint already has backwards compatibility for parsers not created in the
- * new flat config.
+ * **Note:** Types in this project where overridden to be compatible
+ * with ESLint new flat config types. ESlint already has backwards
+ * compatibility for parsers not created in the new flat config.
  * @see {@link https://www.npmjs.com/package/@typescript-eslint/parser npm package}
  */
 declare module '@typescript-eslint/parser' {

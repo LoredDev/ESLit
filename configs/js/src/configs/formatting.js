@@ -36,7 +36,9 @@ const recommended = {
 
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/block-spacing': ['error', 'always'],
-		'@typescript-eslint/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
+		'@typescript-eslint/brace-style': ['error', 'stroustrup', {
+			allowSingleLine: true,
+		}],
 		'@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
 		'@typescript-eslint/comma-spacing': 'error',
 		'@typescript-eslint/func-call-spacing': 'error',
@@ -46,7 +48,10 @@ const recommended = {
 				parameters: 1 },
 			FunctionExpression: { body: 1,
 				parameters: 1 },
-			ImportDeclaration: 1, MemberExpression: 1, ObjectExpression: 1, SwitchCase: 1,
+			ImportDeclaration: 1,
+			MemberExpression: 1,
+			ObjectExpression: 1,
+			SwitchCase: 1,
 			VariableDeclarator: 1,
 			flatTernaryExpressions: false,
 			ignoreComments: false, ignoredNodes: [
@@ -69,12 +74,20 @@ const recommended = {
 				'JSXSpreadChild',
 				'TSTypeParameterInstantiation',
 				'FunctionExpression > .params[decorators.length > 0]',
+				// eslint-disable-next-line max-len
 				'FunctionExpression > .params > :matches(Decorator, :not(:first-child))',
+				// eslint-disable-next-line max-len
 				'ClassBody.body > PropertyDefinition[decorators.length > 0] > .key',
 			], offsetTernaryExpressions: true, outerIIFEBody: 1,
 		}],
-		'@typescript-eslint/key-spacing': ['error', { afterColon: true, beforeColon: false }],
-		'@typescript-eslint/keyword-spacing': ['error', { after: true, before: true }],
+		'@typescript-eslint/key-spacing': ['error', {
+			afterColon: true,
+			beforeColon: false,
+		}],
+		'@typescript-eslint/keyword-spacing': ['error', {
+			after: true,
+			before: true,
+		}],
 		'@typescript-eslint/lines-between-class-members': ['error'],
 		'@typescript-eslint/member-delimiter-style': ['error', {
 			multiline: { delimiter: 'comma', requireLast: true },
@@ -91,7 +104,10 @@ const recommended = {
 			named: 'never',
 		}],
 		'@typescript-eslint/space-infix-ops': 'error',
-		'@typescript-eslint/type-annotation-spacing': ['error', { after: true, before: false }],
+		'@typescript-eslint/type-annotation-spacing': ['error', {
+			after: true,
+			before: false,
+		}],
 		'block-spacing': 'off',
 		'brace-style': 'off',
 		'comma-dangle': 'off',
@@ -118,7 +134,11 @@ const recommended = {
 		...perfectionistPlugin.configs['recommended-natural'].rules,
 
 		'perfectionist/sort-exports': ['error', { type: 'line-length' }],
-		'perfectionist/sort-imports': ['error', { order: 'desc', type: 'line-length' }],
+		'perfectionist/sort-imports': ['error', {
+			order: 'desc',
+			type: 'line-length',
+		}],
+		'perfectionist/sort-interfaces': ['error', { type: 'natural' }],
 
 	},
 };

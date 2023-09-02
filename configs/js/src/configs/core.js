@@ -8,8 +8,9 @@ import importPlugin from 'eslint-plugin-i';
 import process from 'node:process';
 
 /**
- * This config adds necessary plugins and configuration for ESLint to use in the other configs
- * **This should always be in the top of the configuration array**.
+ * This config adds necessary plugins and configuration for ESLint
+ * to use in the other configs **This should always be in the top
+ * of the configuration array**.
  * @type {import('eslint').Linter.FlatConfig}
  */
 const config = {
