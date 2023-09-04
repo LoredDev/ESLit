@@ -1,3 +1,5 @@
+/* eslint-disable import/no-relative-parent-imports */
+/* eslint-disable unicorn/no-useless-spread */
 /**
  * @file
  * Configuration objects for code formatting and style in JavaScript and TypeScript.
@@ -6,9 +8,8 @@
  * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
  */
 
-/* eslint-disable import/no-relative-parent-imports */
-/* eslint-disable unicorn/no-useless-spread */
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
+
 import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
 
@@ -143,6 +144,17 @@ const recommended = createVariations({
 		'perfectionist/sort-enums': ['error', { type: 'natural' }],
 		'perfectionist/sort-exports': ['error', { type: 'line-length' }],
 		'perfectionist/sort-imports': ['error', {
+			groups: [
+				'type',
+				'builtin',
+				'external',
+				'internal-type',
+				'internal',
+				['parent-type', 'sibling-type', 'index-type'],
+				['parent', 'sibling', 'index'],
+				'object',
+				'unknown',
+			],
 			order: 'desc',
 			type: 'line-length',
 		}],

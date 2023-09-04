@@ -1,3 +1,5 @@
+/* eslint-disable import/no-relative-parent-imports */
+/* eslint-disable unicorn/no-useless-spread */
 /**
  * @file
  * Configuration objects for the browser environment.
@@ -6,8 +8,6 @@
  * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
  */
 
-/* eslint-disable import/no-relative-parent-imports */
-/* eslint-disable unicorn/no-useless-spread */
 import { createVariations } from '../../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../../constants.js';
 
