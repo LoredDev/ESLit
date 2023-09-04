@@ -1,3 +1,5 @@
+/* eslint-disable import/no-relative-parent-imports */
+/* eslint-disable unicorn/no-useless-spread */
 /**
  * @file
  * Overrides for specific scenarios or preferences of users. The objects
@@ -8,8 +10,6 @@
  * @todo This file is not completed fully.
  */
 
-/* eslint-disable import/no-relative-parent-imports */
-/* eslint-disable unicorn/no-useless-spread */
 import { createVariations } from '../lib/rule-variations.js';
 import { jsFiles, tsFiles } from '../constants.js';
 

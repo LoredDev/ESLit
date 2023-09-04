@@ -7,19 +7,23 @@
  */
 
 import tsESLint from '@typescript-eslint/eslint-plugin';
-// eslint-disable-next-line import/no-relative-parent-imports
-import { jsFiles, tsFiles } from '../constants.js';
 import unicornPlugin from 'eslint-plugin-unicorn';
 // @ts-expect-error because the package doesn't export correct types
 import tsParser from '@typescript-eslint/parser';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 import importPlugin from 'eslint-plugin-i';
-import process from 'node:process';
+import globals from 'globals';
+
+// eslint-disable-next-line import/no-relative-parent-imports
+import { jsFiles, tsFiles } from '../constants.js';
 
 /** @type {import('eslint').Linter.FlatConfig} */
 const config = {
 	files: [...tsFiles, ...jsFiles],
 	languageOptions: {
+		globals: {
+			...globals.builtin,
+		},
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		parser: tsParser,
 		parserOptions: {
