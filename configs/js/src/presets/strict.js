@@ -12,11 +12,11 @@ import configs from '../configs/index.js';
 /** @type {import('eslint').Linter.FlatConfig[]} */
 const strict = [
 	configs.core,
-	configs.problems.strict.error,
-	configs.suggestions.strict.error,
-	configs['suggestions-typescript'].strict.error,
-	configs.formatting.strict.error,
-	configs.naming.strict.error,
-	configs.documentation.recommended.error,
+	configs.problems.strict.default,
+	configs.suggestions.strict.default,
+	configs['suggestions-typescript'].strict.default,
+	configs.formatting.strict.default,
+	configs.naming.strict.default,
+	configs.documentation.recommended.default,
 ];
 export default strict;

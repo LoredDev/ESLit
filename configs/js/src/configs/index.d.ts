@@ -10,6 +10,19 @@ import type { Linter } from 'eslint';
 
 interface ConfigVariations {
 	/**
+	 * @summary
+	 * Enable rules with the predefined levels of the package.
+	 * @description
+	 * Most of the rules in ESLegant are on `error` level. This
+	 * was preferred so it is harder to ignore them. But it has
+	 * some small exceptions where rules will be at `warn` level,
+	 * being more as a "reminder" than a actual rule.
+	 *
+	 * If you want to **every** rule in the config to have an
+	 * `error` or `warn` level, you can use the other variants.
+	 */
+	default: Linter.FlatConfig,
+	/**
 	 * @description
 	 * Enable all rules with `error` level.
 	 */

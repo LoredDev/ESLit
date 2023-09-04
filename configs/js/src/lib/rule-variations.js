@@ -91,7 +91,12 @@ function createVariations(config) {
 		),
 	};
 
-	return { error: configError, off: configDisabled, warn: configWarning };
+	return {
+		default: config,
+		error: configError,
+		off: configDisabled,
+		warn: configWarning,
+	};
 }
 
 export { createVariations, iterateRules };

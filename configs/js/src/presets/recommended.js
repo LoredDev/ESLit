@@ -12,11 +12,11 @@ import configs from '../configs/index.js';
 /** @type {import('eslint').Linter.FlatConfig[]} */
 const recommended = [
 	configs.core,
-	configs.problems.recommended.error,
-	configs.suggestions.recommended.error,
-	configs['suggestions-typescript'].recommended.error,
-	configs.formatting.recommended.error,
-	configs.naming.recommended.error,
-	configs.documentation.recommended.error,
+	configs.problems.recommended.default,
+	configs.suggestions.recommended.default,
+	configs['suggestions-typescript'].recommended.default,
+	configs.formatting.recommended.default,
+	configs.naming.recommended.default,
+	configs.documentation.recommended.default,
 ];
 export default recommended;
