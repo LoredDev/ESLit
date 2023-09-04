@@ -69,17 +69,19 @@ function iterateRules(rules, handler) {
 function createVariations(config) {
 	const configError = {
 		...config,
-		rules: iterateRules(
-			config.rules ?? {},
-			([key, entry]) => [key, changeLevel(entry, 'error')],
+		rules: iterateRules(config.rules ?? {}, ([key, entry]) =>
+			(entry === 'off' || (Array.isArray(entry) && entry[0] === 'off')
+				? [key, entry]
+				: [key, changeLevel(entry, 'error')]),
 		),
 	};
 
 	const configWarning = {
 		...config,
-		rules: iterateRules(
-			config.rules ?? {},
-			([key, entry]) => [key, changeLevel(entry, 'warn')],
+		rules: iterateRules(config.rules ?? {}, ([key, entry]) =>
+			(entry === 'off' || (Array.isArray(entry) && entry[0] === 'off')
+				? [key, entry]
+				: [key, changeLevel(entry, 'warn')]),
 		),
 	};
 
