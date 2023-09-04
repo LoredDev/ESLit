@@ -299,7 +299,11 @@ const strict = createVariations({
 		'no-extend-native': 'error',
 		'no-extra-bind': 'error',
 		'no-extra-boolean-cast': 'error',
-		'no-extra-parens': ['error', 'all', { nestedBinaryExpressions: true }],
+		'no-extra-parens': ['error', 'all', {
+			enforceForArrowConditionals: false,
+			nestedBinaryExpressions: false,
+			ternaryOperandBinaryExpressions: false,
+		}],
 		'no-floating-decimal': 'error',
 		'no-implicit-coercion': 'error',
 		'no-labels': 'error',
