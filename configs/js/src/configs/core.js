@@ -6,7 +6,10 @@
  * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
  */
 
+import process from 'node:process';
+
 import tsESLint from '@typescript-eslint/eslint-plugin';
+import securityPlugin from 'eslint-plugin-security';
 import unicornPlugin from 'eslint-plugin-unicorn';
 // @ts-expect-error because the package doesn't export correct types
 import tsParser from '@typescript-eslint/parser';
@@ -16,6 +19,7 @@ import globals from 'globals';
 
 // eslint-disable-next-line import/no-relative-parent-imports
 import { jsFiles, tsFiles } from '../constants.js';
+
 
 /** @type {import('eslint').Linter.FlatConfig} */
 const config = {
@@ -40,6 +44,8 @@ const config = {
 		'import': importPlugin,
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		'jsdoc': jsdocPlugin,
+		// @ts-expect-error because eslint-plugin-security doesn't export correct types
+		'security': securityPlugin,
 		// @ts-expect-error because eslint-plugin-unicorn doesn't export correct types
 		'unicorn': unicornPlugin,
 	},
