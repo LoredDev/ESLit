@@ -18,5 +18,6 @@ const strict = [
 	configs.formatting.strict.default,
 	configs.naming.strict.default,
 	configs.documentation.recommended.default,
+	configs.security.strict.default,
 ];
 export default strict;

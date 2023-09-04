@@ -227,6 +227,28 @@ const configs: Readonly<{
 	},
 	/**
 	 * @summary
+	 * Prevents possible vulnerabilities.
+	 * @description
+	 * This configuration tries to prevent possible vulnerabilities
+	 * in you code, such as hard-coded secrets, personal information in comments,
+	 * XSS attacks, etc.
+	 */
+	security: {
+		/**
+		 * @description
+		 * Rules which warns you about possible security vulnerabilities.
+		 */
+		recommended: ConfigVariations,
+		/**
+		 * @borrows Builds on top of the recommended configuration
+		 * @description
+		 * Similar to recommended config, but with rules in error-level
+		 * to make possible vulnerabilities harder to ignore.
+		 */
+		strict: ConfigVariations,
+	},
+	/**
+	 * @summary
 	 * Enforces different ways of coding in JavaScript and TypeScript.
 	 * @description
 	 * This configuration enforces different ways doing things, coding style and/or

@@ -18,5 +18,6 @@ const recommended = [
 	configs.formatting.recommended.default,
 	configs.naming.recommended.default,
 	configs.documentation.recommended.default,
+	configs.security.recommended.default,
 ];
 export default recommended;
