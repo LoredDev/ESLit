@@ -43,7 +43,6 @@ const recommended = createVariations({
 		'no-invalid-regexp': 'error',
 		'no-irregular-whitespace': 'error',
 		'no-misleading-character-class': 'error',
-		'no-new-symbol': 'error',
 		'no-nonoctal-decimal-escape': 'error',
 		'no-obj-calls': 'error',
 		'no-octal': 'error',
@@ -90,9 +89,11 @@ const strict = createVariations({
 
 		...{}, // ESLint rules
 		'no-constant-binary-expression': 'error',
+		'no-duplicate-imports': 'error',
 		'no-new-native-nonconstructor': 'error',
 		'no-promise-executor-return': 'error',
 		'no-self-compare': 'error',
+		'no-sequences': 'error',
 		'no-template-curly-in-string': 'error',
 		'no-unmodified-loop-condition': 'error',
 		'no-unreachable-loop': 'error',
