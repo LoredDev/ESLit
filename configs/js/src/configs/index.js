@@ -1,3 +1,4 @@
+/* eslint-disable import/max-dependencies */
 /**
  * @file
  * Main export files for all the configs objects, merging then in one `configs` object.

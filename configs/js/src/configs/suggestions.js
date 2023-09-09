@@ -9,10 +9,10 @@
  */
 
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES } from '../constants.js';
 
 const recommended = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	rules: {
 		'camelcase': 'error',
 		'max-len': ['error', { code: 80, comments: 100, ignoreUrls: true }],

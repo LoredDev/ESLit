@@ -9,10 +9,10 @@
  */
 
 import { createVariations } from '../lib/rule-variations.js';
-import { tsFiles } from '../constants.js';
+import { TS_FILES } from '../constants.js';
 
 const recommended = createVariations({
-	files: [...tsFiles],
+	files: [TS_FILES].flat(),
 	rules: {
 		...{}, // Plugin: @typescript-eslint/eslint-plugin
 		'@typescript-eslint/explicit-function-return-type': 'error',

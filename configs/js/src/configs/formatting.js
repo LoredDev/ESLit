@@ -11,10 +11,10 @@
 import perfectionistPlugin from 'eslint-plugin-perfectionist';
 
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES } from '../constants.js';
 
 const recommended = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	plugins: {
 		// @ts-expect-error because plugin doesn't export correct type
 		perfectionist: perfectionistPlugin,
@@ -30,7 +30,7 @@ const recommended = createVariations({
 		'no-mixed-spaces-and-tabs': 'error',
 		'no-multi-spaces': 'error',
 		'no-whitespace-before-property': 'error',
-		'padded-blocks': 'error',
+		'padded-blocks': ['error', 'never'],
 		'rest-spread-spacing': 'error',
 		'semi-spacing': 'error',
 		'space-in-parens': 'error',

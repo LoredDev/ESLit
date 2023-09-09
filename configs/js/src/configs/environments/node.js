@@ -12,7 +12,7 @@ import nodePlugin from 'eslint-plugin-n';
 import globals from 'globals';
 
 import { createVariations } from '../../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../../constants.js';
+import { FILES } from '../../constants.js';
 
 const commonjs = createVariations({
 	files: ['**/*.cts', '**/*.cjs'],
@@ -47,7 +47,7 @@ const commonjs = createVariations({
 });
 
 const recommended = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	languageOptions: {
 		globals: {
 			...globals.nodeBuiltin,

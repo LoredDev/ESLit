@@ -12,10 +12,10 @@ import noSecretsPluginRegexes from 'eslint-plugin-no-secrets/regexes.js';
 import noSecretsPlugin from 'eslint-plugin-no-secrets';
 
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES } from '../constants.js';
 
 const recommended = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	plugins: {
 		'no-secrets': noSecretsPlugin,
 	},

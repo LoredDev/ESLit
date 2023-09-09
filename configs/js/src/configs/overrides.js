@@ -11,11 +11,11 @@
  */
 
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES, TS_FILES } from '../constants.js';
 
 // TODO [>=1.0.0]: Create a separate config for performance related practices
 const performance = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	rules: {
 		'prefer-object-spread': 'off',
 		'prefer-spread': 'off',
@@ -23,7 +23,7 @@ const performance = createVariations({
 });
 
 const inferrableTypes = createVariations({
-	files: [...tsFiles],
+	files: TS_FILES,
 	rules: {
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/no-inferrable-types': 'error',

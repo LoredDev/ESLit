@@ -5,7 +5,25 @@
  * @author Guz013 <contact.guz013@gmail.com> (https://guz.one)
  */
 
-const jsFiles = ['**/*.js', '**/*.mjs', '**/*.cjs', '**/*.jsx'];
-const tsFiles = ['**/*.ts', '**/*.mts', '**/*.cts', '**/*.tsx'];
+const JS_FILES = [
+	'**/*.js',
+	'**/*.mjs',
+	'**/*.cjs',
+	'**/*.jsx',
+];
+const TS_FILES = [
+	'**/*.ts',
+	'**/*.mts',
+	'**/*.cts',
+	'**/*.tsx',
+];
+const FILES = [
+	JS_FILES,
+	TS_FILES,
+].flat();
 
-export { jsFiles, tsFiles };
+export {
+	FILES,
+	JS_FILES,
+	TS_FILES,
+};

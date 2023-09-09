@@ -18,12 +18,12 @@ import importPlugin from 'eslint-plugin-i';
 import globals from 'globals';
 
 // eslint-disable-next-line import/no-relative-parent-imports
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES } from '../constants.js';
 
 
 /** @type {import('eslint').Linter.FlatConfig} */
 const config = {
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	languageOptions: {
 		globals: {
 			...globals.builtin,
@@ -50,9 +50,9 @@ const config = {
 		'unicorn': unicornPlugin,
 	},
 	settings: {
-		'import/extensions': [...tsFiles, ...jsFiles],
+		'import/extensions': FILES,
 		'import/parsers': {
-			'@typescript-eslint/parser': [...tsFiles, ...jsFiles ],
+			'@typescript-eslint/parser': FILES,
 		},
 		'import/resolver': {
 			node: true,

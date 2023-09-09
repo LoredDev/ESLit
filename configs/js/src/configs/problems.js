@@ -9,10 +9,10 @@
  */
 
 import { createVariations } from '../lib/rule-variations.js';
-import { jsFiles, tsFiles } from '../constants.js';
+import { FILES } from '../constants.js';
 
 const recommended = createVariations({
-	files: [...tsFiles, ...jsFiles],
+	files: FILES,
 	rules: {
 		...{}, // ESLint rules
 		'constructor-super': 'error',
