@@ -86,9 +86,13 @@ const configs: Readonly<{
 	 */
 	environments: {
 		/**
-		 * @description
+		 * @summary
 		 * Browser environment configuration, use this if you are working
 		 * on a pure client-side or mixed codebase environment.
+		 * @description
+		 * Warns about possible incompatible Web APIs on your codebase, you can
+		 * configure the target browsers using {@link https://github.com/browserslist/browserslist browserslist}
+		 * on `package.json`.
 		 */
 		browser: {
 			/**
