@@ -1,0 +1,64 @@
+{
+  "name": "@eslegant/js",
+  "version": "0.3.0",
+  "description": "",
+  "main": "index.js",
+  "module": "./src/index.js",
+  "source": "./src/index.js",
+  "files": [
+    "src",
+    "index.d.ts"
+  ],
+  "homepage": "https://github.com/LoredDev/ESLegant",
+  "exports": {
+    "default": "./src/index.js",
+    "import": "./src/index.js",
+    "types": "./src/index.d.ts"
+  },
+  "type": "module",
+  "types": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "directory": "configs/js",
+    "type": "git",
+    "url": "https://github.com/LoredDev/ESLegant"
+  },
+  "author": {
+    "email": "contact.guz013@gmail.com",
+    "name": "Gustavo \"Guz\" L. de Mello",
+    "url": "https://guz.one"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/eslint__js": "^8.42.0",
+    "@types/node": "^20.5.3",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@eslint/eslintrc": "^2.1.2",
+    "@eslint/js": "^8.47.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-compat": "^4.2.0",
+    "eslint-plugin-i": "2.28.0-2",
+    "eslint-plugin-jsdoc": "^46.5.0",
+    "eslint-plugin-n": "^16.0.2",
+    "eslint-plugin-no-secrets": "^0.8.9",
+    "eslint-plugin-perfectionist": "^1.5.1",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-unicorn": "^48.0.1",
+    "globals": "^13.21.0"
+  },
+  "peerDependencies": {
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

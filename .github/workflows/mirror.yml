@@ -8,8 +8,8 @@ on:
 
 jobs:
   mirror:
-    if: github.repository == 'loreddev/eslit'
+    if: github.repository == 'loreddev/eslegant'
     uses: loreddev/.github/.github/workflows/mirrors.yml@main
     secrets: inherit
     with:
-      codeberg-repo: https://codeberg.org/LoredDev/ESLit
+      codeberg-repo: https://codeberg.org/LoredDev/ESLegant

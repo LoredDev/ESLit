@@ -1,6 +1,6 @@
 {
-  "name": "@eslit-fixtures/library",
-  "version": "1.0.1",
+  "name": "fixtures/library",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -8,7 +8,7 @@
     "test": "pnpm cli"
   },
   "dependencies": {
-    "@eslit/cli": "workspace:*"
+    "@eslegant/cli": "workspace:*"
   },
   "keywords": [],
   "author": "",

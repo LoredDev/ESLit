@@ -1,0 +1,33 @@
+{
+	"name": "create-eslegant",
+	"version": "0.2.0",
+	"description": "",
+	"keywords": [],
+	"author": {
+		"email": "contact.guz013@gmail.com",
+		"name": "Gustavo \"Guz\" L. de Mello",
+		"url": "https://guz.one"
+	},
+	"files": [
+		"bin.js",
+		"configs.js"
+	],
+	"dependencies": {
+		"@eslegant/cli": "workspace:*"
+	},
+	"homepage": "https://github.com/LoredDev/ESLegant",
+	"type": "module",
+	"repository": {
+		"directory": "packages/create-eslegant",
+		"type": "git",
+		"url": "https://github.com/LoredDev/ESLegant"
+	},
+	"bin": "./bin.js",
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
+	"devDependencies": {
+		"@types/node": "^20.5.3"
+	}
+}

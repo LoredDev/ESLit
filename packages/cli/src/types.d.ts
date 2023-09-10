@@ -1,61 +1,72 @@
 import type { OptionValues } from 'commander';
 
-export type PackageManagerName = 'npm' | 'pnpm' | 'yarn' | 'bun' | 'deno';
+type PackageManagerName = 'bun' | 'deno' | 'npm' | 'pnpm' | 'yarn';
 
-export type CliArgs = {
-	packages?: string[]
-	mergeToRoot?: boolean
-	installPkgs?: boolean | PackageManagerName
-	dir: string
-} & OptionValues;
+interface PackageManagerHandler {
+	install(path: string, packages: string[]): Promise<void> | void,
+}
 
-export type Config = {
-	name: string
-	type: 'single' | 'multiple'
-	manual?: boolean
-	description?: string
-	options: {
-		name: string
-		packages?: Record<string, string | (string | [string, string])[]>
-		configs?: string[]
-		rules?: string[]
-		presets?: string[]
-		detect?: string[] | true
-	}[]
-} | {
-	name: string
-	type: 'confirm'
-	manual: true
-	description?: string
+type Config = {
+	description?: string,
+	manual: true,
+	name: string,
 	options: [{
-		name: 'yes'
-		packages?: Record<string, string | (string | [string, string])[]>
-		configs?: string[]
-		rules?: string[]
-		presets?: string[]
-		detect?: undefined
-	}]
+		configs?: string[],
+		detect?: undefined,
+		name: 'yes',
+		packages?: { [key: string]: ([string, string] | string)[] | string, },
+		presets?: string[],
+		rules?: string[],
+	}],
+	type: 'confirm',
+} | {
+	description?: string,
+	manual?: boolean,
+	name: string,
+	options: {
+		configs?: string[],
+		detect?: string[] | true,
+		name: string,
+		packages?: { [key: string]: ([string, string] | string)[] | string, },
+		presets?: string[],
+		rules?: string[],
+	}[],
+	type: 'multiple' | 'single',
 };
 
-export interface Package {
-	root?: boolean
-	name: string
-	path: string
-	files: string[]
-	directories: string[]
-	config?: Map<string, string[]>
-	configFile?: ConfigFile
+type CliArgs = {
+	configs: Config[],
+	dir: string,
+	installPkgs?: PackageManagerName | boolean,
+	mergeToRoot?: boolean,
+	packages?: string[],
+} & OptionValues;
+
+interface ConfigFile {
+	configs: string[],
+	content?: string,
+	imports: Map<string, ([string, string] | string)[] | string>,
+	path: string,
+	presets: string[],
+	rules: string[],
 }
 
-export interface ConfigFile {
-	path: string
-	imports: Map<string, string | (string | [string, string])[]>
-	configs: string[]
-	presets: string[]
-	rules: string[]
-	content?: string
+interface Package {
+	config?: Map<string, string[]>,
+	configFile?: ConfigFile,
+	directories: string[],
+	files: string[],
+	name: string,
+	path: string,
+	root?: boolean,
 }
 
-export interface PackageManagerHandler {
-	install(path: string, packages: string[]): Promise<void> | void
-}
+
+export type {
+	CliArgs,
+	Config,
+	ConfigFile,
+	Package,
+	PackageManagerHandler,
+	PackageManagerName,
+};

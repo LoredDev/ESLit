@@ -23,6 +23,11 @@
 		"yaml"
 	],
 	"cSpell.words": [
-		"ESLIT"
+		"eslegant",
+		"estree",
+		"nanospinner",
+		"picocolors",
+		"picomatch",
+		"sisteransi"
 	]
 }
