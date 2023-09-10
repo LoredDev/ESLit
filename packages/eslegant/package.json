@@ -9,8 +9,8 @@
 		"url": "https://guz.one"
 	},
 	"files": [
-		"./bin.js",
-		"./configs.js"
+		"bin.js",
+		"configs.js"
 	],
 	"dependencies": {
 		"@eslegant/cli": "workspace:*"

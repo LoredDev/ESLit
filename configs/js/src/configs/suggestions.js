@@ -15,7 +15,12 @@ const recommended = createVariations({
 	files: FILES,
 	rules: {
 		'camelcase': 'error',
-		'max-len': ['error', { code: 80, comments: 100, ignoreUrls: true }],
+		'max-len': ['error', {
+			code: 80,
+			comments: 100,
+			ignoreTemplateLiterals: true,
+			ignoreUrls: true,
+		}],
 		'no-case-declarations': 'error',
 		'no-confusing-arrow': 'error',
 		'no-console': 'error',
@@ -287,7 +292,7 @@ const strict = createVariations({
 		}],
 		'max-nested-callbacks': ['error', 10],
 		'max-params': ['error', 4],
-		'max-statements': ['error', 10],
+		'max-statements': ['error', 15],
 		'multiline-comment-style': ['error', 'starred-block'],
 		'new-cap': 'error',
 		'new-parens': 'error',
@@ -303,11 +308,8 @@ const strict = createVariations({
 		'no-extend-native': 'error',
 		'no-extra-bind': 'error',
 		'no-extra-boolean-cast': 'error',
-		'no-extra-parens': ['error', 'all', {
-			enforceForArrowConditionals: false,
-			nestedBinaryExpressions: false,
-			ternaryOperandBinaryExpressions: false,
-		}],
+		// TODO [>=1.0.0]: Fix no-extra-parens conflict with the unicorn/no-nested-ternary rule.
+		'no-extra-parens': ['error', 'functions'],
 		'no-floating-decimal': 'error',
 		'no-implicit-coercion': 'error',
 		'no-implied-eval': 'error',

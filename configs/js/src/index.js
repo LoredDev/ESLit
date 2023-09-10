@@ -22,6 +22,6 @@ function defineConfig(config) {
 
 const eslegant = { configs, presets };
 
-export {  defineConfig, eslegant as default  };
+export { defineConfig, eslegant as default };
 export { default as configs } from './configs/index.js';
 export { default as presets } from './presets/index.js';

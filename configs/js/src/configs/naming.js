@@ -16,7 +16,10 @@ const recommended = createVariations({
 	rules: {
 		...{}, // Plugin: eslint-plugin-unicorn
 		'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-		'unicorn/prevent-abbreviations': 'error',
+		/*
+		 * TODO [>=1.0.0]: This will be replaced by a better naming convention.
+		 * 'unicorn/prevent-abbreviations': 'error',
+		 */
 	},
 });
 
