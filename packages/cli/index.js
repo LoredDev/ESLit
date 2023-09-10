@@ -1,1 +1,1 @@
-export { default as default } from './src/cli.js';
+export { default } from './src/cli.js';

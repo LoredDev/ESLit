@@ -24,7 +24,7 @@ const recommended = createVariations({
 		'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
 		'comma-style': 'error',
 		'curly': ['error', 'multi-or-nest', 'consistent'],
-		'dot-location': 'error',
+		'dot-location': ['error', 'property'],
 		'eol-last': 'error',
 		'generator-star-spacing': ['error', 'before'],
 		'no-mixed-spaces-and-tabs': 'error',

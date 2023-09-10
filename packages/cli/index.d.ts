@@ -1,17 +1,17 @@
-import type { CliArgs  } from './src/types';
+import type { CliArgs } from './src/types';
 
 /**
- * Class that handles the creation and running the ESLegant command line interface
+ * Class that handles the creation and running the ESLegant command line interface.
  */
 export default class Cli {
 	/**
-	 * @param args Arguments to pass to the cli when its runs
+	 * @param args - Arguments to pass to the cli when its runs.
 	 */
-	constructor(args: CliArgs);
+	public constructor(args: CliArgs);
 	/**
-	 * Runs the cli with the given arguments
+	 * Runs the cli with the given arguments.
 	 */
-	async run(): Promise<void>;
+	public async run(): Promise<void>;
 }
 
 export type { CliArgs, Config } from './src/types.d.ts';

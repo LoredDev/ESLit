@@ -27,6 +27,7 @@ function changeLevel(ruleEntry, level) {
 	if (typeof level === 'number') {
 		/** @type {RuleLevel[]} */
 		const levels = ['error', 'off', 'warn'];
+		// eslint-disable-next-line security/detect-object-injection
 		level = levels[level];
 	}
 
@@ -34,7 +35,6 @@ function changeLevel(ruleEntry, level) {
 		return [level, ruleEntry[1]];
 
 	return level;
-
 }
 
 /**
