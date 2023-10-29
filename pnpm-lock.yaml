@@ -170,8 +170,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       picomatch:
-        specifier: ^2.3.1
-        version: 2.3.1
+        specifier: ^3.0.0
+        version: 3.0.0
       prompts:
         specifier: ^2.4.2
         version: 2.4.2
@@ -3445,6 +3445,11 @@ packages:
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  /picomatch@3.0.0:
+    resolution: {integrity: sha512-G+bUnjy7wQOJBK3YS6hErp7nUOJ+SWI+JZeDEATcdAjnHZwjJ6TXm4TGOHgGScf5lCNGdT9rXdqIa0tJ3lYhnQ==}
+    engines: {node: '>=8.6'}
+    dev: false
 
   /pify@4.0.1:
     resolution: {integrity: sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==}
