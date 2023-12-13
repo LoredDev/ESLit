@@ -73,8 +73,8 @@ importers:
         specifier: ^1.5.1
         version: 1.5.1(eslint@8.47.0)(typescript@5.1.6)
       eslint-plugin-security:
-        specifier: ^1.7.1
-        version: 1.7.1
+        specifier: ^2.0.0
+        version: 2.0.0
       eslint-plugin-unicorn:
         specifier: ^48.0.1
         version: 48.0.1(eslint@8.47.0)
@@ -2210,8 +2210,8 @@ packages:
       - typescript
     dev: false
 
-  /eslint-plugin-security@1.7.1:
-    resolution: {integrity: sha512-sMStceig8AFglhhT2LqlU5r+/fn9OwsA72O5bBuQVTssPCdQAOQzL+oMn/ZcpeUY6KcNfLJArgcrsSULNjYYdQ==}
+  /eslint-plugin-security@2.0.0:
+    resolution: {integrity: sha512-2vJLgIm33tisno85/20c8g8t8hGx4/JSNCtmoaqRHfDximblVzMM9jbCrvNkPlCjyLLCfWaXGgWO0tW2NpnnjQ==}
     dependencies:
       safe-regex: 2.1.1
     dev: false
